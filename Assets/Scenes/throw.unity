@@ -612,11 +612,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6718621269310840456, guid: 448a614265690844c95fa587c8f24065, type: 3}
+      propertyPath: m_TagString
+      value: Stadium
+      objectReference: {fileID: 0}
     - target: {fileID: -5658133984781139290, guid: 448a614265690844c95fa587c8f24065, type: 3}
       propertyPath: m_LocalScale.y
       value: 14
       objectReference: {fileID: 0}
     - target: {fileID: -4522559835550113459, guid: 448a614265690844c95fa587c8f24065, type: 3}
+      propertyPath: m_TagString
+      value: Stadium
+      objectReference: {fileID: 0}
+    - target: {fileID: -1033189042381598072, guid: 448a614265690844c95fa587c8f24065, type: 3}
       propertyPath: m_TagString
       value: Stadium
       objectReference: {fileID: 0}
@@ -628,10 +636,18 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Stadium
       objectReference: {fileID: 0}
+    - target: {fileID: 6864720443080964341, guid: 448a614265690844c95fa587c8f24065, type: 3}
+      propertyPath: m_TagString
+      value: Stadium
+      objectReference: {fileID: 0}
     - target: {fileID: 7177521023893003953, guid: 448a614265690844c95fa587c8f24065, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 828f62919bf85554d9c549150ab3d919, type: 2}
+    - target: {fileID: 8484260368053926915, guid: 448a614265690844c95fa587c8f24065, type: 3}
+      propertyPath: m_TagString
+      value: Stadium
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1518,7 +1534,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 10.085037, y: 3.999999, z: 7.8136973}
+  m_Size: {x: 10.085037, y: 6, z: 30}
   m_Center: {x: 23.042519, y: 0.000000014901161, z: 3.9068487}
 --- !u!1 &2098562974
 GameObject:
