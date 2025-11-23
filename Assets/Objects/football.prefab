@@ -262,9 +262,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2356366480564701080, guid: 88bac933a0bb36540adec8b4c88d18e5, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 88bac933a0bb36540adec8b4c88d18e5, type: 3}
       propertyPath: m_Name
       value: football
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 88bac933a0bb36540adec8b4c88d18e5, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6958542129482643823, guid: 88bac933a0bb36540adec8b4c88d18e5, type: 3}
       propertyPath: m_Materials.Array.size

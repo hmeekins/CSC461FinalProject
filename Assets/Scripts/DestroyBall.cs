@@ -5,6 +5,7 @@ using UnityEngine;
 public class DestroyBall : MonoBehaviour
 {
     private void OnCollisionEnter(Collision other) {
+        Debug.Log($"Ball hit: {other.gameObject.name} | tag: {other.gameObject.tag} | layer: {other.gameObject.layer}");
         if (other.gameObject.CompareTag("Stadium")) {
             StartCoroutine(Miss(0.85f));
             Global.lives -= 1;
