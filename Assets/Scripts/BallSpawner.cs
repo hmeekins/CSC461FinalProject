@@ -36,7 +36,7 @@ public class SpawnInHandOnTrigger : MonoBehaviour
         RecordControllerVelocity();
 
         // Spawn
-        if (!_isHolding && triggerValue >= pressThreshold)
+        if (_currentObject == null && triggerValue >= pressThreshold)
         {
             SpawnObjectInHand();
         }
@@ -141,7 +141,6 @@ public class SpawnInHandOnTrigger : MonoBehaviour
         //Freeze X/Y
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
 
-        _currentObject = null;
         _isHolding = false;
     }
 }
