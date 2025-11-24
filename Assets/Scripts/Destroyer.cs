@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DestroyBall : MonoBehaviour
+public class Destroyer : MonoBehaviour
 {
+    AudioSource catchSound;
     private void OnCollisionEnter(Collision other) {
         Debug.Log($"Ball hit: {other.gameObject.name} | tag: {other.gameObject.tag} | layer: {other.gameObject.layer}");
         if (other.gameObject.CompareTag("Stadium")) {
             StartCoroutine(Miss(0.85f));
-            Global.lives -= 1;
+            GlobalVariables.lives -= 1;
         }
     }
 
@@ -20,7 +21,10 @@ public class DestroyBall : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Player")) {
-            Global.score += 100;
+            GlobalVariables.score += 100;
+            catchSound = other.GetComponent<AudioSource>();
+            AudioSource.PlayClipAtPoint(catchSound.clip, other.transform.position);
+            Destroy(other.gameObject);
             Destroy(gameObject);
         }
     }
