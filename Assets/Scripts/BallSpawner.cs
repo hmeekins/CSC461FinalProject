@@ -24,7 +24,6 @@ public class SpawnInHandOnTrigger : MonoBehaviour
     public Vector3 offset = new Vector3(0f, 90f, 0f);
 
     private GameObject _currentObject;
-    private bool _isHolding;
 
     private Queue<Vector3> _velHistory = new Queue<Vector3>();
 
@@ -42,7 +41,7 @@ public class SpawnInHandOnTrigger : MonoBehaviour
         }
 
         // Release
-        if (_isHolding && triggerValue <= releaseThreshold)
+        if (GlobalVariables.isHolding && triggerValue <= releaseThreshold)
         {
             if (audioSource != null)
                 audioSource.Play();
@@ -51,7 +50,7 @@ public class SpawnInHandOnTrigger : MonoBehaviour
         }
 
         // Keep ball in hand
-        if (_isHolding && _currentObject != null)
+        if (GlobalVariables.isHolding && _currentObject != null)
         {
             _currentObject.transform.position = handTransform.position;
 
@@ -120,7 +119,7 @@ public class SpawnInHandOnTrigger : MonoBehaviour
         }
 
         _velHistory.Clear(); // clear old throw data
-        _isHolding = true;
+        GlobalVariables.isHolding = true;
     }
 
     /// <summary>
@@ -141,6 +140,6 @@ public class SpawnInHandOnTrigger : MonoBehaviour
         //Freeze X/Y
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
 
-        _isHolding = false;
+        GlobalVariables.isHolding = false;
     }
 }

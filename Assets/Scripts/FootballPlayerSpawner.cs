@@ -28,7 +28,6 @@ public class FootballPlayerSpawner : MonoBehaviour
         {
             distanceMultiplier += .1f;
             previousMilestone = GlobalVariables.score;
-            Debug.Log(GlobalVariables.score);
         }
     }
 
