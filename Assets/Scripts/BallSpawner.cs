@@ -21,7 +21,7 @@ public class SpawnInHandOnTrigger : MonoBehaviour
     public float velocityMultiplier;
 
     // How much to rotate the ball relative to the hand (in degrees)
-    public Vector3 offset = new Vector3(0f, 90f, 0f);
+    public Vector3 offset = new Vector3(0f, 90f, 20f);
 
     private GameObject _currentObject;
 
