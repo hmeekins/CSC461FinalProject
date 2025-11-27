@@ -3,16 +3,15 @@ using UnityEngine;
 
 public class Destroyer : MonoBehaviour
 {
-    [Header("References")]
-    public GameObject stadium;        // Stadium object with AudioFade
-    public AudioClip catchClip;       // Clip for catching
-    public AudioClip stadiumClip;     // Clip to play for the stadium audio
+    public AudioClip catchClip;
 
     private AudioFade audioFade;
 
     void Start()
     {
-        audioFade = stadium.GetComponent<AudioFade>();
+        GameObject stadiumObject = GameObject.FindGameObjectWithTag("Stadium");
+        
+        audioFade = stadiumObject.GetComponentInParent<AudioFade>();
     }
 
     private void OnCollisionEnter(Collision other)
@@ -38,41 +37,15 @@ public class Destroyer : MonoBehaviour
 
         GlobalVariables.score += 100;
 
-        // Play catch sound immediately
+        // Play catch sound
         AudioSource.PlayClipAtPoint(catchClip, other.transform.position);
-        // Play stadium audio safely after one frame
-        StartCoroutine(PlayStadiumClipWithFade());
+
+        // Fade stadium sound
+        audioFade.FadeOut(3f);
 
         Destroy(gameObject);
         DestroyPlayersOnField();
     }
-
-    private IEnumerator PlayStadiumClipWithFade()
-    {
-        // Create a temporary GameObject for the audio
-        GameObject temp = new GameObject("TempStadiumAudio");
-        AudioSource source = temp.AddComponent<AudioSource>();
-        source.clip = stadiumClip;
-        source.volume = 1f;
-        source.spatialBlend = 0f; // 2D
-        source.Play();
-
-        // Fade out manually over 2 seconds
-        float duration = 2f;
-        float time = 0f;
-        float startVolume = source.volume;
-
-        while (time < duration)
-        {
-            source.volume = Mathf.Lerp(startVolume, 0f, time / duration);
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        source.Stop();
-        Destroy(temp);
-    }
-
 
     private void DestroyPlayersOnField()
     {

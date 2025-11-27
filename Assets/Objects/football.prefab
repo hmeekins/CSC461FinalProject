@@ -411,9 +411,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d41641a485f746e4d807f851867529ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stadium: {fileID: 3213853912021799625, guid: 091280f45ffa3d04abc27c1f5fc3e586, type: 3}
+  stadium: {fileID: 6629245048943651428, guid: 091280f45ffa3d04abc27c1f5fc3e586, type: 3}
   catchClip: {fileID: 8300000, guid: 4a799a1d3427f824cbe816fe30c29646, type: 3}
-  stadiumClip: {fileID: 8300000, guid: c7a25bb0326ab934587ddfde44c319fa, type: 3}
+  stadiumClip: {fileID: 8300000, guid: eceb541b1ba7f7d46802e76e15bdb6c6, type: 3}
 --- !u!4 &3243275577178182984 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 88bac933a0bb36540adec8b4c88d18e5, type: 3}

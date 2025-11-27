@@ -20,6 +20,7 @@ public class RunSpawner : MonoBehaviour
     {
         box = GetComponent<BoxCollider>();
     }
+    
     void Update()
     {
         if (rightRunner == null && leftRunner == null) 
@@ -97,12 +98,14 @@ public class RunSpawner : MonoBehaviour
             targetPosition = new Vector3(pos.x, pos.y, GlobalVariables.rightTargetZ);
             rightRunner.transform.position = Vector3.MoveTowards(pos, targetPosition, speed * Time.deltaTime);
         }
+        
         if (!leftRunnerTarget.atTargetZ)
         {
             pos = leftRunner.transform.position;
             targetPosition = new Vector3(pos.x, pos.y, GlobalVariables.leftTargetZ);
             leftRunner.transform.position = Vector3.MoveTowards(pos, targetPosition, speed * Time.deltaTime);
         }
+
         if (!rightRunnerTarget.atTargetX && rightRunnerTarget.atTargetZ)
         {
             pos = rightRunner.transform.position;

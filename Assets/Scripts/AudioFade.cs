@@ -7,6 +7,10 @@ public class AudioFade : MonoBehaviour
     public AudioSource audioSource;
     public void FadeOut(float duration)
     {
+        audioSource.Stop();
+        audioSource.volume = .85f;
+
+        audioSource.Play();
         StartCoroutine(FadeOutCoroutine(duration));
     }
 
