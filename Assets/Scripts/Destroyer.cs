@@ -32,24 +32,34 @@ public class Destroyer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("FootballPlayer"))
-            return;
-
-        GlobalVariables.score += 100;
-
-        // Play catch sound
-        AudioSource.PlayClipAtPoint(catchClip, other.transform.position);
-
-        // Fade stadium sound
-        audioFade.FadeOut(3f);
-
-        Destroy(gameObject);
-        DestroyPlayersOnField();
+        if (other.CompareTag("FootballPlayer")) 
+        {
+            GlobalVariables.score += 100;
+            // Play catch sound
+            AudioSource.PlayClipAtPoint(catchClip, other.transform.position);
+            // Fade stadium sound
+            audioFade.FadeOut(3f);
+            Destroy(gameObject);
+            DestroyPlayersOnField();
+        }
+        else if (other.CompareTag("Opponent"))
+        {
+            GlobalVariables.lives -= 1;
+            AudioSource.PlayClipAtPoint(catchClip, other.transform.position);
+            Destroy(gameObject);
+            DestroyPlayersOnField();
+        }
     }
 
     private void DestroyPlayersOnField()
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("FootballPlayer");
+        foreach (GameObject player in players)
+        {
+            Destroy(player);
+        }
+
+        players = GameObject.FindGameObjectsWithTag("Opponent");
         foreach (GameObject player in players)
         {
             Destroy(player);

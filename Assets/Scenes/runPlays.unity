@@ -7377,8 +7377,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPrefab: {fileID: 1340186942231210787, guid: 8f74496555c6e7c4885efc88ca53464d, type: 3}
+  enemyPrefab: {fileID: 724392657753041719, guid: 8e7e18e00cf6911449185a74866e9c93, type: 3}
+  enemyFollowStartDelay: 0.2
   spawnHeight: 1
   speed: 5
+  offsetX: 0
+  offsetZ: 0
 --- !u!1 &1454816962
 GameObject:
   m_ObjectHideFlags: 0

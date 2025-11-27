@@ -5,9 +5,14 @@ using UnityEngine;
 public class RunSpawner : MonoBehaviour
 {
     public GameObject objectPrefab;
-
+    public GameObject enemyPrefab;
+    public float enemyFollowStartDelay = 0.2f;
     public float spawnHeight;
     public float speed;
+    public float offsetX;
+    public float offsetZ;
+
+    
     private int variation;
     private GameObject rightRunner;
 
@@ -41,26 +46,40 @@ public class RunSpawner : MonoBehaviour
     private void SpawnFootballPlayer()
     {
         var bounds = box.bounds;
-        Vector3 leftSpawnPosition = new Vector3(bounds.max.x, spawnHeight, bounds.max.z);
+
+        Vector3 leftSpawnPosition = new Vector3(bounds.max.x - offsetX, spawnHeight, bounds.max.z - offsetZ);
         leftRunner = Instantiate(
             objectPrefab,
             leftSpawnPosition,
             Quaternion.identity
         );
+
         leftRunnerTarget = leftRunner.GetComponent<AtTarget>();
         leftRunnerTarget.playerPosition = "Left";
+        SpawnOpponentForTarget(leftRunner.transform, leftSpawnPosition);
 
-        Vector3 rightSpawnPosition = new Vector3(bounds.min.x, spawnHeight, bounds.max.z);
+        Vector3 rightSpawnPosition = new Vector3(bounds.min.x + offsetX, spawnHeight, bounds.max.z - offsetZ);
         rightRunner = Instantiate(
             objectPrefab,
             rightSpawnPosition,
             Quaternion.identity
         );
+
         rightRunnerTarget = rightRunner.GetComponent<AtTarget>();
         rightRunnerTarget.playerPosition = "Right";
+        SpawnOpponentForTarget(rightRunner.transform, rightSpawnPosition);
 
         GetTargets();
 
+    }
+
+    private void SpawnOpponentForTarget(Transform target, Vector3 spawnPos)
+    {
+        Vector3 enemyPos = spawnPos + new Vector3(0f, 0f, -2f);
+        GameObject enemy = Instantiate(enemyPrefab, enemyPos, Quaternion.identity);
+
+        EnemyFollower follower = enemy.GetComponent<EnemyFollower>();
+        follower.target = target;
     }
 
     private void GetTargets()

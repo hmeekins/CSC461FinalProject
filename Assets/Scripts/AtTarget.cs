@@ -7,6 +7,7 @@ public class AtTarget : MonoBehaviour
     public bool atTargetZ = false;
     public bool atTargetX = false;
     public string playerPosition;
+
     // Start is called before the first frame update
 
     // Update is called once per frame
