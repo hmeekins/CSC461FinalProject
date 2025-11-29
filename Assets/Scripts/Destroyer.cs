@@ -36,23 +36,20 @@ public class Destroyer : MonoBehaviour
                 Destroy(runSpawner.leftRunner);
             }   
         }
-        if (runSpawner.rightRunner == null && runSpawner.leftRunner == null)
+        if (GlobalVariables.runEnd || (runSpawner.rightRunner == null && runSpawner.leftRunner == null))
         {
-            DestroyPlayersOnField();
+            GlobalVariables.runActive = false;
+            DestroyEverything();
+            GlobalVariables.runEnd = true;
         }
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        Debug.Log(
-    "Hit Object: " + other.gameObject.name +
-    " | Tag: " + other.gameObject.tag +
-    " | Layer: " + other.gameObject.layer
-);
         if (other.gameObject.CompareTag("Stadium"))
         {
             GlobalVariables.lives -= 1;
-            DestroyPlayersOnField();
+            GlobalVariables.runEnd = true;
             StartCoroutine(Miss(0.85f));
         }
     }
@@ -73,23 +70,33 @@ public class Destroyer : MonoBehaviour
             // Fade stadium sound
             audioFade.FadeOut(3f);
             Destroy(gameObject);
-            DestroyPlayersOnField();
+            GlobalVariables.runEnd = true;
         }
         else if (other.CompareTag("Opponent"))
         {
             GlobalVariables.lives -= 1;
             AudioSource.PlayClipAtPoint(catchClip, other.transform.position);
             Destroy(gameObject);
-            DestroyPlayersOnField();
+            GlobalVariables.runEnd = true;
         }
     }
 
-    private void DestroyPlayersOnField()
+    private void DestroyEverything()
     {
-        GameObject[] players = GameObject.FindGameObjectsWithTag("FootballPlayer");
-        foreach (GameObject player in players)
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("FootballPlayer");
+        foreach (GameObject instance in objects)
         {
-            Destroy(player);
+            Destroy(instance);
+        }
+        objects = GameObject.FindGameObjectsWithTag("Opponent");
+        foreach (GameObject instance in objects)
+        {
+            Destroy(instance);
+        }
+        objects = GameObject.FindGameObjectsWithTag("Ball");
+        foreach (GameObject instance in objects)
+        {
+            Destroy(instance);
         }
     }
 }

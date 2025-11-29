@@ -5,39 +5,84 @@ using Oculus.Interaction.Locomotion;
 public class ResetPlayerOnPlayEnd : MonoBehaviour
 {
     [Header("Rig References")]
-    public Transform cameraRig;      // ✅ [BuildingBlock] Camera Rig
-    public Transform trackingSpace; // ✅ TrackingSpace (child of rig)
-    public Transform resetPoint;     // ✅ PlayerSpawnPoint
+    public Transform cameraRig;
+    public Transform trackingSpace;
+    public Transform resetPoint;
 
     [Header("Locomotion")]
-    public GameObject locomotor;    // ✅ Locomotor GameObject
+    public GameObject locomotor;
 
     [Header("Facing Direction")]
-    public float targetYaw = 180f;  // Which way the player should face
+    public float targetYaw = 180f;
+
+    private OVRScreenFade fade;
+
+    private bool hasEverRun = false;   // ✅ blocks first-spawn fade
+    private bool isResetting = false;
+    private float fadeStartTime;
+    private bool hasTeleported = false;
+
+    private void Start()
+    {
+        fade = FindObjectOfType<OVRScreenFade>();
+    }
 
     private void LateUpdate()
     {
-        if (!GlobalVariables.runActive)
+        //When game is running
+        if (GlobalVariables.runActive)
         {
-            // ✅ HARD FREEZE MOVEMENT
-            locomotor.SetActive(false);
+            hasEverRun = true;
 
-            // ✅ TELEPORT ROOT (NOT THE HEAD)
+            if (!locomotor.activeSelf)
+                locomotor.SetActive(true);
+
+            isResetting = false;
+            return;
+        }
+
+        //Block fade on first spawn
+        if (!hasEverRun)
+        {
+            locomotor.SetActive(false);
             cameraRig.position = resetPoint.position;
 
-            // ✅ ROTATE VIA TRACKING SPACE (THIS IS THE VR FIX)
             Vector3 currentRot = trackingSpace.eulerAngles;
             trackingSpace.rotation = Quaternion.Euler(
                 currentRot.x,
                 targetYaw,
                 currentRot.z
             );
+            GlobalVariables.hasTeleported = true;
+            return;
         }
-        else
+
+        //Start fade
+        if (!isResetting)
         {
-            // ✅ MOVEMENT ENABLED ONLY AFTER PLAY STARTS
-            if (!locomotor.activeSelf)
-                locomotor.SetActive(true);
+            GlobalVariables.hasTeleported = false;
+            isResetting = true;
+
+            locomotor.SetActive(false);
+            fadeStartTime = Time.time;
+            fade.FadeOut();
+        }
+
+        if (!GlobalVariables.hasTeleported && Time.time - fadeStartTime >= fade.fadeTime)
+        {
+            cameraRig.position = resetPoint.position;
+
+            Vector3 currentRot = trackingSpace.eulerAngles;
+            trackingSpace.rotation = Quaternion.Euler(
+                currentRot.x,
+                targetYaw,
+                currentRot.z
+            );
+
+            fade.FadeIn();
+            GlobalVariables.tackled = false;
+            GlobalVariables.hasTeleported = true;
+            GlobalVariables.runEnd = false;
         }
     }
 }

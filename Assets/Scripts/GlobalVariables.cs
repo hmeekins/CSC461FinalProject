@@ -13,6 +13,11 @@ public static class GlobalVariables
 
     public static bool runActive = false;
 
+    public static bool tackled = false;
+
+    public static bool runEnd = false;
+    public static bool hasTeleported = false;
+
     public static float leftTargetZ = 0;
 
     public static float rightTargetZ = 0;

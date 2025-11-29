@@ -23,7 +23,7 @@ public class RunSpawner : MonoBehaviour
     
     void Update()
     {
-        if (rightRunner == null && leftRunner == null) 
+        if (GlobalVariables.hasTeleported && rightRunner == null && leftRunner == null) 
         {
             SpawnFootballPlayer();
             GlobalVariables.runActive = false;

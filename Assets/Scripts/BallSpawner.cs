@@ -23,6 +23,8 @@ public class BallSpawner : MonoBehaviour
     private Queue<Vector3> _velHistory = new Queue<Vector3>();
     private Transform trackingSpace;
 
+    private bool ballSpawned;
+
     private void Start()
     {
         var rig = FindObjectOfType<OVRCameraRig>();
@@ -39,9 +41,14 @@ public class BallSpawner : MonoBehaviour
         RecordControllerVelocity();
 
         // ✅ SPAWN BALL (ENABLE MOVEMENT HERE)
-        if (_currentObject == null && triggerValue >= pressThreshold)
+        if (GlobalVariables.hasTeleported && _currentObject == null && triggerValue >= pressThreshold && !ballSpawned)
         {
             SpawnObjectInHand();
+            ballSpawned = true;
+        }
+        if (triggerValue <= pressThreshold)
+        {
+            ballSpawned = false;
         }
 
         // ✅ RELEASE BALL
@@ -59,6 +66,10 @@ public class BallSpawner : MonoBehaviour
             _currentObject.transform.position = handTransform.position;
             _currentObject.transform.rotation =
                 handTransform.rotation * Quaternion.Euler(offset);
+        }
+        if (GlobalVariables.runEnd)
+        {
+            Destroy(_currentObject);
         }
     }
 

@@ -234,6 +234,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1979026827}
     - target: {fileID: 5801245061754409418, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _speedFactor
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5801245061754409418, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
       propertyPath: _playerOrigin
       value: 
       objectReference: {fileID: 1357414559}
@@ -277,6 +281,53 @@ MonoBehaviour:
   installationRoutineCheckpoint:
     _installationRoutineId: 2063f481-1b63-4eda-9ee8-a00df98536bc
     _installationVariants: []
+--- !u!1 &783982089
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 783982090}
+  - component: {fileID: 783982091}
+  m_Layer: 0
+  m_Name: RusherSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &783982090
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 783982089}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.36, y: 1, z: 1.68}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &783982091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 783982089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cee53ab5693c3f46b451a61276a0d31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectPrefab: {fileID: 1420079243975716393, guid: c0596765b6af9c443af4d0423ffff27a, type: 3}
+  spawnPoint: {fileID: 783982090}
+  cameraRigTarget: {fileID: 1357414559}
 --- !u!1 &789379877
 GameObject:
   m_ObjectHideFlags: 0
@@ -656,12 +707,10 @@ GameObject:
   - component: {fileID: 1357414557}
   - component: {fileID: 1357414556}
   - component: {fileID: 1357414555}
-  - component: {fileID: 1357414560}
   - component: {fileID: 1357414561}
-  - component: {fileID: 1357414562}
   m_Layer: 0
   m_Name: '[BuildingBlock] Camera Rig'
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -814,20 +863,6 @@ Transform:
   - {fileID: 769501877}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1357414560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1357414554}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdb0b3b245e3e5d4990917b6293ad177, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  forcedYDirection: 180
-  locomotion: {fileID: 1773040736}
 --- !u!114 &1357414561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -845,19 +880,6 @@ MonoBehaviour:
   resetPoint: {fileID: 1848626827}
   locomotor: {fileID: 856641862}
   targetYaw: 180
---- !u!114 &1357414562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1357414554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 096ca8a33cebcfb439b563b9c865fb14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lastPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &1421451124
 GameObject:
   m_ObjectHideFlags: 0
@@ -1019,7 +1041,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPrefab: {fileID: 7332933886325223193, guid: fc9dfa34c39ffb6448943ac4a208f1b9, type: 3}
-  enemyPrefab: {fileID: 724392657753041719, guid: 8e7e18e00cf6911449185a74866e9c93, type: 3}
+  enemyPrefab: {fileID: 1420079243975716393, guid: 392b497fe458ad84f85dd887d170f907, type: 3}
   spawnHeight: 1
   speed: 5
   rightRunner: {fileID: 0}
@@ -1207,17 +1229,6 @@ Transform:
   - {fileID: 789379878}
   m_Father: {fileID: 967137028}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1773040736 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5801245061754409418, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
-  m_PrefabInstance: {fileID: 769501876}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec6a2955cc1374944a4634c6f312985a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1848626826
 GameObject:
   m_ObjectHideFlags: 0
@@ -1243,7 +1254,7 @@ Transform:
   m_GameObject: {fileID: 1848626826}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.22, y: 0.64, z: 14.24}
+  m_LocalPosition: {x: -3.22, y: -0.02, z: 14.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1260,6 +1271,7 @@ GameObject:
   - component: {fileID: 1979026827}
   - component: {fileID: 1979026829}
   - component: {fileID: 1979026828}
+  - component: {fileID: 1979026830}
   m_Layer: 0
   m_Name: CenterEyeAnchor
   m_TagString: MainCamera
@@ -1341,6 +1353,22 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1979026826}
   m_Enabled: 1
+--- !u!114 &1979026830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979026826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df8e1d778abf442e4bec449c360e9e1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeTime: 2
+  fadeColor: {r: 0.01, g: 0.01, b: 0.01, a: 1}
+  fadeOnStart: 1
+  renderQueue: 5000
 --- !u!1 &2091067966
 GameObject:
   m_ObjectHideFlags: 0
@@ -4081,3 +4109,4 @@ SceneRoots:
   - {fileID: 2869417168476722291}
   - {fileID: 1357414559}
   - {fileID: 1848626827}
+  - {fileID: 783982090}
