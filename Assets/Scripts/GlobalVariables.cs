@@ -11,6 +11,8 @@ public static class GlobalVariables
 
     public static bool isHolding = false;
 
+    public static bool runActive = false;
+
     public static float leftTargetZ = 0;
 
     public static float rightTargetZ = 0;

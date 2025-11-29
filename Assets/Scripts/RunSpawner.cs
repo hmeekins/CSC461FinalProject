@@ -6,21 +6,16 @@ public class RunSpawner : MonoBehaviour
 {
     public GameObject objectPrefab;
     public GameObject enemyPrefab;
-    public float enemyFollowStartDelay = 0.2f;
     public float spawnHeight;
     public float speed;
-    public float offsetX;
-    public float offsetZ;
+    public GameObject rightRunner;
 
-    
+    public GameObject leftRunner;
     private int variation;
-    private GameObject rightRunner;
-
-    private GameObject leftRunner;
     private BoxCollider box;
     private AtTarget rightRunnerTarget;
     private AtTarget leftRunnerTarget;
-    private bool runActive;
+
     void Start()
     {
         box = GetComponent<BoxCollider>();
@@ -31,13 +26,13 @@ public class RunSpawner : MonoBehaviour
         if (rightRunner == null && leftRunner == null) 
         {
             SpawnFootballPlayer();
-            runActive = false;
+            GlobalVariables.runActive = false;
         }
         if (GlobalVariables.isHolding)
         {
-            runActive = true;
+            GlobalVariables.runActive = true;
         }
-        if (runActive)
+        if (GlobalVariables.runActive)
         {
             Run();
         }
@@ -47,22 +42,23 @@ public class RunSpawner : MonoBehaviour
     {
         var bounds = box.bounds;
 
-        Vector3 leftSpawnPosition = new Vector3(bounds.max.x - offsetX, spawnHeight, bounds.max.z - offsetZ);
+        Quaternion spawnRotation = Quaternion.LookRotation(Vector3.back);
+        Vector3 leftSpawnPosition = new Vector3(bounds.max.x, spawnHeight, bounds.max.z);
         leftRunner = Instantiate(
             objectPrefab,
             leftSpawnPosition,
-            Quaternion.identity
+            spawnRotation
         );
 
         leftRunnerTarget = leftRunner.GetComponent<AtTarget>();
         leftRunnerTarget.playerPosition = "Left";
         SpawnOpponentForTarget(leftRunner.transform, leftSpawnPosition);
 
-        Vector3 rightSpawnPosition = new Vector3(bounds.min.x + offsetX, spawnHeight, bounds.max.z - offsetZ);
+        Vector3 rightSpawnPosition = new Vector3(bounds.min.x, spawnHeight, bounds.max.z);
         rightRunner = Instantiate(
             objectPrefab,
             rightSpawnPosition,
-            Quaternion.identity
+            spawnRotation
         );
 
         rightRunnerTarget = rightRunner.GetComponent<AtTarget>();
@@ -70,7 +66,6 @@ public class RunSpawner : MonoBehaviour
         SpawnOpponentForTarget(rightRunner.transform, rightSpawnPosition);
 
         GetTargets();
-
     }
 
     private void SpawnOpponentForTarget(Transform target, Vector3 spawnPos)
@@ -110,33 +105,50 @@ public class RunSpawner : MonoBehaviour
     {
         Vector3 pos;
         Vector3 targetPosition;
+        var bounds = box.bounds;
 
-        if (!rightRunnerTarget.atTargetZ)
+        if (!rightRunnerTarget.atTargetZ && rightRunner != null)
         {
             pos = rightRunner.transform.position;
             targetPosition = new Vector3(pos.x, pos.y, GlobalVariables.rightTargetZ);
-            rightRunner.transform.position = Vector3.MoveTowards(pos, targetPosition, speed * Time.deltaTime);
+
+            rightRunner.transform.position =
+            Vector3.MoveTowards(pos, targetPosition, speed * Time.deltaTime);
         }
-        
-        if (!leftRunnerTarget.atTargetZ)
+
+        if (!leftRunnerTarget.atTargetZ && leftRunner != null)
         {
             pos = leftRunner.transform.position;
             targetPosition = new Vector3(pos.x, pos.y, GlobalVariables.leftTargetZ);
-            leftRunner.transform.position = Vector3.MoveTowards(pos, targetPosition, speed * Time.deltaTime);
+
+            leftRunner.transform.position =
+            Vector3.MoveTowards(pos, targetPosition, speed * Time.deltaTime);
         }
 
-        if (!rightRunnerTarget.atTargetX && rightRunnerTarget.atTargetZ)
+        if (!rightRunnerTarget.atTargetX && rightRunnerTarget.atTargetZ && rightRunner != null)
         {
             pos = rightRunner.transform.position;
             targetPosition = new Vector3(GlobalVariables.rightTargetX, pos.y, pos.z);
-            rightRunner.transform.position = Vector3.MoveTowards(pos, targetPosition, speed * Time.deltaTime);
+
+            Vector3 moveDir = targetPosition - pos;
+            if (moveDir != Vector3.zero)
+                rightRunner.transform.rotation = Quaternion.LookRotation(moveDir);
+
+            rightRunner.transform.position =
+                Vector3.MoveTowards(pos, targetPosition, speed * Time.deltaTime);
         }
 
-        if (!leftRunnerTarget.atTargetX && leftRunnerTarget.atTargetZ)
+        if (!leftRunnerTarget.atTargetX && leftRunnerTarget.atTargetZ && leftRunner != null)
         {
             pos = leftRunner.transform.position;
             targetPosition = new Vector3(GlobalVariables.leftTargetX, pos.y, pos.z);
-            leftRunner.transform.position = Vector3.MoveTowards(pos, targetPosition, speed * Time.deltaTime);
+
+            Vector3 moveDir = targetPosition - pos;
+            if (moveDir != Vector3.zero)
+                leftRunner.transform.rotation = Quaternion.LookRotation(moveDir);
+
+            leftRunner.transform.position =
+                Vector3.MoveTowards(pos, targetPosition, speed * Time.deltaTime);
         }
     }
 }

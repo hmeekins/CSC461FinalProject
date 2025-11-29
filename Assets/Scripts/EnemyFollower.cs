@@ -26,6 +26,11 @@ public class EnemyFollower : MonoBehaviour
         //Slows down enemies over time
         float t = Mathf.Clamp01(timer / slowDownTime);
         currentSpeed = Mathf.Lerp(startSpeed, minSpeed, t);
+        if (target == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         Vector3 current = transform.position;
 
@@ -41,6 +46,8 @@ public class EnemyFollower : MonoBehaviour
             return;
 
         Vector3 direction = (targetPos - current).normalized;
-        transform.position += direction * currentSpeed * Time.deltaTime;
+        if (transform.position != null) {
+            transform.position += direction * currentSpeed * Time.deltaTime;
+        }
     }
 }

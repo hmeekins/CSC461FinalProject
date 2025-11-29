@@ -217,6 +217,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   startSpeed: 8
-  minSpeed: 4
+  minSpeed: 3
   slowDownTime: 8
   stopDistance: 1.5
