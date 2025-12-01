@@ -17,10 +17,9 @@ public class ResetPlayerOnPlayEnd : MonoBehaviour
 
     private OVRScreenFade fade;
 
-    private bool hasEverRun = false;   // ✅ blocks first-spawn fade
+    private bool hasEverRun = false;
     private bool isResetting = false;
     private float fadeStartTime;
-    private bool hasTeleported = false;
 
     private void Start()
     {
@@ -29,15 +28,20 @@ public class ResetPlayerOnPlayEnd : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (GameFlowController.Instance.State == GameState.WaitingForSnap)
+        {
+            locomotor.SetActive(false);
+            isResetting = false;
+            return;
+        }
         //When game is running
-        if (GlobalVariables.runActive)
+        if (GameFlowController.Instance.State == GameState.PlayRunning)
         {
             hasEverRun = true;
 
             if (!locomotor.activeSelf)
                 locomotor.SetActive(true);
 
-            isResetting = false;
             return;
         }
 
@@ -53,14 +57,12 @@ public class ResetPlayerOnPlayEnd : MonoBehaviour
                 targetYaw,
                 currentRot.z
             );
-            GlobalVariables.hasTeleported = true;
             return;
         }
 
         //Start fade
         if (!isResetting)
         {
-            GlobalVariables.hasTeleported = false;
             isResetting = true;
 
             locomotor.SetActive(false);
@@ -68,21 +70,20 @@ public class ResetPlayerOnPlayEnd : MonoBehaviour
             fade.FadeOut();
         }
 
-        if (!GlobalVariables.hasTeleported && Time.time - fadeStartTime >= fade.fadeTime)
+        if (Time.time - fadeStartTime >= fade.fadeTime)
         {
             cameraRig.position = resetPoint.position;
 
             Vector3 currentRot = trackingSpace.eulerAngles;
-            trackingSpace.rotation = Quaternion.Euler(
-                currentRot.x,
-                targetYaw,
-                currentRot.z
-            );
+            //trackingSpace.rotation = Quaternion.Euler(
+                //currentRot.x,
+                //targetYaw,
+                //currentRot.z
+            //);
 
             fade.FadeIn();
-            GlobalVariables.tackled = false;
-            GlobalVariables.hasTeleported = true;
-            GlobalVariables.runEnd = false;
+            isResetting = false;
+            GameFlowController.Instance.FinishReset();
         }
     }
 }

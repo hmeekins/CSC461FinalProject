@@ -10,7 +10,7 @@ public class RusherSpawner : MonoBehaviour
 
     void Update()
     {
-        if (GlobalVariables.hasTeleported && rusher == null)
+        if (GameFlowController.Instance.State == GameState.WaitingForSnap && rusher == null)
         {
             rusher = Instantiate(
                 objectPrefab,

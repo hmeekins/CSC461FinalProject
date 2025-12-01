@@ -8,32 +8,44 @@ public class AtTarget : MonoBehaviour
     public bool atTargetX = false;
     public string playerPosition;
 
-    // Start is called before the first frame update
+    public float targetZ;
+    public float targetX;
 
-    // Update is called once per frame
+    TeammateMovement teammateMovement;
+
+    void Start()
+    {
+        teammateMovement = GetComponent<TeammateMovement>();
+    }
+
     void Update()
     {
-        if (playerPosition == "Left")
+        if (GameFlowController.Instance.State == GameState.PlayRunning)
+            checkProgress();
+    }
+
+    /// <summary>
+    /// Checks to see if player position is at target x or z.
+    /// </summary>
+    private void checkProgress()
+    {
+        if (teammateMovement.playerPosition == "Left")
         {
+            targetZ = GlobalVariables.leftTargetZ;
+            targetX = GlobalVariables.leftTargetX;
             if (transform.position.z == GlobalVariables.leftTargetZ)
-            {
                 atTargetZ = true;
-            }
             if (transform.position.x == GlobalVariables.leftTargetX)
-            {
                 atTargetX = true;
-            }
         }
-        if (playerPosition == "Right")
+        else
         {
+            targetZ = GlobalVariables.rightTargetZ;
+            targetX = GlobalVariables.rightTargetX;
             if (transform.position.z == GlobalVariables.rightTargetZ)
-            {
                 atTargetZ = true;
-            }
             if (transform.position.x == GlobalVariables.rightTargetX)
-            {
                 atTargetX = true;
-            }
         }
     }
 }

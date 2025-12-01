@@ -8,16 +8,7 @@ public static class GlobalVariables
     public static int highScore = 0;
     public static int lives = 4;
     public static bool gameActive = false;
-
-    public static bool isHolding = false;
-
-    public static bool runActive = false;
-
-    public static bool tackled = false;
-
-    public static bool runEnd = false;
-    public static bool hasTeleported = false;
-
+    public static bool ballThrown = false;
     public static float leftTargetZ = 0;
 
     public static float rightTargetZ = 0;

@@ -1,0 +1,56 @@
+using UnityEngine;
+using System.Collections.Generic;
+
+public class BallSpawner : MonoBehaviour
+{
+    public GameObject objectPrefab;
+    public Transform handTransform;
+    public OVRInput.Controller controller;
+    public OVRInput.Axis1D triggerAxis = OVRInput.Axis1D.PrimaryIndexTrigger;
+    public float pressThreshold = 0.8f;
+    public Vector3 offset = new Vector3(0f, 90f, 20f);
+    private GameObject currentObject;
+    private Queue<Vector3> _velHistory = new Queue<Vector3>();
+    private bool hasReleasedTrigger = true;
+
+    private void Update()
+    {
+        float triggerValue = OVRInput.Get(triggerAxis, controller);
+
+        if (GameFlowController.Instance.State != GameState.WaitingForSnap) 
+            return;
+        if (triggerValue < pressThreshold)
+            hasReleasedTrigger = true;
+        if (currentObject == null && triggerValue >= pressThreshold && hasReleasedTrigger == true)
+        {   
+            SpawnObjectInHand();
+            GameFlowController.Instance.StartPlay();
+            hasReleasedTrigger = false;
+        }
+
+    }
+    /// <summary>
+    /// Spawns football in player hand
+    /// </summary>
+    private void SpawnObjectInHand()
+    {
+        //Adjust base rotation so ball feels more natural in hand
+        Quaternion spawnRot = handTransform.rotation * Quaternion.Euler(offset);
+
+        currentObject = Instantiate(
+            objectPrefab,
+            handTransform.position,
+            spawnRot
+        );
+
+        var rbs = currentObject.GetComponentsInChildren<Rigidbody>();
+        foreach (var rb in rbs)
+        {
+            rb.isKinematic = true;
+            rb.useGravity = false;
+        }
+
+        _velHistory.Clear();
+    }
+
+}
