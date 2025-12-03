@@ -169,6 +169,7 @@ MonoBehaviour:
   minSpeed: 3
   slowDownTime: 8
   stopDistance: 1.5
+  rotationSpeed: 5
 --- !u!1 &6208722462874921288
 GameObject:
   m_ObjectHideFlags: 0

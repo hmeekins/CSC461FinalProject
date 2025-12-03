@@ -9,6 +9,7 @@ TagManager:
   - FootballPlayer
   - Opponent
   - Spawner
+  - Rusher
   layers:
   - Default
   - TransparentFX

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5474751675097235250}
   - component: {fileID: 5520109656358640544}
   - component: {fileID: 5681571939923400149}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: grabPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 4986431059584293089}
   - component: {fileID: 4376102317717721278}
   - component: {fileID: 818978663293657435}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: ISDK_HandGrabInteraction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -264,7 +264,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2356366480564701080, guid: 88bac933a0bb36540adec8b4c88d18e5, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 88bac933a0bb36540adec8b4c88d18e5, type: 3}
       propertyPath: m_Name
@@ -272,7 +272,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 88bac933a0bb36540adec8b4c88d18e5, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 88bac933a0bb36540adec8b4c88d18e5, type: 3}
       propertyPath: m_TagString
@@ -361,7 +361,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   catchClip: {fileID: 8300000, guid: 4a799a1d3427f824cbe816fe30c29646, type: 3}
-  runSpawner: {fileID: 0}
 --- !u!136 &-3346170354596426574
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -403,7 +402,7 @@ MonoBehaviour:
   triggerAxis: 1
   releaseThreshold: 0.2
   velocitySamples: 5
-  velocityMultiplier: 2.1
+  velocityMultiplier: 2.3
   offset: {x: 0, y: 90, z: 20}
 --- !u!82 &4653634130064194354
 AudioSource:

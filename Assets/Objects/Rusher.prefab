@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -5317682019274831183}
   m_Layer: 0
   m_Name: Rusher
-  m_TagString: Opponent
+  m_TagString: Rusher
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -168,6 +168,7 @@ MonoBehaviour:
   startSpeed: 3
   maxSpeed: 9
   speedUpTime: 20
+  rotationSpeed: 3
 --- !u!1 &4104262698484410940
 GameObject:
   m_ObjectHideFlags: 0
