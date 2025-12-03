@@ -4,83 +4,76 @@ using Oculus.Interaction.Locomotion;
 
 public class ResetPlayerOnPlayEnd : MonoBehaviour
 {
-    [Header("Rig References")]
     public Transform cameraRig;
-    public Transform trackingSpace;
     public Transform resetPoint;
-
-    [Header("Locomotion")]
     public GameObject locomotor;
-
-    [Header("Facing Direction")]
-    public float targetYaw = 180f;
 
     private OVRScreenFade fade;
 
-    private bool hasEverRun = false;
-    private bool isResetting = false;
+    private bool hasEverRun;
+    private bool isResetting;
     private float fadeStartTime;
 
-    private void Start()
+    void Start()
     {
         fade = FindObjectOfType<OVRScreenFade>();
     }
 
-    private void LateUpdate()
+    void LateUpdate()
     {
-        if (GameFlowController.Instance.State == GameState.WaitingForSnap)
+        GameState state = GameFlowController.Instance.State;
+
+        if (state == GameState.WaitingForSnap)
         {
-            locomotor.SetActive(false);
-            isResetting = false;
-            return;
+            HandleWaiting();
         }
-        //When game is running
-        if (GameFlowController.Instance.State == GameState.PlayRunning)
+        else if (state == GameState.PlayRunning)
         {
-            hasEverRun = true;
-
-            if (!locomotor.activeSelf)
-                locomotor.SetActive(true);
-
-            return;
+            HandlePlayRunning();
         }
+        else
+        {
+            HandleResetting();
+        }
+    }
 
-        //Block fade on first spawn
+    void HandleWaiting()
+    {
+        locomotor.SetActive(false);
+        isResetting = false;
+    }
+
+    void HandlePlayRunning()
+    {
+        hasEverRun = true;
+
+        if (!locomotor.activeSelf)
+            locomotor.SetActive(true);
+    }
+
+    void HandleResetting()
+    {
+        if (GameFlowController.Instance.IsResolvingPlay)
+            return;
         if (!hasEverRun)
         {
             locomotor.SetActive(false);
             cameraRig.position = resetPoint.position;
-
-            Vector3 currentRot = trackingSpace.eulerAngles;
-            trackingSpace.rotation = Quaternion.Euler(
-                currentRot.x,
-                targetYaw,
-                currentRot.z
-            );
             return;
         }
 
-        //Start fade
         if (!isResetting)
         {
             isResetting = true;
-
             locomotor.SetActive(false);
             fadeStartTime = Time.time;
             fade.FadeOut();
+            return;
         }
 
         if (Time.time - fadeStartTime >= fade.fadeTime)
         {
             cameraRig.position = resetPoint.position;
-
-            Vector3 currentRot = trackingSpace.eulerAngles;
-            //trackingSpace.rotation = Quaternion.Euler(
-                //currentRot.x,
-                //targetYaw,
-                //currentRot.z
-            //);
-
             fade.FadeIn();
             isResetting = false;
             GameFlowController.Instance.FinishReset();

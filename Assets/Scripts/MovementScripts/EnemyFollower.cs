@@ -7,8 +7,8 @@ public class EnemyFollower : MonoBehaviour
     public float startSpeed;     
     public float minSpeed;       
     public float slowDownTime;
-
     public float stopDistance;
+    public float rotationSpeed;
 
     private float currentSpeed;
     private float timer;
@@ -23,9 +23,9 @@ public class EnemyFollower : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        //Slows down enemies over time
         float t = Mathf.Clamp01(timer / slowDownTime);
         currentSpeed = Mathf.Lerp(startSpeed, minSpeed, t);
+
         if (target == null)
         {
             Destroy(gameObject);
@@ -46,8 +46,10 @@ public class EnemyFollower : MonoBehaviour
             return;
 
         Vector3 direction = (targetPos - current).normalized;
-        if (transform.position != null) {
-            transform.position += direction * currentSpeed * Time.deltaTime;
-        }
+
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
+
+        transform.position += direction * currentSpeed * Time.deltaTime;
     }
 }

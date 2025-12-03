@@ -8,7 +8,8 @@ public class RusherMovement : MonoBehaviour
     public float startSpeed;
     public float maxSpeed;
     public float speedUpTime;
-    
+    public float rotationSpeed;
+
     private float currentSpeed;
     private float timer;
 
@@ -21,6 +22,7 @@ public class RusherMovement : MonoBehaviour
     {
         if (GameFlowController.Instance.State == GameState.PlayRunning)
             Run();
+
         if (GlobalVariables.ballThrown)
         {
             SphereCollider collider = GetComponent<SphereCollider>();
@@ -35,7 +37,7 @@ public class RusherMovement : MonoBehaviour
         float t = Mathf.Clamp01(timer / speedUpTime);
         currentSpeed = Mathf.Lerp(startSpeed, maxSpeed, t);
 
-        Vector3 current = gameObject.transform.position;
+        Vector3 current = transform.position;
 
         Vector3 targetPos = new Vector3(
             target.position.x,
@@ -44,6 +46,10 @@ public class RusherMovement : MonoBehaviour
         );
 
         Vector3 direction = (targetPos - current).normalized;
-        gameObject.transform.position += direction * currentSpeed * Time.deltaTime;
+
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
+
+        transform.position += direction * currentSpeed * Time.deltaTime;
     }
 }

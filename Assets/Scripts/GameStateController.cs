@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public enum GameState
 {
@@ -12,6 +13,8 @@ public class GameFlowController : MonoBehaviour
     public static GameFlowController Instance;
 
     public GameState State { get; private set; }
+
+    public bool IsResolvingPlay { get; private set; } = false;
 
     private void Awake()
     {
@@ -45,9 +48,29 @@ public class GameFlowController : MonoBehaviour
         CleanupEverything();
     }
 
+    public void OnPlayerTackled()
+    {
+        if (State != GameState.PlayRunning || IsResolvingPlay)
+            return;
+
+        IsResolvingPlay = true;
+        State = GameState.Resetting;
+
+        StartCoroutine(TackleSequence());
+    }
+
     public void FinishReset()
     {
         EnterWaitingForSnap();
+    }
+
+    private IEnumerator TackleSequence()
+    {
+        yield return new WaitForSecondsRealtime(0.4f);
+
+        CleanupEverything();
+        IsResolvingPlay = false;
+
     }
 
     private void CleanupEverything()
@@ -55,6 +78,7 @@ public class GameFlowController : MonoBehaviour
         DestroyByTag("Ball");
         DestroyByTag("FootballPlayer");
         DestroyByTag("Opponent");
+        DestroyByTag("Rusher");
     }
 
     private void DestroyByTag(string tag)
