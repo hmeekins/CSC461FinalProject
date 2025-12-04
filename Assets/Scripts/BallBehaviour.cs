@@ -80,6 +80,7 @@ public class BallBehaviour : MonoBehaviour
     /// </summary>
     private void ReleaseObject()
     {
+        GlobalVariables.ballPosition = currentObject.transform.position;
         GlobalVariables.ballThrown = true;
         Vector3 throwVel = GetAveragedVelocity() * velocityMultiplier;
 

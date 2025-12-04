@@ -25,6 +25,9 @@ public class GameFlowController : MonoBehaviour
 
     private void Start()
     {
+        GlobalVariables.score = 0;
+        GlobalVariables.downs = 1;
+        GlobalVariables.ballThrown = false;
         BeginGame();
     }
 

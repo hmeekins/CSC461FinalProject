@@ -361,6 +361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   catchClip: {fileID: 8300000, guid: 4a799a1d3427f824cbe816fe30c29646, type: 3}
+  scoreMultiplier: 20
 --- !u!136 &-3346170354596426574
 CapsuleCollider:
   m_ObjectHideFlags: 0

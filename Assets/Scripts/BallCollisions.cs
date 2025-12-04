@@ -4,9 +4,12 @@ using UnityEngine;
 public class BallCollisions : MonoBehaviour
 {
     public AudioClip catchClip;
+    public int scoreMultiplier;
 
     private AudioFade audioFade;
     private bool locked = false;
+    private float distance;
+
 
     void Start()
     {
@@ -35,7 +38,8 @@ public class BallCollisions : MonoBehaviour
         {
             Debug.Log("Collision Occured");
             locked = true;
-            GlobalVariables.score += 100;
+            distance = Vector3.Distance(GlobalVariables.ballPosition, gameObject.transform.position);
+            GlobalVariables.score += Mathf.RoundToInt(distance * scoreMultiplier);
             // Play catch sound
             AudioSource.PlayClipAtPoint(catchClip, other.transform.position);
             // Fade stadium sound
