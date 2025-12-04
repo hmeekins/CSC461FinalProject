@@ -22,7 +22,10 @@ public class ResetPlayerOnPlayEnd : MonoBehaviour
     void LateUpdate()
     {
         GameState state = GameFlowController.Instance.State;
-
+        if (state == GameState.StartGame)
+        {
+            HandleStart();
+        }
         if (state == GameState.WaitingForSnap)
         {
             HandleWaiting();
@@ -31,12 +34,18 @@ public class ResetPlayerOnPlayEnd : MonoBehaviour
         {
             HandlePlayRunning();
         }
-        else
+        else if (state == GameState.Resetting)
         {
             HandleResetting();
         }
     }
 
+    void HandleStart()
+    {
+        locomotor.SetActive(false);
+        cameraRig.position = resetPoint.position;
+        return;
+    }
     void HandleWaiting()
     {
         locomotor.SetActive(false);
@@ -45,8 +54,6 @@ public class ResetPlayerOnPlayEnd : MonoBehaviour
 
     void HandlePlayRunning()
     {
-        hasEverRun = true;
-
         if (!locomotor.activeSelf)
             locomotor.SetActive(true);
     }
@@ -55,12 +62,6 @@ public class ResetPlayerOnPlayEnd : MonoBehaviour
     {
         if (GameFlowController.Instance.IsResolvingPlay)
             return;
-        if (!hasEverRun)
-        {
-            locomotor.SetActive(false);
-            cameraRig.position = resetPoint.position;
-            return;
-        }
 
         if (!isResetting)
         {

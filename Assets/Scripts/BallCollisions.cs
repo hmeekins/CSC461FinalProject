@@ -22,7 +22,7 @@ public class BallCollisions : MonoBehaviour
         if (other.gameObject.CompareTag("Stadium"))
         {
             locked = true;
-            GlobalVariables.lives -= 1;
+            GlobalVariables.downs += 1;
             GameFlowController.Instance.EndPlay();
         }
     }
@@ -46,7 +46,7 @@ public class BallCollisions : MonoBehaviour
         {
             Debug.Log("Collision Occured");
             locked = true;
-            GlobalVariables.lives -= 1;
+            GlobalVariables.downs += 1;
             AudioSource.PlayClipAtPoint(catchClip, other.transform.position);
             GameFlowController.Instance.EndPlay();
         }
@@ -57,7 +57,7 @@ public class BallCollisions : MonoBehaviour
             {
                 locked = true;
                 Debug.Log("Rusher");
-                GlobalVariables.lives -= 1;
+                GlobalVariables.downs += 1;
                 AudioSource.PlayClipAtPoint(catchClip, other.transform.position);
                 GameFlowController.Instance.EndPlay();
             }

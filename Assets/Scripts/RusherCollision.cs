@@ -44,7 +44,7 @@ public class RusherCollision : MonoBehaviour
             AudioSource.PlayClipAtPoint(audioSource.clip, transform.position);
         }
 
-        GlobalVariables.lives -= 1;
+        GlobalVariables.downs += 1;
 
         yield return StartCoroutine(ApplyKnockback(hitSourcePos));
         yield return StartCoroutine(ImpactShake());

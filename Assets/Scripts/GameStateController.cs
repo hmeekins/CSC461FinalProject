@@ -3,9 +3,11 @@ using System.Collections;
 
 public enum GameState
 {
+    StartGame,
     WaitingForSnap,
     PlayRunning,
-    Resetting
+    Resetting,
+    GameOver
 }
 
 public class GameFlowController : MonoBehaviour
@@ -23,7 +25,12 @@ public class GameFlowController : MonoBehaviour
 
     private void Start()
     {
-        EndPlay();
+        BeginGame();
+    }
+
+    private void BeginGame()
+    {
+        State = GameState.StartGame;
     }
 
     public void EnterWaitingForSnap()
@@ -62,6 +69,13 @@ public class GameFlowController : MonoBehaviour
     public void FinishReset()
     {
         EnterWaitingForSnap();
+    }
+
+    public void EndGame()
+    {
+        if (GlobalVariables.score > GlobalVariables.highscore)
+            GlobalVariables.highscore = GlobalVariables.score;
+        State = GameState.GameOver;
     }
 
     private IEnumerator TackleSequence()
