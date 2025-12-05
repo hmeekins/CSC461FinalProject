@@ -78,6 +78,7 @@ public class GameFlowController : MonoBehaviour
     {
         if (GlobalVariables.score > GlobalVariables.highscore)
             GlobalVariables.highscore = GlobalVariables.score;
+        SetHighScore();
         State = GameState.GameOver;
     }
 
@@ -88,6 +89,13 @@ public class GameFlowController : MonoBehaviour
         CleanupEverything();
         IsResolvingPlay = false;
 
+    }
+
+    private void SetHighScore()
+    {
+        GlobalVariables.highscore = GlobalVariables.score;
+        PlayerPrefs.SetInt("HIGH_SCORE", GlobalVariables.highscore);
+        PlayerPrefs.Save(); // Forces disk write
     }
 
     private void CleanupEverything()

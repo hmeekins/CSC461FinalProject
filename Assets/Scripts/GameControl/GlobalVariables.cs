@@ -5,7 +5,7 @@ using UnityEngine;
 public static class GlobalVariables
 {
     public static int score = 1000;
-    public static int highscore = 0;
+    public static int highscore;
     public static int downs = 1;
     public static bool ballThrown = false;
     public static bool leftHanded = false;
