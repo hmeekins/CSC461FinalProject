@@ -21,7 +21,16 @@ public class BallBehaviour : MonoBehaviour
         currentObject = gameObject;
         var rig = FindObjectOfType<OVRCameraRig>();
         trackingSpace = rig.trackingSpace;
-        handTransform = rig.rightHandAnchor;
+        if (!GlobalVariables.leftHanded)
+        {
+            controller = OVRInput.Controller.RTouch;
+            handTransform = rig.rightHandAnchor;
+        }
+        else
+        {
+            controller = OVRInput.Controller.LTouch;
+            handTransform = rig.leftHandAnchor;
+        }
     }
 
     void Update()
@@ -53,6 +62,7 @@ public class BallBehaviour : MonoBehaviour
     private void RecordControllerVelocity()
     {
         Vector3 vel = OVRInput.GetLocalControllerVelocity(controller);
+        
         _velHistory.Enqueue(vel);
 
         while (_velHistory.Count > velocitySamples)

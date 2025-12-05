@@ -8,6 +8,7 @@ public static class GlobalVariables
     public static int highscore = 0;
     public static int downs = 1;
     public static bool ballThrown = false;
+    public static bool leftHanded = false;
 
     public static Vector3 ballPosition = new Vector3(0,0,0);
     public static float leftTargetZ = 0;

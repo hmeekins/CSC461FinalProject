@@ -4,15 +4,31 @@ using System.Collections.Generic;
 public class BallSpawner : MonoBehaviour
 {
     public GameObject objectPrefab;
-    public Transform handTransform;
-    public OVRInput.Controller controller;
+    
     public OVRInput.Axis1D triggerAxis = OVRInput.Axis1D.PrimaryIndexTrigger;
     public float pressThreshold = 0.8f;
     public Vector3 offset = new Vector3(0f, 90f, 20f);
+    private Transform handTransform;
+    private OVRInput.Controller controller;
     private GameObject currentObject;
     private Queue<Vector3> _velHistory = new Queue<Vector3>();
     private bool hasReleasedTrigger = true;
 
+
+    public void Start()
+    {
+        OVRCameraRig rig = FindObjectOfType<OVRCameraRig>();
+        if (!GlobalVariables.leftHanded)
+        {
+            controller = OVRInput.Controller.RTouch;
+            handTransform = rig.rightHandAnchor;
+        }
+        else
+        {
+            controller = OVRInput.Controller.LTouch;
+            handTransform = rig.leftHandAnchor;
+        }
+    }
     private void Update()
     {
         float triggerValue = OVRInput.Get(triggerAxis, controller);
