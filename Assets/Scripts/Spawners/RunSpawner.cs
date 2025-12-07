@@ -11,7 +11,6 @@ public class RunSpawner : MonoBehaviour
     public GameObject rightRunner;
 
     public GameObject leftRunner;
-    private int variation;
     private BoxCollider box;
     private TeammateMovement rightRunnerPosition;
     private TeammateMovement leftRunnerPosition;
@@ -67,7 +66,7 @@ public class RunSpawner : MonoBehaviour
     /// <param name="spawnPos">Spawn location of opponent</param>
     private void SpawnOpponentForTeammate(Transform target, Vector3 spawnPos)
     {
-        Vector3 enemyPos = spawnPos + new Vector3(0f, 0f, -2f);
+        Vector3 enemyPos = spawnPos + new Vector3(0f, 0f, -5f);
         GameObject enemy = Instantiate(enemyPrefab, enemyPos, Quaternion.identity);
 
         EnemyFollower follower = enemy.GetComponent<EnemyFollower>();
@@ -80,9 +79,8 @@ public class RunSpawner : MonoBehaviour
     private void GetTargets()
     {
         var bounds = box.bounds;
-        variation = UnityEngine.Random.Range(0, 2);
+        int variation = GetPlayVariation();
         float lengthOfField = bounds.max.z - bounds.min.z;
-
         float startZ = bounds.max.z - 0.2f * lengthOfField;
         float midZ   = bounds.min.z + 0.5f * lengthOfField;
 
@@ -91,13 +89,34 @@ public class RunSpawner : MonoBehaviour
             GlobalVariables.leftTargetZ  = UnityEngine.Random.Range(midZ, startZ);
             GlobalVariables.rightTargetZ = UnityEngine.Random.Range(bounds.min.z, midZ);
         }
-        if (variation == 1)
+        else if (variation == 1)
         {
             GlobalVariables.rightTargetZ  = UnityEngine.Random.Range(midZ, startZ);
             GlobalVariables.leftTargetZ = UnityEngine.Random.Range(bounds.min.z, midZ);
         }
+        else
+        {
+            GlobalVariables.leftTargetZ = UnityEngine.Random.Range(bounds.min.z, midZ);
+            GlobalVariables.rightTargetZ = UnityEngine.Random.Range(bounds.min.z, midZ);
+        }
 
         GlobalVariables.leftTargetX = bounds.min.x;
         GlobalVariables.rightTargetX = bounds.max.x;
+    }
+
+    /// <summary>
+    /// Gets play variation based on number of successful passes the player makes
+    /// </summary>
+    /// <returns>Play Variation</returns>
+    private int GetPlayVariation()
+    {
+        int variation;
+        if (GlobalVariables.successfulPasses < 4)
+            variation = UnityEngine.Random.Range(0, 2);
+        else if (GlobalVariables.successfulPasses < 8)
+            variation = UnityEngine.Random.Range(0, 3);
+        else
+            variation = 2;
+        return variation;
     }
 }

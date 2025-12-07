@@ -28,6 +28,7 @@ public class GameFlowController : MonoBehaviour
         GlobalVariables.score = 0;
         GlobalVariables.downs = 1;
         GlobalVariables.ballThrown = false;
+        GlobalVariables.successfulPasses = 0;
         BeginGame();
     }
 
@@ -77,8 +78,7 @@ public class GameFlowController : MonoBehaviour
     public void EndGame()
     {
         if (GlobalVariables.score > GlobalVariables.highscore)
-            GlobalVariables.highscore = GlobalVariables.score;
-        SetHighScore();
+            SetHighScore();
         State = GameState.GameOver;
     }
 
@@ -95,7 +95,7 @@ public class GameFlowController : MonoBehaviour
     {
         GlobalVariables.highscore = GlobalVariables.score;
         PlayerPrefs.SetInt("HIGH_SCORE", GlobalVariables.highscore);
-        PlayerPrefs.Save(); // Forces disk write
+        PlayerPrefs.Save();
     }
 
     private void CleanupEverything()

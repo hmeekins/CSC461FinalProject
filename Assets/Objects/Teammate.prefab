@@ -94,8 +94,8 @@ GameObject:
   - component: {fileID: 7964616112894031267}
   - component: {fileID: 6576993530712582540}
   - component: {fileID: 3963325430935750943}
-  - component: {fileID: 8248534961093463826}
   - component: {fileID: -506330470178356942}
+  - component: {fileID: 2567553447994771268}
   m_Layer: 0
   m_Name: Teammate
   m_TagString: FootballPlayer
@@ -236,7 +236,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8248534961093463826
+--- !u!114 &-506330470178356942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7332933886325223193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e99dbc541be4f564181ec994fa5a7bb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPosition: 
+  speed: 5
+--- !u!114 &2567553447994771268
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -253,20 +267,6 @@ MonoBehaviour:
   playerPosition: 
   targetZ: 0
   targetX: 0
---- !u!114 &-506330470178356942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7332933886325223193}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e99dbc541be4f564181ec994fa5a7bb5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerPosition: 
-  speed: 5
 --- !u!1 &7683274504300007697
 GameObject:
   m_ObjectHideFlags: 0

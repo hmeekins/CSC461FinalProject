@@ -36,10 +36,10 @@ public class BallCollisions : MonoBehaviour
             return;
         if (other.CompareTag("FootballPlayer")) 
         {
-            Debug.Log("Collision Occured");
             locked = true;
             distance = Vector3.Distance(GlobalVariables.ballPosition, gameObject.transform.position);
             GlobalVariables.score += Mathf.RoundToInt(distance * scoreMultiplier);
+            GlobalVariables.successfulPasses += 1;
             // Play catch sound
             AudioSource.PlayClipAtPoint(catchClip, other.transform.position);
             // Fade stadium sound
@@ -48,9 +48,8 @@ public class BallCollisions : MonoBehaviour
         }
         else if (other.CompareTag("Opponent"))
         {
-            Debug.Log("Collision Occured");
             locked = true;
-            GlobalVariables.downs += 1;
+            GlobalVariables.downs = 5;
             AudioSource.PlayClipAtPoint(catchClip, other.transform.position);
             GameFlowController.Instance.EndPlay();
         }
@@ -60,8 +59,7 @@ public class BallCollisions : MonoBehaviour
             if (other.CompareTag("Rusher"))
             {
                 locked = true;
-                Debug.Log("Rusher");
-                GlobalVariables.downs += 1;
+                GlobalVariables.downs = 5;
                 AudioSource.PlayClipAtPoint(catchClip, other.transform.position);
                 GameFlowController.Instance.EndPlay();
             }

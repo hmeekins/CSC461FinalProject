@@ -26,7 +26,6 @@ public class TeammateMovement : MonoBehaviour
         {
             Run();
             checkProgress();
-            
         }
     }
     /// <summary>
@@ -41,7 +40,7 @@ public class TeammateMovement : MonoBehaviour
 
             gameObject.transform.position = Vector3.MoveTowards(pos, targetPosition, speed * Time.deltaTime);
         }
-        if (atTarget.atTargetZ)
+        if (atTargetZ)
         {
             pos = gameObject.transform.position;
             targetPosition = new Vector3(atTarget.targetX, pos.y, pos.z);
@@ -54,6 +53,9 @@ public class TeammateMovement : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// Checks if player is at target position, destroyes them if route is
+    /// </summary>
     private void checkProgress()
     {
         if (playerPosition == "Left")

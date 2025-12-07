@@ -401,9 +401,9 @@ MonoBehaviour:
   handTransform: {fileID: 0}
   controller: 2
   triggerAxis: 1
-  releaseThreshold: 0.2
+  releaseThreshold: 0.1
   velocitySamples: 5
-  velocityMultiplier: 2.3
+  velocityMultiplier: 2.4
   offset: {x: 0, y: 90, z: 20}
 --- !u!82 &4653634130064194354
 AudioSource:

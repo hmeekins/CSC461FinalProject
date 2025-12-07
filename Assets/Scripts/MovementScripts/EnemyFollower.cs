@@ -1,5 +1,6 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-
 public class EnemyFollower : MonoBehaviour
 {
     public Transform target;
@@ -12,6 +13,7 @@ public class EnemyFollower : MonoBehaviour
 
     private float currentSpeed;
     private float timer;
+    private bool runStart = true;
 
     void Start()
     {
@@ -20,6 +22,26 @@ public class EnemyFollower : MonoBehaviour
     }
 
     void Update()
+    {
+        if (GameFlowController.Instance.State == GameState.PlayRunning)
+        {
+            if (runStart)
+                StartCoroutine(waitToMove());
+            else
+                Run();
+        }
+    }
+
+     private IEnumerator waitToMove()
+    {
+        yield return new WaitForSeconds(1.2f);
+        runStart = false;
+    }
+
+    /// <summary>
+    /// Runs toward target, slows down as time increases.
+    /// </summary>
+    void Run()
     {
         timer += Time.deltaTime;
 
