@@ -98,10 +98,7 @@ public class BallBehaviour : MonoBehaviour
         rb.isKinematic = false;
         rb.useGravity = true;
 
-        if (trackingSpace != null)
-            rb.velocity = trackingSpace.TransformDirection(throwVel);
-        else
-            rb.velocity = throwVel;
+        rb.velocity = trackingSpace.TransformDirection(throwVel);
 
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
     }
@@ -109,5 +106,12 @@ public class BallBehaviour : MonoBehaviour
     public bool IsHoldingBall()
     {
         return currentObject != null;
+    }
+
+    public Vector3 GetPredictedVelocity()
+    {
+        Vector3 throwVel = GetAveragedVelocity() * velocityMultiplier;
+
+        return trackingSpace.TransformDirection(throwVel);
     }
 }
