@@ -105,4 +105,9 @@ public class BallBehaviour : MonoBehaviour
 
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
     }
+
+    public bool IsHoldingBall()
+    {
+        return currentObject != null;
+    }
 }
