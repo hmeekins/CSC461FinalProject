@@ -14,10 +14,6 @@ public class BallPath : MonoBehaviour
     public float pumpHoldTime = 0.3f;
     public float decayPerSecond = 10f;
 
-    public LayerMask collisionMask;
-    public float sphereRadius = 0.05f;
-    public Transform endMarker;
-
     private LineRenderer path;
     private BallBehaviour ball;
     private Transform handTransform;
@@ -27,6 +23,10 @@ public class BallPath : MonoBehaviour
     private float smoothedSpeed;
     private float latchedSpeed;
     private float latchedTime;
+    private bool isPreviewing;
+    private bool wasHoldingBall;
+    private Vector3 thrownPosition;
+    private Vector3 thrownVelocity;
 
     void Start()
     {
@@ -38,33 +38,36 @@ public class BallPath : MonoBehaviour
 
     void Update()
     {
-        if (path == null || ball == null || handTransform == null)
-            return;
+        bool isHoldingBall = ball.IsHoldingBall();
 
-        if (!ball.IsHoldingBall())
+        if (wasHoldingBall && !isHoldingBall)
         {
-            path.enabled = false;
-            latchedSpeed = 0f;
-            smoothedSpeed = 0f;
-            smoothedDir = Vector3.zero;
-            if (endMarker != null) endMarker.gameObject.SetActive(false);
+            thrownPosition = transform.position;
+            thrownVelocity = ball.GetPredictedVelocity();
+        }
+
+        wasHoldingBall = isHoldingBall;
+
+        if (OVRInput.GetDown(OVRInput.Button.Two, ball.controller))
+            isPreviewing = !isPreviewing;
+
+        if (!isHoldingBall)
+        {
+            path.enabled = true;
+            DrawThrownPath();
             return;
         }
 
-        bool previewing = OVRInput.Get(OVRInput.Button.One, ball.controller);
-
-        if (!previewing)
+        if (isPreviewing)
         {
             path.enabled = false;
             latchedSpeed = 0f;
             smoothedSpeed = 0f;
             smoothedDir = Vector3.zero;
-            if (endMarker != null) endMarker.gameObject.SetActive(false);
             return;
         }
 
         path.enabled = true;
-        if (endMarker != null) endMarker.gameObject.SetActive(true);
         DrawPath();
     }
 
@@ -107,7 +110,6 @@ public class BallPath : MonoBehaviour
         int count = points + 1;
         path.positionCount = count;
 
-        Vector3 lastPoint = p;
         path.SetPosition(0, p);
 
         for (int i = 0; i < points; i++)
@@ -115,25 +117,32 @@ public class BallPath : MonoBehaviour
             Vector3 nextP = p + v * timeStep + 0.5f * Physics.gravity * timeStep * timeStep;
             Vector3 nextV = v + Physics.gravity * timeStep;
 
-            Vector3 seg = nextP - p;
-            float dist = seg.magnitude;
-
-            if (dist > 0.0001f && Physics.SphereCast(p, sphereRadius, seg.normalized, out RaycastHit hit, dist, collisionMask, QueryTriggerInteraction.Ignore))
-            {
-                path.positionCount = i + 2;
-                path.SetPosition(i + 1, hit.point);
-                lastPoint = hit.point;
-                if (endMarker != null) endMarker.position = lastPoint;
-                return;
-            }
-
             path.SetPosition(i + 1, nextP);
-            lastPoint = nextP;
 
             p = nextP;
             v = nextV;
         }
+    }
 
-        if (endMarker != null) endMarker.position = lastPoint;
+    void DrawThrownPath()
+    {
+        Vector3 p = thrownPosition;
+        Vector3 v = thrownVelocity;
+
+        int count = points + 1;
+        path.positionCount = count;
+
+        path.SetPosition(0, p);
+
+        for (int i = 0; i < points; i++)
+        {
+            Vector3 nextP = p + v * timeStep + 0.5f * Physics.gravity * timeStep * timeStep;
+            Vector3 nextV = v + Physics.gravity * timeStep;
+
+            path.SetPosition(i + 1, nextP);
+
+            p = nextP;
+            v = nextV;
+        }
     }
 }
