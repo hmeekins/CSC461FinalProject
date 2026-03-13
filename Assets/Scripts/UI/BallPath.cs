@@ -14,6 +14,12 @@ public class BallPath : MonoBehaviour
     public float pumpHoldTime = 0.3f;
     public float decayPerSecond = 10f;
 
+    public Gradient throwColorGradient;
+    public float maxColorSpeed = 20f;
+
+    public float minWidth = 0.01f;
+    public float maxWidth = 0.05f;
+
     private LineRenderer path;
     private BallBehaviour ball;
     private Transform handTransform;
@@ -71,6 +77,18 @@ public class BallPath : MonoBehaviour
         DrawPath();
     }
 
+    void UpdatePathVisuals(float speed)
+    {
+        float t = Mathf.InverseLerp(minPreviewSpeed, maxColorSpeed, speed);
+        Color c = throwColorGradient.Evaluate(t);
+        float w = Mathf.Lerp(minWidth, maxWidth, t);
+
+        path.startColor = c;
+        path.endColor = c;
+        path.startWidth = w;
+        path.endWidth = w;
+    }
+
     void DrawPath()
     {
         Vector3 position = transform.position;
@@ -103,6 +121,7 @@ public class BallPath : MonoBehaviour
             smoothedDir = Vector3.Slerp(smoothedDir, aimDir, aDir);
 
         smoothedSpeed = Mathf.Lerp(smoothedSpeed, latchedSpeed, aSpeed);
+        UpdatePathVisuals(smoothedSpeed);
 
         Vector3 p = position;
         Vector3 v = smoothedDir * smoothedSpeed;
@@ -128,6 +147,7 @@ public class BallPath : MonoBehaviour
     {
         Vector3 p = thrownPosition;
         Vector3 v = thrownVelocity;
+        UpdatePathVisuals(v.magnitude);
 
         int count = points + 1;
         path.positionCount = count;
