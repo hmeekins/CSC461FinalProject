@@ -10,18 +10,19 @@ public class BallCollisions : MonoBehaviour
     private bool locked = false;
     private float distance;
 
-
     void Start()
     {
         GameObject stadiumObject = GameObject.FindGameObjectWithTag("Stadium");
-        
-        audioFade = stadiumObject.GetComponentInParent<AudioFade>();
+
+        if (stadiumObject != null)
+            audioFade = stadiumObject.GetComponentInParent<AudioFade>();
     }
 
     private void OnCollisionEnter(Collision other)
     {
         if (locked)
             return;
+
         if (other.gameObject.CompareTag("Stadium"))
         {
             locked = true;
@@ -34,35 +35,45 @@ public class BallCollisions : MonoBehaviour
     {
         if (locked)
             return;
-        if (other.CompareTag("FootballPlayer")) 
+
+        if (other.CompareTag("FootballPlayer"))
         {
+            ShowFootball(other);
+
             locked = true;
-            distance = Vector3.Distance(GlobalVariables.ballPosition, gameObject.transform.position);
+            distance = Vector3.Distance(GlobalVariables.ballPosition, transform.position);
             GlobalVariables.score += Mathf.RoundToInt(distance * scoreMultiplier);
             GlobalVariables.successfulPasses += 1;
-            // Play catch sound
             AudioSource.PlayClipAtPoint(catchClip, other.transform.position);
-            // Fade stadium sound
-            audioFade.FadeOut(4f);
+
+            if (audioFade != null)
+                audioFade.FadeOut(4f);
+
             GameFlowController.Instance.EndPlay();
         }
         else if (other.CompareTag("Opponent"))
         {
+            ShowFootball(other);
+
             locked = true;
             GlobalVariables.downs = 5;
             AudioSource.PlayClipAtPoint(catchClip, other.transform.position);
             GameFlowController.Instance.EndPlay();
         }
-        //Only registers collision if ball is thrown to prevent conflicts when rusher collides with player
-        else if (GlobalVariables.ballThrown)
+        else if (GlobalVariables.ballThrown && other.CompareTag("Rusher"))
         {
-            if (other.CompareTag("Rusher"))
-            {
-                locked = true;
-                GlobalVariables.downs = 5;
-                AudioSource.PlayClipAtPoint(catchClip, other.transform.position);
-                GameFlowController.Instance.EndPlay();
-            }
+            ShowFootball(other);
+
+            locked = true;
+            GlobalVariables.downs = 5;
+            AudioSource.PlayClipAtPoint(catchClip, other.transform.position);
+            GameFlowController.Instance.EndPlay();
         }
+    }
+
+    private void ShowFootball(Collider other)
+    {
+        Transform football = other.transform.Find("Visuals/Football");
+        football.gameObject.SetActive(true);
     }
 }

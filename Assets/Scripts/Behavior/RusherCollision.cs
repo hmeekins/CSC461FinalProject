@@ -27,12 +27,14 @@ public class RusherCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (hasTriggered) return;
+        if (!GlobalVariables.ballThrown) {
+            if (hasTriggered) return;
 
-        if (other.CompareTag("Rusher"))
-        {
-            hasTriggered = true;
-            StartCoroutine(TackleSequence(other.transform.position));
+            if (other.CompareTag("Rusher"))
+            {
+                hasTriggered = true;
+                StartCoroutine(TackleSequence(other.transform.position));
+            }
         }
     }
 

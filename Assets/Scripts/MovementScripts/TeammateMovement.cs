@@ -7,6 +7,7 @@ public class TeammateMovement : MonoBehaviour
     public string playerPosition;
 
     public float speed;
+    public GameObject football;
 
     private Vector3 targetPosition;
     private AtTarget atTarget;
