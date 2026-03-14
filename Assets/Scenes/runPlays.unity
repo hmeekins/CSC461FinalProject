@@ -2541,6 +2541,7 @@ MonoBehaviour:
   cameraRig: {fileID: 1357414559}
   resetPoint: {fileID: 1848626827}
   locomotor: {fileID: 856641862}
+  fade: {fileID: 0}
 --- !u!114 &1357414561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10871,6 +10872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8269406712ff5dc479591f163e2dda35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetPlayerOnPlayEnd: {fileID: 1357414560}
 --- !u!82 &6629245050171995750
 AudioSource:
   m_ObjectHideFlags: 0
