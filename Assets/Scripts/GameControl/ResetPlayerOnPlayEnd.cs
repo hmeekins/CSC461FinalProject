@@ -8,7 +8,7 @@ public class ResetPlayerOnPlayEnd : MonoBehaviour
     public Transform resetPoint;
     public GameObject locomotor;
 
-    private OVRScreenFade fade;
+    public OVRScreenFade fade;
 
     private bool hasEverRun;
     private bool isResetting;

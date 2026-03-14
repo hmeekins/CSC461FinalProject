@@ -18,6 +18,8 @@ public class GameFlowController : MonoBehaviour
 
     public bool IsResolvingPlay { get; private set; } = false;
 
+    [SerializeField] private ResetPlayerOnPlayEnd resetPlayerOnPlayEnd;
+
     private void Awake()
     {
         Instance = this;
@@ -53,10 +55,8 @@ public class GameFlowController : MonoBehaviour
     public void EndPlay()
     {
         if (State != GameState.PlayRunning) return;
-
-        State = GameState.Resetting;
-
-        CleanupEverything();
+        DestroyByTag("Ball");
+        StartCoroutine(FinishSequence());
     }
 
     public void OnPlayerTackled()
@@ -86,9 +86,17 @@ public class GameFlowController : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(0.4f);
 
-        CleanupEverything();
+        CleanupPlayers();
         IsResolvingPlay = false;
 
+    }
+
+    private IEnumerator FinishSequence()
+    {
+        yield return new WaitForSecondsRealtime(2f);
+        State = GameState.Resetting;
+        yield return new WaitForSecondsRealtime(resetPlayerOnPlayEnd.fade.fadeTime);
+        CleanupPlayers();
     }
 
     private void SetHighScore()
@@ -98,9 +106,8 @@ public class GameFlowController : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    private void CleanupEverything()
+    private void CleanupPlayers()
     {
-        DestroyByTag("Ball");
         DestroyByTag("FootballPlayer");
         DestroyByTag("Opponent");
         DestroyByTag("Rusher");
