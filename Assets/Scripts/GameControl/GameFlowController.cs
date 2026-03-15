@@ -53,20 +53,33 @@ public class GameFlowController : MonoBehaviour
 
     public void EndPlay()
     {
+        if (GlobalVariables.downs > 4)
+        {
+            DestroyByTag("Ball");
+            return;
+        }
+
         if (State != GameState.PlayRunning) return;
         DestroyByTag("Ball");
         StartCoroutine(FinishSequence());
     }
 
+    public void OnIncomplete()
+    {
+        if (GlobalVariables.downs > 4)
+            return;
+        
+        StartCoroutine(FinishSequence());
+    }
+
     public void OnPlayerTackled()
     {
-        if (State != GameState.PlayRunning || IsResolvingPlay)
+        if (State != GameState.PlayRunning || IsResolvingPlay || GlobalVariables.downs > 4)
             return;
 
         IsResolvingPlay = true;
-        State = GameState.Resetting;
 
-        StartCoroutine(TackleSequence());
+        StartCoroutine(FinishSequence());
     }
 
     public void FinishReset()
@@ -84,21 +97,12 @@ public class GameFlowController : MonoBehaviour
         State = GameState.GameOver;
     }
 
-    private IEnumerator TackleSequence()
-    {
-        yield return new WaitForSecondsRealtime(0.4f);
-
-        CleanupPlayers();
-        IsResolvingPlay = false;
-
-    }
-
     private IEnumerator FinishSequence()
     {
         yield return new WaitForSecondsRealtime(2f);
         State = GameState.Resetting;
         yield return new WaitForSecondsRealtime(resetPlayerOnPlayEnd.fade.fadeTime);
-        CleanupPlayers();
+        CleanupField();
     }
 
     private void SetHighScore()
@@ -108,8 +112,9 @@ public class GameFlowController : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    private void CleanupPlayers()
+    private void CleanupField()
     {
+        DestroyByTag("Ball");
         DestroyByTag("FootballPlayer");
         DestroyByTag("Opponent");
         DestroyByTag("Rusher");

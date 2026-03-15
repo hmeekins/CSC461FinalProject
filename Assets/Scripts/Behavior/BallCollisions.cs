@@ -27,7 +27,7 @@ public class BallCollisions : MonoBehaviour
             locked = true;
             GlobalVariables.miss = true;
             GlobalVariables.downs += 1;
-            GameFlowController.Instance.EndPlay();
+            GameFlowController.Instance.OnIncomplete();
         }
     }
 
