@@ -15,6 +15,7 @@ public class TeammateMovement : MonoBehaviour
     private Vector3 pos;
 
     private bool atTargetZ;
+    private float ENDZONE = -94f;
 
 
     void Start()
@@ -23,10 +24,10 @@ public class TeammateMovement : MonoBehaviour
     }
     private void Update()
     {
-        if (GameFlowController.Instance.State == GameState.PlayRunning)
-        {
-            Run();
+        if (GameFlowController.Instance.State == GameState.PlayRunning || GameFlowController.Instance.State == GameState.Resetting)
+        {   
             checkProgress();
+            Run();
         }
     }
     /// <summary>
@@ -34,23 +35,36 @@ public class TeammateMovement : MonoBehaviour
     /// </summary>
     private void Run()
     {
-        if (!atTargetZ)
+        if (GlobalVariables.teammateCaught)
         {
             pos = gameObject.transform.position;
-            targetPosition = new Vector3(pos.x, pos.y, atTarget.targetZ);
-
+            targetPosition = new Vector3(pos.x, pos.y, ENDZONE);
             gameObject.transform.position = Vector3.MoveTowards(pos, targetPosition, speed * Time.deltaTime);
-        }
-        if (atTargetZ)
-        {
-            pos = gameObject.transform.position;
-            targetPosition = new Vector3(atTarget.targetX, pos.y, pos.z);
 
             Vector3 moveDir = targetPosition - pos;
+            gameObject.transform.rotation = Quaternion.LookRotation(moveDir);
+        }
+        else if (!GlobalVariables.miss)
+        {
+            if (!atTargetZ)
+            {
+                pos = gameObject.transform.position;
+                targetPosition = new Vector3(pos.x, pos.y, atTarget.targetZ);
+
+                gameObject.transform.position = Vector3.MoveTowards(pos, targetPosition, speed * Time.deltaTime);
+            }
+            if (atTargetZ)
+            {
+                pos = gameObject.transform.position;
+                targetPosition = new Vector3(atTarget.targetX, pos.y, pos.z);
+
+                Vector3 moveDir = targetPosition - pos;
+
             if (moveDir != Vector3.zero)
                 gameObject.transform.rotation = Quaternion.LookRotation(moveDir);
 
-           gameObject.transform.position = Vector3.MoveTowards(pos, targetPosition, speed * Time.deltaTime);
+                gameObject.transform.position = Vector3.MoveTowards(pos, targetPosition, speed * Time.deltaTime);
+            }
         }
     }
     

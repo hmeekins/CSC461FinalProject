@@ -14,8 +14,7 @@ public class BallCollisions : MonoBehaviour
     {
         GameObject stadiumObject = GameObject.FindGameObjectWithTag("Stadium");
 
-        if (stadiumObject != null)
-            audioFade = stadiumObject.GetComponentInParent<AudioFade>();
+        audioFade = stadiumObject.GetComponentInParent<AudioFade>();
     }
 
     private void OnCollisionEnter(Collision other)
@@ -26,6 +25,7 @@ public class BallCollisions : MonoBehaviour
         if (other.gameObject.CompareTag("Stadium"))
         {
             locked = true;
+            GlobalVariables.miss = true;
             GlobalVariables.downs += 1;
             GameFlowController.Instance.EndPlay();
         }
@@ -41,6 +41,7 @@ public class BallCollisions : MonoBehaviour
             ShowFootball(other);
 
             locked = true;
+            GlobalVariables.teammateCaught = true;
             distance = Vector3.Distance(GlobalVariables.ballPosition, transform.position);
             GlobalVariables.score += Mathf.RoundToInt(distance * scoreMultiplier);
             GlobalVariables.successfulPasses += 1;
@@ -56,6 +57,7 @@ public class BallCollisions : MonoBehaviour
             ShowFootball(other);
 
             locked = true;
+            GlobalVariables.miss = true;
             GlobalVariables.downs = 5;
             AudioSource.PlayClipAtPoint(catchClip, other.transform.position);
             GameFlowController.Instance.EndPlay();
@@ -65,6 +67,7 @@ public class BallCollisions : MonoBehaviour
             ShowFootball(other);
 
             locked = true;
+            GlobalVariables.miss = true;
             GlobalVariables.downs = 5;
             AudioSource.PlayClipAtPoint(catchClip, other.transform.position);
             GameFlowController.Instance.EndPlay();

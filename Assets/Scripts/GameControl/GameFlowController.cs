@@ -42,7 +42,6 @@ public class GameFlowController : MonoBehaviour
     public void EnterWaitingForSnap()
     {
         State = GameState.WaitingForSnap;
-        GlobalVariables.ballThrown = false;
     }
 
     public void StartPlay()
@@ -72,6 +71,9 @@ public class GameFlowController : MonoBehaviour
 
     public void FinishReset()
     {
+        GlobalVariables.ballThrown = false;
+        GlobalVariables.teammateCaught = false;
+        GlobalVariables.miss = false;
         EnterWaitingForSnap();
     }
 

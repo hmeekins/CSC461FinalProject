@@ -18,4 +18,7 @@ public static class GlobalVariables
     public static float leftTargetX = 0;
 
     public static float rightTargetX = 0;
+
+    public static bool teammateCaught = false;
+    public static bool miss = false;
 }
