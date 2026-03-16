@@ -43,6 +43,9 @@ public class BallCollisions : MonoBehaviour
 
             locked = true;
             GlobalVariables.teammateCaught = true;
+
+            ParticleSystem particles = other.GetComponent<ParticleSystem>();
+            particles.Play();
             distance = Vector3.Distance(GlobalVariables.ballPosition, transform.position);
             GlobalVariables.score += Mathf.RoundToInt(distance * scoreMultiplier);
             GlobalVariables.successfulPasses += 1;
