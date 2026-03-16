@@ -19,10 +19,13 @@ public class RusherCollision : MonoBehaviour
 
     private Vector3 originalShakePos;
     private bool hasTriggered = false;
+    private AudioFade audioFade;
 
     private void Start()
     {
         originalShakePos = trackingSpace.localPosition;
+        GameObject stadiumObject = GameObject.FindGameObjectWithTag("Stadium");
+        audioFade = stadiumObject.GetComponentInParent<AudioFade>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -32,6 +35,7 @@ public class RusherCollision : MonoBehaviour
 
             if (other.CompareTag("Rusher"))
             {
+                audioFade.FadeOut(1, 4f);
                 hasTriggered = true;
                 StartCoroutine(TackleSequence(other.transform.position));
             }
@@ -57,7 +61,11 @@ public class RusherCollision : MonoBehaviour
         OVRInput.SetControllerVibration(0f, 0f, OVRInput.Controller.RTouch);
         OVRInput.SetControllerVibration(0f, 0f, OVRInput.Controller.LTouch);
 
-        GameFlowController.Instance.OnPlayerTackled();
+        if (GlobalVariables.miss && !GlobalVariables.teammateCaught)
+        {
+            GlobalVariables.downs += 1;
+            GameFlowController.Instance.OnPlayerTackled();
+        }
         hasTriggered = false;
     }
 

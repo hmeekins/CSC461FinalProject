@@ -4,29 +4,41 @@ using UnityEngine;
 
 public class AudioFade : MonoBehaviour
 {
-    public AudioSource audioSource;
-    public void FadeOut(float duration)
+    public AudioSource cheer;
+    public AudioSource boo;
+    public void FadeOut(int audioSourceNum, float duration)
     {
-        audioSource.Stop();
-        audioSource.volume = .85f;
+        if (audioSourceNum == 0)
+        {
+            cheer.Stop();
+            cheer.volume = .85f;
 
-        audioSource.Play();
-        StartCoroutine(FadeOutCoroutine(duration));
+            cheer.Play();
+            StartCoroutine(FadeOutCoroutine(cheer, duration));
+        }
+        else
+        {
+            boo.Stop();
+            boo.volume = 1f;
+
+            boo.Play();
+            StartCoroutine(FadeOutCoroutine(boo, duration));
+        }
     }
 
-    IEnumerator FadeOutCoroutine(float duration)
+    IEnumerator FadeOutCoroutine(AudioSource audio, float duration)
     {
-        float startVolume = audioSource.volume;
+        float startVolume = audio.volume;
 
         float time = 0;
         while (time < duration)
         {
-            audioSource.volume = Mathf.Lerp(startVolume, 0, time / duration);
+            audio.volume = Mathf.Lerp(startVolume, 0, time / duration);
             time += Time.deltaTime;
             yield return null;
         }
 
-        audioSource.volume = 0;
-        audioSource.Stop();
+        audio.volume = 0;
+        audio.Stop();
     }
 }

@@ -7,7 +7,7 @@ public class BallCollisions : MonoBehaviour
     public int scoreMultiplier;
 
     private AudioFade audioFade;
-    private bool locked = false;
+    public bool locked = false;
     private float distance;
 
     void Start()
@@ -27,6 +27,7 @@ public class BallCollisions : MonoBehaviour
             locked = true;
             GlobalVariables.miss = true;
             GlobalVariables.downs += 1;
+            audioFade.FadeOut(1, 4f);
             GameFlowController.Instance.OnIncomplete();
         }
     }
@@ -47,8 +48,7 @@ public class BallCollisions : MonoBehaviour
             GlobalVariables.successfulPasses += 1;
             AudioSource.PlayClipAtPoint(catchClip, other.transform.position);
 
-            if (audioFade != null)
-                audioFade.FadeOut(4f);
+            audioFade.FadeOut(0, 4f);
 
             GameFlowController.Instance.EndPlay();
         }
@@ -60,6 +60,7 @@ public class BallCollisions : MonoBehaviour
             GlobalVariables.miss = true;
             GlobalVariables.downs = 5;
             AudioSource.PlayClipAtPoint(catchClip, other.transform.position);
+            audioFade.FadeOut(1, 4f);
             GameFlowController.Instance.EndPlay();
         }
         else if (GlobalVariables.ballThrown && other.CompareTag("Rusher"))
@@ -70,6 +71,7 @@ public class BallCollisions : MonoBehaviour
             GlobalVariables.miss = true;
             GlobalVariables.downs = 5;
             AudioSource.PlayClipAtPoint(catchClip, other.transform.position);
+            audioFade.FadeOut(1, 4f);
             GameFlowController.Instance.EndPlay();
         }
     }
