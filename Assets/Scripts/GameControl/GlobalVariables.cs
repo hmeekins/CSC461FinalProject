@@ -21,4 +21,5 @@ public static class GlobalVariables
 
     public static bool teammateCaught = false;
     public static bool miss = false;
+    public static bool tackled = false;
 }

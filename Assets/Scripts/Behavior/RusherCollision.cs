@@ -18,7 +18,7 @@ public class RusherCollision : MonoBehaviour
     public float knockbackDuration = 0.10f;
 
     private Vector3 originalShakePos;
-    private bool hasTriggered = false;
+    public bool hasTriggered = false;
     private AudioFade audioFade;
 
     private void Start()
@@ -49,9 +49,8 @@ public class RusherCollision : MonoBehaviour
             audioSource.Play();
             AudioSource.PlayClipAtPoint(audioSource.clip, transform.position);
         }
-
-        GlobalVariables.downs += 1;
-
+        GameFlowController.Instance.OnPlayerTackled();
+        GlobalVariables.tackled = true;
         yield return StartCoroutine(ApplyKnockback(hitSourcePos));
         yield return StartCoroutine(ImpactShake());
         
@@ -61,12 +60,7 @@ public class RusherCollision : MonoBehaviour
         OVRInput.SetControllerVibration(0f, 0f, OVRInput.Controller.RTouch);
         OVRInput.SetControllerVibration(0f, 0f, OVRInput.Controller.LTouch);
 
-        if (GlobalVariables.miss && !GlobalVariables.teammateCaught)
-        {
-            GlobalVariables.downs += 1;
-            GameFlowController.Instance.OnPlayerTackled();
-        }
-        hasTriggered = false;
+        GlobalVariables.downs += 1;
     }
 
     private IEnumerator ImpactShake()

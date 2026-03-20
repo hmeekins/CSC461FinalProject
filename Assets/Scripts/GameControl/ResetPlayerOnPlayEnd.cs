@@ -60,9 +60,6 @@ public class ResetPlayerOnPlayEnd : MonoBehaviour
 
     void HandleResetting()
     {
-        if (GameFlowController.Instance.IsResolvingPlay)
-            return;
-
         if (!isResetting)
         {
             isResetting = true;

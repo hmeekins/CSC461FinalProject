@@ -47473,6 +47473,7 @@ MonoBehaviour:
   knockbackStrength: 1.6
   knockbackUpwardBoost: 0.15
   knockbackDuration: 0.1
+  hasTriggered: 0
 --- !u!1 &1895428908
 GameObject:
   m_ObjectHideFlags: 0
@@ -56186,6 +56187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resetPlayerOnPlayEnd: {fileID: 1357414560}
+  rusherCollision: {fileID: 1890685609}
 --- !u!82 &6629245050171995750
 AudioSource:
   m_ObjectHideFlags: 0

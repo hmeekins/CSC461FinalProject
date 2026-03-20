@@ -20,6 +20,8 @@ public class GameFlowController : MonoBehaviour
 
     [SerializeField] private ResetPlayerOnPlayEnd resetPlayerOnPlayEnd;
 
+    [SerializeField] private RusherCollision rusherCollision;
+
     private void Awake()
     {
         Instance = this;
@@ -44,6 +46,8 @@ public class GameFlowController : MonoBehaviour
         GlobalVariables.ballThrown = false;
         GlobalVariables.teammateCaught = false;
         GlobalVariables.miss = false;
+        GlobalVariables.tackled = false;
+        rusherCollision.hasTriggered = false;
         State = GameState.WaitingForSnap;
     }
 
@@ -63,6 +67,7 @@ public class GameFlowController : MonoBehaviour
         }
 
         if (State != GameState.PlayRunning) return;
+        IsResolvingPlay = true;
         DestroyByTag("Ball");
         StartCoroutine(FinishSequence());
     }
@@ -72,6 +77,7 @@ public class GameFlowController : MonoBehaviour
         if (GlobalVariables.downs > 4)
             return;
         
+        IsResolvingPlay = true;
         StartCoroutine(FinishSequence());
     }
 
@@ -81,12 +87,13 @@ public class GameFlowController : MonoBehaviour
             return;
 
         IsResolvingPlay = true;
-
+        DestroyByTag("Ball");
         StartCoroutine(FinishSequence());
     }
 
     public void FinishReset()
     {
+        IsResolvingPlay = false;
         EnterWaitingForSnap();
     }
 

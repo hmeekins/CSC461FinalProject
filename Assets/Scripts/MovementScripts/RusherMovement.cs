@@ -12,6 +12,8 @@ public class RusherMovement : MonoBehaviour
 
     private float currentSpeed;
     private float timer;
+    private RusherCollision rusherCollision;
+    private GameObject player;
 
     void Start()
     {
@@ -21,8 +23,11 @@ public class RusherMovement : MonoBehaviour
 
     void Update()
     {
-        if (GameFlowController.Instance.State == GameState.PlayRunning)
+        if (GameFlowController.Instance.State == GameState.PlayRunning && !GlobalVariables.tackled)
+        {
+            Debug.Log(player);
             Run();
+        }
     }
 
     void Run()
