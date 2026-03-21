@@ -101,6 +101,7 @@ public class GameFlowController : MonoBehaviour
     {
         if (GlobalVariables.score > GlobalVariables.highscore)
             SetHighScore();
+        CleanupField();
         State = GameState.GameOver;
     }
 
