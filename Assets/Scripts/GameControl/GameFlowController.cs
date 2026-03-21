@@ -60,11 +60,10 @@ public class GameFlowController : MonoBehaviour
     {
         if (GlobalVariables.downs > 4)
         {
-            DestroyByTag("Ball");
+            GameFlowController.Instance.EndGame();
             return;
         }
 
-        if (State != GameState.PlayRunning) return;
         IsResolvingPlay = true;
         DestroyByTag("Ball");
         StartCoroutine(FinishSequence());
@@ -73,7 +72,10 @@ public class GameFlowController : MonoBehaviour
     public void OnIncomplete()
     {
         if (GlobalVariables.downs > 4)
+        {
+            GameFlowController.Instance.EndGame();
             return;
+        }
         
         IsResolvingPlay = true;
         StartCoroutine(FinishSequence());
@@ -81,8 +83,11 @@ public class GameFlowController : MonoBehaviour
 
     public void OnPlayerTackled()
     {
-        if (State != GameState.PlayRunning || IsResolvingPlay || GlobalVariables.downs > 4)
+        if (GlobalVariables.downs > 4)
+        {
+            GameFlowController.Instance.EndGame();
             return;
+        }
 
         IsResolvingPlay = true;
         DestroyByTag("Ball");

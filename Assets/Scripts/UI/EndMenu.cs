@@ -18,9 +18,6 @@ public class EndMenu : MonoBehaviour
 
     void Update()
     {
-        if (GlobalVariables.downs > 4)
-            GameFlowController.Instance.EndGame();
-
         if (GameFlowController.Instance.State == GameState.GameOver)
         {
             if (!menuSpawned)

@@ -25,6 +25,7 @@ public class BallCollisions : MonoBehaviour
         if (other.gameObject.CompareTag("Stadium"))
         {
             locked = true;
+            distance = Vector3.Distance(GlobalVariables.ballPosition, transform.position);
 
             GlobalVariables.miss = true;
             GlobalVariables.downs += 1;

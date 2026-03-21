@@ -47,12 +47,6 @@ public static class GameData
         Distances.Add(distance);
     }
 
-    public static void FinalizeRound()
-    {
-        CalculateAccuracy();
-        CalculateAverageDistance();
-        Debug.Log(Variation + " " + NumPasses + " " + CompletedPasses + " " + Accuracy + " " + AverageDistance + " " + RoundDuration);
-    }
 
     private static void CalculateAccuracy()
     {
@@ -81,5 +75,13 @@ public static class GameData
         }
 
         AverageDistance = (float)System.Math.Round(total / Distances.Count, 2);
+    }
+
+    
+    public static void FinalizeRound()
+    {
+        CalculateAccuracy();
+        CalculateAverageDistance();
+        Debug.Log(Variation + " " + NumPasses + " " + CompletedPasses + " " + Accuracy + " " + AverageDistance + " " + RoundDuration);
     }
 }

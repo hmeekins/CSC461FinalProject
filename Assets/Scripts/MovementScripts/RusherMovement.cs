@@ -25,7 +25,6 @@ public class RusherMovement : MonoBehaviour
     {
         if (GameFlowController.Instance.State == GameState.PlayRunning && !GlobalVariables.tackled)
         {
-            Debug.Log(player);
             Run();
         }
     }
