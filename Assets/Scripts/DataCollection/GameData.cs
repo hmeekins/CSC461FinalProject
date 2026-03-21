@@ -82,6 +82,6 @@ public static class GameData
     {
         CalculateAccuracy();
         CalculateAverageDistance();
-        Debug.Log(Variation + " " + NumPasses + " " + CompletedPasses + " " + Accuracy + " " + AverageDistance + " " + RoundDuration);
+        CsvLogger.SaveRoundData();
     }
 }
