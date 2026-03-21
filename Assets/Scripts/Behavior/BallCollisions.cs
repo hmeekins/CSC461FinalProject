@@ -25,9 +25,12 @@ public class BallCollisions : MonoBehaviour
         if (other.gameObject.CompareTag("Stadium"))
         {
             locked = true;
+
             GlobalVariables.miss = true;
             GlobalVariables.downs += 1;
-            audioFade.FadeOut(1, 4f);
+
+            GameData.AddDistance(distance);
+
             GameFlowController.Instance.OnIncomplete();
         }
     }
@@ -40,41 +43,38 @@ public class BallCollisions : MonoBehaviour
         if (other.CompareTag("FootballPlayer"))
         {
             ShowFootball(other);
-
-            locked = true;
-            GlobalVariables.teammateCaught = true;
-
-            ParticleSystem particles = other.GetComponent<ParticleSystem>();
-            particles.Play();
-            distance = Vector3.Distance(GlobalVariables.ballPosition, transform.position);
-            GlobalVariables.score += Mathf.RoundToInt(distance * scoreMultiplier);
-            GlobalVariables.successfulPasses += 1;
             AudioSource.PlayClipAtPoint(catchClip, other.transform.position);
-
             audioFade.FadeOut(0, 4f);
 
+            locked = true;
+            distance = Vector3.Distance(GlobalVariables.ballPosition, transform.position);
+            
+            ParticleSystem particles = other.GetComponent<ParticleSystem>();
+            particles.Play();
+
+            GlobalVariables.teammateCaught = true;
+            GlobalVariables.score += Mathf.RoundToInt(distance * scoreMultiplier);
+            GlobalVariables.successfulPasses += 1;
+
+            GameData.RegisterCompletedPass();
+            GameData.AddDistance(distance);
+            
             GameFlowController.Instance.EndPlay();
         }
-        else if (other.CompareTag("Opponent"))
+        else if (other.CompareTag("Opponent") || (GlobalVariables.ballThrown && other.CompareTag("Rusher")))
         {
             ShowFootball(other);
-
-            locked = true;
-            GlobalVariables.miss = true;
-            GlobalVariables.downs = 5;
             AudioSource.PlayClipAtPoint(catchClip, other.transform.position);
             audioFade.FadeOut(1, 4f);
-            GameFlowController.Instance.EndPlay();
-        }
-        else if (GlobalVariables.ballThrown && other.CompareTag("Rusher"))
-        {
-            ShowFootball(other);
 
             locked = true;
+            distance = Vector3.Distance(GlobalVariables.ballPosition, transform.position);
+
             GlobalVariables.miss = true;
             GlobalVariables.downs = 5;
-            AudioSource.PlayClipAtPoint(catchClip, other.transform.position);
-            audioFade.FadeOut(1, 4f);
+           
+            GameData.AddDistance(distance);
+
             GameFlowController.Instance.EndPlay();
         }
     }

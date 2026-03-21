@@ -29,15 +29,13 @@ public class GameFlowController : MonoBehaviour
 
     private void Start()
     {
-        GlobalVariables.score = 0;
-        GlobalVariables.downs = 1;
-        GlobalVariables.ballThrown = false;
-        GlobalVariables.successfulPasses = 0;
+        GlobalVariables.ResetData();
         BeginGame();
     }
 
     private void BeginGame()
     {
+        GameData.StartNewRound();
         State = GameState.StartGame;
     }
 
@@ -102,6 +100,7 @@ public class GameFlowController : MonoBehaviour
         if (GlobalVariables.score > GlobalVariables.highscore)
             SetHighScore();
         CleanupField();
+        GameData.FinalizeRound();
         State = GameState.GameOver;
     }
 

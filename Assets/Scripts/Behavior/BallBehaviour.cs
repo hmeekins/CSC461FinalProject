@@ -50,6 +50,7 @@ public class BallBehaviour : MonoBehaviour
             hold();
         }
     }
+    
     private void hold()
     {
         currentObject.transform.position = handTransform.position;
@@ -101,6 +102,7 @@ public class BallBehaviour : MonoBehaviour
         rb.velocity = trackingSpace.TransformDirection(throwVel);
 
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+        GameData.RegisterPass();
     }
 
     public bool IsHoldingBall()

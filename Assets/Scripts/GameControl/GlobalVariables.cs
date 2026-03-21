@@ -22,4 +22,15 @@ public static class GlobalVariables
     public static bool teammateCaught = false;
     public static bool miss = false;
     public static bool tackled = false;
+
+    public static void ResetData()
+    {
+        score = 0;
+        downs = 1;
+        ballThrown = false;
+        teammateCaught = false;
+        miss = false;
+        tackled = false;
+        successfulPasses = 0;
+    }
 }
