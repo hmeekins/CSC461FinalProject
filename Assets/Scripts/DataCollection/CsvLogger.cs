@@ -4,26 +4,26 @@ using UnityEngine;
 
 public static class CsvLogger
 {
-    private static string FilePath
-    {
-        get
-        {
-            return Path.Combine(Application.dataPath, "game_data.csv");
-        }
-    }
-
     public static void SaveRoundData()
     {
-        bool fileExists = File.Exists(FilePath);
+        string directory = Path.Combine(Application.dataPath, "csv");
+        if (!Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+
+        string filePath = Path.Combine(directory, "game_data.csv");
+        bool fileExists = File.Exists(filePath);
         StringBuilder sb = new StringBuilder();
 
         if (!fileExists)
         {
-            sb.AppendLine("Date,Variation,NumPasses,CompletedPasses,Accuracy,RoundDuration,AverageDistance");
+            sb.AppendLine("Date,SessionNum,Variation,NumPasses,CompletedPasses,Accuracy,RoundDuration,AverageDistance");
         }
 
         sb.AppendLine(string.Join(",",
-            System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+            System.DateTime.Now.ToString("yyyy-MM-dd"),
+            GameData.SessionNumber,
             GameData.Variation,
             GameData.NumPasses,
             GameData.CompletedPasses,
@@ -32,7 +32,59 @@ public static class CsvLogger
             GameData.AverageDistance
         ));
 
-        File.AppendAllText(FilePath, sb.ToString());
-        Debug.Log("CSV saved to: " + FilePath);
+        File.AppendAllText(filePath, sb.ToString());
+        Debug.Log("CSV saved to: " + filePath);
     }
+
+    public static void SaveMovementData()
+    {
+        string directory = Path.Combine(Application.dataPath, "csv");
+        if (!Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+
+        string filePath = Path.Combine(directory, $"movementData_{GameData.SessionNumber}.csv");
+    
+        StringBuilder sb = new StringBuilder();
+
+        sb.AppendLine("SessionNumber,PlayNum,Timestamp,HeadPosX,HeadPosY,HeadPosZ,HeadRotX,HeadRotY,HeadRotZ,HeadRotW,LeftHandPosX,LeftHandPosY,LeftHandPosZ,LeftHandRotX,LeftHandRotY,LeftHandRotZ,LeftHandRotW,RightHandPosX,RightHandPosY,RightHandPosZ,RightHandRotX,RightHandRotY,RightHandRotZ,RightHandRotW");
+
+        foreach (MovementSample sample in GameData.MovementSamples)
+        {
+            sb.AppendLine(string.Join(",",
+                GameData.SessionNumber,
+                sample.PlayNum,
+                sample.Timestamp,
+
+                sample.HeadPosition.x,
+                sample.HeadPosition.y,
+                sample.HeadPosition.z,
+                sample.HeadRotation.x,
+                sample.HeadRotation.y,
+                sample.HeadRotation.z,
+                sample.HeadRotation.w,
+
+                sample.LeftHandPosition.x,
+                sample.LeftHandPosition.y,
+                sample.LeftHandPosition.z,
+                sample.LeftHandRotation.x,
+                sample.LeftHandRotation.y,
+                sample.LeftHandRotation.z,
+                sample.LeftHandRotation.w,
+
+                sample.RightHandPosition.x,
+                sample.RightHandPosition.y,
+                sample.RightHandPosition.z,
+                sample.RightHandRotation.x,
+                sample.RightHandRotation.y,
+                sample.RightHandRotation.z,
+                sample.RightHandRotation.w
+            ));
+    }
+
+    File.WriteAllText(filePath, sb.ToString());
+    Debug.Log("Movement CSV saved to: " + filePath);
+}
+    
 }
