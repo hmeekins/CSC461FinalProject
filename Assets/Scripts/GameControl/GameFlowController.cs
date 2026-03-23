@@ -10,10 +10,22 @@ public enum GameState
     GameOver
 }
 
+public enum GameVariation
+{
+    Variation1 = 1,
+    Variation2 = 2,
+    Variation3 = 3,
+    Variation4 = 4,
+    Variation5 = 5,
+    Variation6 = 6
+}
+
+
 public class GameFlowController : MonoBehaviour
 {
+    
     public static GameFlowController Instance;
-
+    public GameVariation Variation;
     public GameState State { get; private set; }
 
     public bool IsResolvingPlay { get; private set; } = false;

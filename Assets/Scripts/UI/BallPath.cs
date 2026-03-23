@@ -54,27 +54,20 @@ public class BallPath : MonoBehaviour
 
         wasHoldingBall = isHoldingBall;
 
-        if (OVRInput.GetDown(OVRInput.Button.Two, ball.controller))
-            isPreviewing = !isPreviewing;
-
-        if (!isHoldingBall)
+        if (GameFlowController.Instance.Variation == GameVariation.Variation4 ||
+        GameFlowController.Instance.Variation == GameVariation.Variation5 ||
+        GameFlowController.Instance.Variation == GameVariation.Variation6)
         {
+            if (!isHoldingBall)
+            {
+                path.enabled = true;
+                DrawThrownPath();
+                return;
+            }
+
             path.enabled = true;
-            DrawThrownPath();
-            return;
+            DrawPath();
         }
-
-        if (isPreviewing)
-        {
-            path.enabled = false;
-            latchedSpeed = 0f;
-            smoothedSpeed = 0f;
-            smoothedDir = Vector3.zero;
-            return;
-        }
-
-        path.enabled = true;
-        DrawPath();
     }
 
     void UpdatePathVisuals(float speed)
