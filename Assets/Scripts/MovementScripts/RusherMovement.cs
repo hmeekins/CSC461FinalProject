@@ -19,6 +19,23 @@ public class RusherMovement : MonoBehaviour
     {
         timer = 0f;
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        if (GameFlowController.Instance.Variation == GameVariation.Variation1 ||
+        GameFlowController.Instance.Variation == GameVariation.Variation4)
+        {
+            startSpeed = 0;
+            maxSpeed = 0;
+        }
+        else if (GameFlowController.Instance.Variation == GameVariation.Variation2 ||
+        GameFlowController.Instance.Variation == GameVariation.Variation5)
+        {
+            startSpeed = 3;
+            maxSpeed = 9;
+        }
+        else
+        {
+            startSpeed = 5;
+            maxSpeed = 11;
+        }
     }
 
     void Update()
