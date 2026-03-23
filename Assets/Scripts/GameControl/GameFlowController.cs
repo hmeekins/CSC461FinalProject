@@ -12,12 +12,17 @@ public enum GameState
 
 public enum GameVariation
 {
-    Variation1 = 1,
-    Variation2 = 2,
-    Variation3 = 3,
-    Variation4 = 4,
-    Variation5 = 5,
-    Variation6 = 6
+    Variation1 = 1, //No Aim Assist and Stationary Rusher
+    
+    Variation2 = 2, //No Aim Assist and Regular Rusher
+    
+    Variation3 = 3, //No Aim Assist and Fast Rusher
+
+    Variation4 = 4, //Aim Assist and Stationary Rusher
+    
+    Variation5 = 5, //Aim Assist and Regular Rusher
+    
+    Variation6 = 6 //Aim Assist and Fast Rusher
 }
 
 

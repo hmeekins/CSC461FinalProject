@@ -16,7 +16,7 @@ public static class GameData
     public static void StartNewRound()
     {
         SessionNumber = SessionManager.GetSessionNumber();
-        Variation = 0;
+        Variation = (int)GameFlowController.Instance.Variation;
         NumPasses = 0;
         CompletedPasses = 0;
         Accuracy = 0f;
@@ -24,11 +24,6 @@ public static class GameData
         AverageDistance = 0f;
         Distances.Clear();
         MovementSamples.Clear();
-    }
-
-    public static void SetVariation(int variation)
-    {
-        Variation = variation;
     }
 
     public static void RegisterPass()
