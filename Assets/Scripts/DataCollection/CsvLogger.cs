@@ -18,12 +18,13 @@ public static class CsvLogger
 
         if (!fileExists)
         {
-            sb.AppendLine("Date,SessionNum,Variation,NumPasses,CompletedPasses,Accuracy,RoundDuration,AverageDistance");
+            sb.AppendLine("Date,SessionNum,MovementFile,Variation,NumPasses,CompletedPasses,Accuracy,RoundDuration,AverageDistance");
         }
-
+        string movementFile = $"movementData_{GameData.SessionNumber}.csv";
         sb.AppendLine(string.Join(",",
             System.DateTime.Now.ToString("yyyy-MM-dd"),
             GameData.SessionNumber,
+            movementFile,
             GameData.Variation,
             GameData.NumPasses,
             GameData.CompletedPasses,
