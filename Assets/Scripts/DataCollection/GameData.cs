@@ -3,7 +3,6 @@ using UnityEngine;
 
 public static class GameData
 {
-    public static int SessionNumber { get; private set; }
     public static int Variation { get; private set; } = 0;
     public static int NumPasses { get; private set; } = 0;
     public static int CompletedPasses { get; private set; } = 0;
@@ -15,7 +14,6 @@ public static class GameData
 
     public static void StartNewRound()
     {
-        SessionNumber = SessionManager.GetSessionNumber();
         Variation = (int)GameFlowController.Instance.Variation;
         NumPasses = 0;
         CompletedPasses = 0;
@@ -86,9 +84,7 @@ public static class GameData
     {
         CalculateAccuracy();
         CalculateAverageDistance();
-        CsvLogger.SaveRoundData();
-        CsvLogger.SaveMovementData();
-        SessionNumber += 1;
-        SessionManager.SetSessionNumber(SessionNumber);
+        string movementFile = CsvLogger.SaveMovementData();
+        CsvLogger.SaveRoundData(movementFile);
     }
 }
