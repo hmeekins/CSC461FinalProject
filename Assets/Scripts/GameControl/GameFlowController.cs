@@ -32,9 +32,9 @@ public class GameFlowController : MonoBehaviour
     public static GameFlowController Instance;
     public GameVariation Variation;
     public GameState State { get; private set; }
-
+    public string UserId;
     public bool IsResolvingPlay { get; private set; } = false;
-
+    
     [SerializeField] private ResetPlayerOnPlayEnd resetPlayerOnPlayEnd;
 
     [SerializeField] private RusherCollision rusherCollision;

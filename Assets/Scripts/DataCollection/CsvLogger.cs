@@ -12,7 +12,7 @@ public static class CsvLogger
             Directory.CreateDirectory(directory);
         }
 
-        string filePath = Path.Combine(directory, "game_data.csv");
+        string filePath = Path.Combine(directory, $"game_data{GameFlowController.Instance.UserId}.csv");
         bool fileExists = File.Exists(filePath);
         StringBuilder sb = new StringBuilder();
 
@@ -20,7 +20,7 @@ public static class CsvLogger
         {
             sb.AppendLine("Date,SessionNum,MovementFile,Variation,NumPasses,CompletedPasses,Accuracy,RoundDuration,AverageDistance");
         }
-        string movementFile = $"movementData_{GameData.SessionNumber}.csv";
+        string movementFile = $"movementData_{GameFlowController.Instance.UserId}{GameData.SessionNumber}.csv";
         sb.AppendLine(string.Join(",",
             System.DateTime.Now.ToString("yyyy-MM-dd"),
             GameData.SessionNumber,
@@ -45,7 +45,7 @@ public static class CsvLogger
             Directory.CreateDirectory(directory);
         }
 
-        string filePath = Path.Combine(directory, $"movementData_{GameData.SessionNumber}.csv");
+        string filePath = Path.Combine(directory, $"movementData_{GameFlowController.Instance.UserId}{GameData.SessionNumber}.csv");
     
         StringBuilder sb = new StringBuilder();
 
