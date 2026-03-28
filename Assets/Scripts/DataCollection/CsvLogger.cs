@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Text;
 using UnityEngine;
@@ -20,8 +21,9 @@ public static class CsvLogger
         {
             sb.AppendLine("Date,MovementFile,Variation,NumPasses,CompletedPasses,Accuracy,RoundDuration,AverageDistance"); 
         }
+
         sb.AppendLine(string.Join(",",
-            System.DateTime.Now.ToString("yyyy-MM-dd"),
+            DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToLongTimeString(),
             movementFile, 
             GameData.Variation,
             GameData.NumPasses,
@@ -43,7 +45,14 @@ public static class CsvLogger
             Directory.CreateDirectory(directory);
         }
 
-        string timestamp = System.DateTime.Now.ToString("yyyyMMdd_HHmmss"); 
+        string timestamp = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToLongTimeString();
+
+        // Replace invalid filename characters (like / and :)
+        foreach (var c in Path.GetInvalidFileNameChars())
+        {
+            timestamp = timestamp.Replace(c, '.');
+        }
+
         string movementFileName = $"movementData_{GameFlowController.Instance.UserId}_{timestamp}.csv"; 
         string filePath = Path.Combine(directory, movementFileName); 
     
