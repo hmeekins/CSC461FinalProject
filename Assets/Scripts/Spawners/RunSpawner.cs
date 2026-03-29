@@ -42,7 +42,7 @@ public class RunSpawner : MonoBehaviour
         );
 
         leftRunnerPosition = leftRunner.GetComponent<TeammateMovement>();
-        leftRunnerPosition.playerPosition = "Left";
+        leftRunnerPosition.PlayerPosition = "Left";
         SpawnOpponentForTeammate(leftRunner.transform, leftSpawnPosition);
 
         Vector3 rightSpawnPosition = new Vector3(bounds.min.x, spawnHeight, bounds.max.z);
@@ -53,7 +53,7 @@ public class RunSpawner : MonoBehaviour
         );
 
         rightRunnerPosition = rightRunner.GetComponent<TeammateMovement>();
-        rightRunnerPosition.playerPosition = "Right";
+        rightRunnerPosition.PlayerPosition = "Right";
         SpawnOpponentForTeammate(rightRunner.transform, rightSpawnPosition);
 
         GetTargets();

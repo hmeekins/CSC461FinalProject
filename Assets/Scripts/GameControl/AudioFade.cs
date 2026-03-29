@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class AudioFade : MonoBehaviour
 {
-    public AudioSource cheer;
-    public AudioSource boo;
+    public AudioSource Cheer;
+    public AudioSource Boo;
     public void FadeOut(int audioSourceNum, float duration)
     {
         if (audioSourceNum == 0)
         {
-            cheer.Stop();
-            cheer.volume = .85f;
+            Cheer.Stop();
+            Cheer.volume = .85f;
 
-            cheer.Play();
-            StartCoroutine(FadeOutCoroutine(cheer, duration));
+            Cheer.Play();
+            StartCoroutine(FadeOutCoroutine(Cheer, duration));
         }
         else
         {
-            boo.Stop();
-            boo.volume = 1f;
+            Boo.Stop();
+            Boo.volume = 1f;
 
-            boo.Play();
-            StartCoroutine(FadeOutCoroutine(boo, duration));
+            Boo.Play();
+            StartCoroutine(FadeOutCoroutine(Boo, duration));
         }
     }
 

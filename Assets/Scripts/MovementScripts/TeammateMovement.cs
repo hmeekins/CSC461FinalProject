@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TeammateMovement : MonoBehaviour
 {
-    public string playerPosition;
+    public string PlayerPosition;
 
     public float speed;
     public GameObject football;
@@ -14,7 +14,7 @@ public class TeammateMovement : MonoBehaviour
 
     private Vector3 pos;
 
-    private bool atTargetZ;
+    private bool AtTargetZ;
     private float ENDZONE = -94f;
 
 
@@ -46,17 +46,17 @@ public class TeammateMovement : MonoBehaviour
         }
         else if (!GlobalVariables.miss)
         {
-            if (!atTargetZ)
+            if (!AtTargetZ)
             {
                 pos = gameObject.transform.position;
-                targetPosition = new Vector3(pos.x, pos.y, atTarget.targetZ);
+                targetPosition = new Vector3(pos.x, pos.y, atTarget.TargetZ);
 
                 gameObject.transform.position = Vector3.MoveTowards(pos, targetPosition, speed * Time.deltaTime);
             }
-            if (atTargetZ)
+            if (AtTargetZ)
             {
                 pos = gameObject.transform.position;
-                targetPosition = new Vector3(atTarget.targetX, pos.y, pos.z);
+                targetPosition = new Vector3(atTarget.TargetX, pos.y, pos.z);
 
                 Vector3 moveDir = targetPosition - pos;
 
@@ -73,17 +73,17 @@ public class TeammateMovement : MonoBehaviour
     /// </summary>
     private void checkProgress()
     {
-        if (playerPosition == "Left")
+        if (PlayerPosition == "Left")
         {
             if (transform.position.z == GlobalVariables.leftTargetZ)
-                atTargetZ = true;
+                AtTargetZ = true;
             if (transform.position.x == GlobalVariables.leftTargetX)
                 Destroy(gameObject);
         }
         else
         {
             if (transform.position.z == GlobalVariables.rightTargetZ)
-                atTargetZ = true;
+                AtTargetZ = true;
             if (transform.position.x == GlobalVariables.rightTargetX)
                 Destroy(gameObject);
         }

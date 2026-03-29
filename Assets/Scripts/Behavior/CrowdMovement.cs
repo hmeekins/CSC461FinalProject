@@ -4,29 +4,29 @@ using UnityEngine;
 
 public class CrowdMovement : MonoBehaviour
 {
-    private float amplitude = 0.02f;
-    private float speed = 3f;
+    private float _amplitude = 0.02f;
+    private float _speed = 3f;
 
-    Vector3 startPos;
-    float randomOffset;
+    private Vector3 _startPos;
+    private float _randomOffset;
 
     void Start()
     {
-        startPos = transform.localPosition;
-        randomOffset = Random.Range(5f, 10f);
+        _startPos = transform.localPosition;
+        _randomOffset = Random.Range(5f, 10f);
     }
 
     void Update()
     {
         if (GlobalVariables.teammateCaught)
         {
-            float offset = Mathf.Sin((Time.time + randomOffset) * 2*speed) * amplitude*6;
-            transform.localPosition = startPos + new Vector3(0, offset, 0);
+            float offset = Mathf.Sin((Time.time + _randomOffset) * 2*_speed) * _amplitude*6;
+            transform.localPosition = _startPos + new Vector3(0, offset, 0);
         }
         else
         {
-            float offset = Mathf.Sin((Time.time + randomOffset) * speed) * amplitude;
-            transform.localPosition = startPos + new Vector3(0, offset, 0);
+            float offset = Mathf.Sin((Time.time + _randomOffset) * _speed) * _amplitude;
+            transform.localPosition = _startPos + new Vector3(0, offset, 0);
         } 
     }
 }

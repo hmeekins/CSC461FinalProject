@@ -80,8 +80,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d41641a485f746e4d807f851867529ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  catchClip: {fileID: 8300000, guid: 4a799a1d3427f824cbe816fe30c29646, type: 3}
-  scoreMultiplier: 50
+  _catchClip: {fileID: 8300000, guid: 4a799a1d3427f824cbe816fe30c29646, type: 3}
+  _scoreMultiplier: 50
 --- !u!136 &-3346170354596426574
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -117,14 +117,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac61226e11f1bcc4b85ae7594da67e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 4653634130064194354}
-  handTransform: {fileID: 0}
-  controller: 2
-  triggerAxis: 1
-  releaseThreshold: 0.1
-  velocitySamples: 5
-  velocityMultiplier: 2.6
-  offset: {x: 0, y: 90, z: 20}
+  _audioSource: {fileID: 4653634130064194354}
+  _releaseThreshold: 0.1
+  _velocitySamples: 5
+  _velocityMultiplier: 2.6
+  _offset: {x: 0, y: 90, z: 20}
 --- !u!82 &4653634130064194354
 AudioSource:
   m_ObjectHideFlags: 0

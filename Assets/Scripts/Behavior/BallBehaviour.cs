@@ -4,50 +4,51 @@ using UnityEngine;
 
 public class BallBehaviour : MonoBehaviour
 {
-    public AudioSource audioSource;
-    public Transform handTransform;
-    public OVRInput.Controller controller;
-    public OVRInput.Axis1D triggerAxis;
-    public float releaseThreshold = 0.2f;
-    public int velocitySamples = 10;
-    public float velocityMultiplier = 2f;
-    public Vector3 offset = new Vector3(0f, 90f, 20f);
-    private GameObject currentObject;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private float _releaseThreshold = 0.2f;
+    [SerializeField] private int _velocitySamples = 10;
+    [SerializeField] private float _velocityMultiplier = 2f;
+    [SerializeField] private Vector3 _offset = new Vector3(0f, 90f, 20f);
+
+    private Transform _handTransform;
+    private OVRInput.Controller _controller;
+    private OVRInput.Axis1D _triggerAxis;
+    private GameObject _currentObject;
     private Queue<Vector3> _velHistory = new Queue<Vector3>();
-    private Transform trackingSpace;
+    private Transform _trackingSpace;
 
     private void Start()
     {
-        currentObject = gameObject;
+        _currentObject = gameObject;
         var rig = FindObjectOfType<OVRCameraRig>();
-        trackingSpace = rig.trackingSpace;
+        _trackingSpace = rig.trackingSpace;
         if (!GameFlowController.Instance.LeftHanded)
         {
-            controller = OVRInput.Controller.RTouch;
-            handTransform = rig.rightHandAnchor;
-            triggerAxis = OVRInput.Axis1D.SecondaryIndexTrigger;
+            _controller = OVRInput.Controller.RTouch;
+            _handTransform = rig.rightHandAnchor;
+            _triggerAxis = OVRInput.Axis1D.PrimaryIndexTrigger;
         }
         else
         {
-            controller = OVRInput.Controller.LTouch;
-            handTransform = rig.leftHandAnchor;
-            triggerAxis = OVRInput.Axis1D.PrimaryIndexTrigger;
+            _controller = OVRInput.Controller.LTouch;
+            _handTransform = rig.leftHandAnchor;
+            _triggerAxis = OVRInput.Axis1D.PrimaryIndexTrigger;
         }
     }
 
     void Update()
     {
         //Float value representing the press amount of trigger
-        float triggerValue = OVRInput.Get(triggerAxis, controller);
+        float triggerValue = OVRInput.Get(_triggerAxis, _controller);
         RecordControllerVelocity();
 
-        if (currentObject != null && triggerValue <= releaseThreshold)
+        if (_currentObject != null && triggerValue <= _releaseThreshold)
         {
-                audioSource.Play();
+                _audioSource.Play();
                 ReleaseObject();
-                currentObject = null;
+                _currentObject = null;
         }
-        if (currentObject != null)
+        if (_currentObject != null)
         {
             hold();
         }
@@ -55,8 +56,8 @@ public class BallBehaviour : MonoBehaviour
     
     private void hold()
     {
-        currentObject.transform.position = handTransform.position;
-        currentObject.transform.rotation = handTransform.rotation * Quaternion.Euler(offset);
+        _currentObject.transform.position = _handTransform.position;
+        _currentObject.transform.rotation = _handTransform.rotation * Quaternion.Euler(_offset);
     }
 
     /// <summary>
@@ -64,11 +65,11 @@ public class BallBehaviour : MonoBehaviour
     /// </summary>
     private void RecordControllerVelocity()
     {
-        Vector3 vel = OVRInput.GetLocalControllerVelocity(controller);
+        Vector3 vel = OVRInput.GetLocalControllerVelocity(_controller);
         
         _velHistory.Enqueue(vel);
 
-        while (_velHistory.Count > velocitySamples)
+        while (_velHistory.Count > _velocitySamples)
             _velHistory.Dequeue();
     }
 
@@ -93,15 +94,15 @@ public class BallBehaviour : MonoBehaviour
     /// </summary>
     private void ReleaseObject()
     {
-        GlobalVariables.ballPosition = currentObject.transform.position;
+        GlobalVariables.ballPosition = _currentObject.transform.position;
         GlobalVariables.ballThrown = true;
-        Vector3 throwVel = GetAveragedVelocity() * velocityMultiplier;
+        Vector3 throwVel = GetAveragedVelocity() * _velocityMultiplier;
 
-        Rigidbody rb = currentObject.GetComponent<Rigidbody>();
+        Rigidbody rb = _currentObject.GetComponent<Rigidbody>();
         rb.isKinematic = false;
         rb.useGravity = true;
 
-        rb.velocity = trackingSpace.TransformDirection(throwVel);
+        rb.velocity = _trackingSpace.TransformDirection(throwVel);
 
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
         GameData.RegisterPass();
@@ -109,13 +110,13 @@ public class BallBehaviour : MonoBehaviour
 
     public bool IsHoldingBall()
     {
-        return currentObject != null;
+        return _currentObject != null;
     }
 
     public Vector3 GetPredictedVelocity()
     {
-        Vector3 throwVel = GetAveragedVelocity() * velocityMultiplier;
+        Vector3 throwVel = GetAveragedVelocity() * _velocityMultiplier;
 
-        return trackingSpace.TransformDirection(throwVel);
+        return _trackingSpace.TransformDirection(throwVel);
     }
 }

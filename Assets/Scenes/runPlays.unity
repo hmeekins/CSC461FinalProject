@@ -18145,13 +18145,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8269406712ff5dc479591f163e2dda35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LeftHanded: 1
+  LeftHanded: 0
   resetPlayerOnPlayEnd: {fileID: 1357414560}
   rusherCollision: {fileID: 1890685609}
   Variation: 2
   UserId: 
   MaxPlays: 5
   IgnoreDowns: 1
+  DifficultyScaling: 0
 --- !u!4 &780009711
 Transform:
   m_ObjectHideFlags: 0
@@ -52329,7 +52330,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPrefab: {fileID: 2758944435429937138, guid: 2685f967d9ccd9b46be15c09b83aed57, type: 3}
-  triggerAxis: 1
   pressThreshold: 0.9
   offset: {x: 0, y: 90, z: 30}
 --- !u!4 &2098562976
@@ -56342,8 +56342,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 181a98537bfd5e64c95f3b82b8feee72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cheer: {fileID: 4872154223784356420}
-  boo: {fileID: 6629245050171995753}
+  Cheer: {fileID: 6629245050171995751}
+  Boo: {fileID: 6629245050171995753}
 --- !u!82 &6629245050171995750
 AudioSource:
   m_ObjectHideFlags: 0

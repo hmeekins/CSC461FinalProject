@@ -1,11 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public class BallSpawner : MonoBehaviour
 {
     public GameObject objectPrefab;
     
-    public OVRInput.Axis1D triggerAxis;
+    private OVRInput.Axis1D triggerAxis;
     public float pressThreshold = 0.8f;
     public Vector3 offset = new Vector3(0f, 90f, 20f);
     private Transform handTransform;
@@ -22,7 +23,7 @@ public class BallSpawner : MonoBehaviour
         {
             controller = OVRInput.Controller.RTouch;
             handTransform = rig.rightHandAnchor;
-            triggerAxis = OVRInput.Axis1D.SecondaryIndexTrigger;
+            triggerAxis = OVRInput.Axis1D.PrimaryIndexTrigger;
         }
         else
         {
@@ -30,6 +31,7 @@ public class BallSpawner : MonoBehaviour
             handTransform = rig.leftHandAnchor;
             triggerAxis = OVRInput.Axis1D.PrimaryIndexTrigger;
         }
+        UnityEngine.Debug.Log(controller + " " + triggerAxis);
     }
     private void Update()
     {

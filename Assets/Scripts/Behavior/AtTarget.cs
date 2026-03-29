@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class AtTarget : MonoBehaviour
 {
-    public bool atTargetZ = false;
-    public bool atTargetX = false;
-    public string playerPosition;
+    public bool AtTargetZ = false;
+    public bool AtTargetX = false;
+    public string PlayerPosition;
 
-    public float targetZ;
-    public float targetX;
+    public float TargetZ;
+    public float TargetX;
 
-    TeammateMovement teammateMovement;
+    private TeammateMovement _teammateMovement;
 
     void Start()
     {
-        teammateMovement = GetComponent<TeammateMovement>();
+        _teammateMovement = GetComponent<TeammateMovement>();
     }
 
     void Update()
@@ -29,23 +29,23 @@ public class AtTarget : MonoBehaviour
     /// </summary>
     private void checkProgress()
     {
-        if (teammateMovement.playerPosition == "Left")
+        if (_teammateMovement.PlayerPosition == "Left")
         {
-            targetZ = GlobalVariables.leftTargetZ;
-            targetX = GlobalVariables.leftTargetX;
+            TargetZ = GlobalVariables.leftTargetZ;
+            TargetX = GlobalVariables.leftTargetX;
             if (transform.position.z == GlobalVariables.leftTargetZ)
-                atTargetZ = true;
+                AtTargetZ = true;
             if (transform.position.x == GlobalVariables.leftTargetX)
-                atTargetX = true;
+                AtTargetX = true;
         }
         else
         {
-            targetZ = GlobalVariables.rightTargetZ;
-            targetX = GlobalVariables.rightTargetX;
+            TargetZ = GlobalVariables.rightTargetZ;
+            TargetX = GlobalVariables.rightTargetX;
             if (transform.position.z == GlobalVariables.rightTargetZ)
-                atTargetZ = true;
+                AtTargetZ = true;
             if (transform.position.x == GlobalVariables.rightTargetX)
-                atTargetX = true;
+                AtTargetX = true;
         }
     }
 }
