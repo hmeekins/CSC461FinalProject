@@ -8,8 +8,9 @@ public class MovementRecorder : MonoBehaviour
     private float _previous = 0f;
     private bool _timerStarted = false;
     private bool _reset = false;
-    private int _playNum = 1;
+    
     private float _interval = 2f;
+    public int PlayNum {get; private set;} = 1;
 
 
     void Start()
@@ -24,7 +25,7 @@ public class MovementRecorder : MonoBehaviour
             _timerStarted = false;
             _previous = 0;
             _roundTime = 0;
-            _playNum += 1;
+            PlayNum += 1;
             _reset = true;
         }
         else if (GameFlowController.Instance.State == GameState.GameOver)
@@ -32,7 +33,7 @@ public class MovementRecorder : MonoBehaviour
             _timerStarted = false;
             _previous = 0;
             _roundTime = 0;
-            _playNum = 1;
+            PlayNum = 1;
         }
         
         if (GameFlowController.Instance.State == GameState.PlayRunning && !_timerStarted)
@@ -70,12 +71,12 @@ public class MovementRecorder : MonoBehaviour
 
         Debug.Log(
             $"[MovementRecorder]\n" +
-            $"Play #: {_playNum}" +
+            $"Play #: {PlayNum}" +
             $"Time: {timestamp}\n" +
             $"Head Pos: {headPos} | Head Rot: {headRot}\n" +
             $"Left Hand Pos: {leftPos} | Left Hand Rot: {leftRot}\n" +
             $"Right Hand Pos: {rightPos} | Right Hand Rot: {rightRot}"
         );
-        GameData.AddMovementSample(new MovementSample(_playNum, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), headPos, headRot, leftPos, leftRot, rightPos, rightRot));
+        GameData.AddMovementSample(new MovementSample(PlayNum, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), headPos, headRot, leftPos, leftRot, rightPos, rightRot));
     }
 }

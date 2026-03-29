@@ -18041,6 +18041,7 @@ GameObject:
   m_Component:
   - component: {fileID: 780009711}
   - component: {fileID: 780009710}
+  - component: {fileID: 780009712}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -18060,10 +18061,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8269406712ff5dc479591f163e2dda35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Variation: 0
-  UserId: 
   resetPlayerOnPlayEnd: {fileID: 1357414560}
   rusherCollision: {fileID: 1890685609}
+  Variation: 1
+  UserId: 
+  MaxPlays: 5
 --- !u!4 &780009711
 Transform:
   m_ObjectHideFlags: 0
@@ -18079,6 +18081,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &780009712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780009709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c71fe411551ccf45b3b774f0de692e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &783982089
 GameObject:
   m_ObjectHideFlags: 0
