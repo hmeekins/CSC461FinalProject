@@ -46,6 +46,7 @@ public class GameFlowController : MonoBehaviour
     public string UserId;
     public int MaxPlays;
     public bool IgnoreDowns;
+    public bool DifficultyScaling;
 
     private void Awake()
     {

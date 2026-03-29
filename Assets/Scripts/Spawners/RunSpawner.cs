@@ -111,7 +111,7 @@ public class RunSpawner : MonoBehaviour
     private int GetPlayVariation()
     {
         int variation;
-        if (GlobalVariables.successfulPasses < 4)
+        if (GlobalVariables.successfulPasses < 4 || !GameFlowController.Instance.DifficultyScaling)
             variation = UnityEngine.Random.Range(0, 2);
         else if (GlobalVariables.successfulPasses < 8)
             variation = UnityEngine.Random.Range(0, 3);
