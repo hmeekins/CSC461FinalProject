@@ -34,6 +34,8 @@ public class GameFlowController : MonoBehaviour
     public GameState State { get; private set; }
     
     public bool IsResolvingPlay { get; private set; } = false;
+
+    public bool LeftHanded;
     
     [SerializeField] private ResetPlayerOnPlayEnd resetPlayerOnPlayEnd;
 

@@ -6,7 +6,6 @@ public class ResetPlayerOnPlayEnd : MonoBehaviour
 {
     public Transform cameraRig;
     public Transform resetPoint;
-    public GameObject locomotor;
 
     public OVRScreenFade fade;
 
@@ -30,10 +29,6 @@ public class ResetPlayerOnPlayEnd : MonoBehaviour
         {
             HandleWaiting();
         }
-        else if (state == GameState.PlayRunning)
-        {
-            HandlePlayRunning();
-        }
         else if (state == GameState.Resetting)
         {
             HandleResetting();
@@ -42,28 +37,18 @@ public class ResetPlayerOnPlayEnd : MonoBehaviour
 
     void HandleStart()
     {
-        locomotor.SetActive(false);
         cameraRig.position = resetPoint.position;
         return;
     }
     void HandleWaiting()
     {
-        locomotor.SetActive(false);
         isResetting = false;
     }
-
-    void HandlePlayRunning()
-    {
-        if (!locomotor.activeSelf)
-            locomotor.SetActive(true);
-    }
-
     void HandleResetting()
     {
         if (!isResetting)
         {
             isResetting = true;
-            locomotor.SetActive(false);
             fadeStartTime = Time.time;
             fade.FadeOut();
             return;

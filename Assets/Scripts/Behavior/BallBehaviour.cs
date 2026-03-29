@@ -7,7 +7,7 @@ public class BallBehaviour : MonoBehaviour
     public AudioSource audioSource;
     public Transform handTransform;
     public OVRInput.Controller controller;
-    public OVRInput.Axis1D triggerAxis = OVRInput.Axis1D.PrimaryIndexTrigger;
+    public OVRInput.Axis1D triggerAxis;
     public float releaseThreshold = 0.2f;
     public int velocitySamples = 10;
     public float velocityMultiplier = 2f;
@@ -21,15 +21,17 @@ public class BallBehaviour : MonoBehaviour
         currentObject = gameObject;
         var rig = FindObjectOfType<OVRCameraRig>();
         trackingSpace = rig.trackingSpace;
-        if (!GlobalVariables.leftHanded)
+        if (!GameFlowController.Instance.LeftHanded)
         {
             controller = OVRInput.Controller.RTouch;
             handTransform = rig.rightHandAnchor;
+            triggerAxis = OVRInput.Axis1D.SecondaryIndexTrigger;
         }
         else
         {
             controller = OVRInput.Controller.LTouch;
             handTransform = rig.leftHandAnchor;
+            triggerAxis = OVRInput.Axis1D.PrimaryIndexTrigger;
         }
     }
 

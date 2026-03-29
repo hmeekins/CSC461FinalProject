@@ -5,7 +5,7 @@ public class BallSpawner : MonoBehaviour
 {
     public GameObject objectPrefab;
     
-    public OVRInput.Axis1D triggerAxis = OVRInput.Axis1D.PrimaryIndexTrigger;
+    public OVRInput.Axis1D triggerAxis;
     public float pressThreshold = 0.8f;
     public Vector3 offset = new Vector3(0f, 90f, 20f);
     private Transform handTransform;
@@ -18,15 +18,17 @@ public class BallSpawner : MonoBehaviour
     public void Start()
     {
         OVRCameraRig rig = FindObjectOfType<OVRCameraRig>();
-        if (!GlobalVariables.leftHanded)
+        if (!GameFlowController.Instance.LeftHanded)
         {
             controller = OVRInput.Controller.RTouch;
             handTransform = rig.rightHandAnchor;
+            triggerAxis = OVRInput.Axis1D.SecondaryIndexTrigger;
         }
         else
         {
             controller = OVRInput.Controller.LTouch;
             handTransform = rig.leftHandAnchor;
+            triggerAxis = OVRInput.Axis1D.PrimaryIndexTrigger;
         }
     }
     private void Update()
