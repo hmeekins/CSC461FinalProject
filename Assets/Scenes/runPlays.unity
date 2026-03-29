@@ -18066,6 +18066,7 @@ MonoBehaviour:
   Variation: 1
   UserId: 
   MaxPlays: 5
+  IgnoreDowns: 1
 --- !u!4 &780009711
 Transform:
   m_ObjectHideFlags: 0
@@ -35007,7 +35008,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0455066, y: 120, z: 40}
+  m_Size: {x: 1.0455066, y: 120, z: 33}
   m_Center: {x: -0.0053975163, y: 0, z: 17}
 --- !u!23 &1454816965
 MeshRenderer:

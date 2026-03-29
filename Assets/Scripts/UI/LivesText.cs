@@ -9,7 +9,7 @@ public class LivesText : MonoBehaviour
 
     void Update()
     {
-        if (GameFlowController.Instance.State == GameState.StartGame)
+        if (GameFlowController.Instance.State == GameState.StartGame || GameFlowController.Instance.IgnoreDowns)
             downsText.text = "";
         else if (GameFlowController.Instance.State == GameState.WaitingForSnap)
             downsText.text = "Down: " + GlobalVariables.downs.ToString();

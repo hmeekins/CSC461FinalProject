@@ -43,6 +43,7 @@ public class GameFlowController : MonoBehaviour
     public GameVariation Variation;
     public string UserId;
     public int MaxPlays;
+    public bool IgnoreDowns;
 
     private void Awake()
     {
@@ -80,7 +81,7 @@ public class GameFlowController : MonoBehaviour
 
     public void EndPlay()
     {
-        if (GlobalVariables.downs > 4)
+        if (GlobalVariables.downs > 4 && !IgnoreDowns)
         {
             GameFlowController.Instance.EndGame();
             return;
@@ -93,7 +94,7 @@ public class GameFlowController : MonoBehaviour
 
     public void OnIncomplete()
     {
-        if (GlobalVariables.downs > 4)
+        if (GlobalVariables.downs > 4 && !IgnoreDowns)
         {
             GameFlowController.Instance.EndGame();
             return;
@@ -105,7 +106,7 @@ public class GameFlowController : MonoBehaviour
 
     public void OnPlayerTackled()
     {
-        if (GlobalVariables.downs > 4)
+        if (GlobalVariables.downs > 4 && !IgnoreDowns)
         {
             GameFlowController.Instance.EndGame();
             return;
