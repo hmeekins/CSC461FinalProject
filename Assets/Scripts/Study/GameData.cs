@@ -20,6 +20,8 @@ public static class GameData
         NumPasses = 0;
         CompletedPasses = 0;
         Accuracy = 0f;
+        NumTackles = 0;
+        NumInterceptions = 0;
         RoundDuration = 0;
         AverageDistance = 0f;
         Distances.Clear();

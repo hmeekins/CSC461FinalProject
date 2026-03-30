@@ -71,7 +71,7 @@ public class GameFlowController : MonoBehaviour
         GlobalVariables.teammateCaught = false;
         GlobalVariables.miss = false;
         GlobalVariables.tackled = false;
-        rusherCollision.hasTriggered = false;
+        rusherCollision.HasTriggered = false;
         State = GameState.WaitingForSnap;
     }
 
