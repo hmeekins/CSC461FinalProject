@@ -19,7 +19,7 @@ public static class CsvLogger
 
         if (!fileExists)
         {
-            sb.AppendLine("Date,MovementFile,Variation,NumPasses,CompletedPasses,Accuracy,RoundDuration,AverageDistance"); 
+            sb.AppendLine("Date,MovementFile,Variation,NumPasses,CompletedPasses,Accuracy,NumInterceptions,NumTackles,RoundDuration(s),AverageDistance(m)"); 
         }
 
         sb.AppendLine(string.Join(",",
@@ -29,6 +29,8 @@ public static class CsvLogger
             GameData.NumPasses,
             GameData.CompletedPasses,
             GameData.Accuracy,
+            GameData.NumInterceptions,
+            GameData.NumTackles,
             GameData.RoundDuration,
             GameData.AverageDistance
         ));

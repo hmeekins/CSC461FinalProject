@@ -7,6 +7,8 @@ public static class GameData
     public static int NumPasses { get; private set; } = 0;
     public static int CompletedPasses { get; private set; } = 0;
     public static float Accuracy { get; private set; } = 0f;
+    public static int NumInterceptions { get; private set; } = 0;
+    public static int NumTackles { get; private set; } = 0;
     public static int RoundDuration { get; private set; } = 0;
     public static List<float> Distances { get; private set; } = new List<float>();
     public static float AverageDistance { get; private set; } = 0f;
@@ -32,6 +34,15 @@ public static class GameData
     public static void RegisterCompletedPass()
     {
         CompletedPasses++;
+    }
+
+    public static void RegisterInterception()
+    {
+        NumInterceptions++;
+    }
+    public static void RegisterTackle()
+    {
+        NumTackles++;
     }
 
     public static void SetRoundDuration(int roundDuration)

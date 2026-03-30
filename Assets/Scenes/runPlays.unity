@@ -17727,7 +17727,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3181206837818800583, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3725902998641757613, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
       propertyPath: m_IsActive
@@ -17779,7 +17779,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3928705923008943111, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4148778239110795873, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
       propertyPath: m_Name
@@ -18148,9 +18148,9 @@ MonoBehaviour:
   LeftHanded: 0
   resetPlayerOnPlayEnd: {fileID: 1357414560}
   rusherCollision: {fileID: 1890685609}
-  Variation: 2
+  Variation: 5
   UserId: 
-  MaxPlays: 5
+  MaxPlays: 3
   IgnoreDowns: 1
   DifficultyScaling: 0
 --- !u!4 &780009711
@@ -56342,7 +56342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 181a98537bfd5e64c95f3b82b8feee72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cheer: {fileID: 6629245050171995751}
+  Cheer: {fileID: 4872154223784356420}
   Boo: {fileID: 6629245050171995753}
 --- !u!82 &6629245050171995750
 AudioSource:

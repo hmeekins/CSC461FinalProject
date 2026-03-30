@@ -25,11 +25,12 @@ public class BallCollisions : MonoBehaviour
         if (other.gameObject.CompareTag("Stadium"))
         {
             _locked = true;
-            _distance = Vector3.Distance(GlobalVariables.ballPosition, transform.position);
-
+            _audioFade.FadeOut(1, 4f);
+            
             GlobalVariables.miss = true;
             GlobalVariables.downs += 1;
 
+            _distance = Vector3.Distance(GlobalVariables.ballPosition, transform.position);
             GameData.AddDistance(_distance);
 
             GameFlowController.Instance.OnIncomplete();
@@ -75,6 +76,7 @@ public class BallCollisions : MonoBehaviour
             GlobalVariables.downs = 5;
            
             GameData.AddDistance(_distance);
+            GameData.RegisterInterception();
 
             GameFlowController.Instance.EndPlay();
         }
