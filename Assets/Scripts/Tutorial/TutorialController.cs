@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialController : MonoBehaviour
-{
-    public enum TutorialStep
+public enum TutorialStep
     {
         GameBasics,
         SpawnBall,
@@ -13,4 +11,9 @@ public class TutorialController : MonoBehaviour
         Defenders,
         TutorialOver
     }
+
+public class TutorialController : MonoBehaviour
+{
+    public static TutorialController Instance;
+    public TutorialStep TutorialStep;
 }
