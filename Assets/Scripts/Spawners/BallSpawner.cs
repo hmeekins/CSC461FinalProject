@@ -5,6 +5,7 @@ using System.Diagnostics;
 public class BallSpawner : MonoBehaviour
 {
     public GameObject objectPrefab;
+    [SerializeField] private bool StartPlayOnBallSpawn;
     
     private OVRInput.Axis1D triggerAxis;
     public float pressThreshold = 0.8f;
@@ -44,7 +45,8 @@ public class BallSpawner : MonoBehaviour
         if (currentObject == null && triggerValue >= pressThreshold && hasReleasedTrigger == true)
         {   
             SpawnObjectInHand();
-            GameFlowController.Instance.StartPlay();
+            if (StartPlayOnBallSpawn)
+                GameFlowController.Instance.StartPlay();
             hasReleasedTrigger = false;
         }
 
