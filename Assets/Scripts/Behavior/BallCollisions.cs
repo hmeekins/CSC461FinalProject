@@ -22,6 +22,12 @@ public class BallCollisions : MonoBehaviour
         if (_locked)
             return;
 
+        if (GameFlowController.Instance.IsTutorial)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         if (other.gameObject.CompareTag("Stadium"))
         {
             _locked = true;
@@ -41,6 +47,11 @@ public class BallCollisions : MonoBehaviour
     {
         if (_locked)
             return;
+
+        if (GameFlowController.Instance.IsTutorial)
+        {
+            return;
+        }
 
         if (other.CompareTag("FootballPlayer"))
         {

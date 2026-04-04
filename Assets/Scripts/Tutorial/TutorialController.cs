@@ -17,6 +17,16 @@ public class TutorialController : MonoBehaviour
     public static TutorialController Instance;
     public TutorialStep TutorialStep;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+    
+    void Start() 
+    {
+        GameFlowController.Instance.EnterWaitingForSnap();
+    }
+
     public void StartTutorial()
     {
         Instance.TutorialStep = TutorialStep.GameBasics;
