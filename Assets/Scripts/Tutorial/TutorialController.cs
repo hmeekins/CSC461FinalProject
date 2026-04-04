@@ -16,4 +16,34 @@ public class TutorialController : MonoBehaviour
 {
     public static TutorialController Instance;
     public TutorialStep TutorialStep;
+
+    public void StartTutorial()
+    {
+        Instance.TutorialStep = TutorialStep.GameBasics;
+    }
+
+    public void BallSpawned()
+    {
+        Instance.TutorialStep = TutorialStep.SpawnBall;
+    }
+
+    public void HitFirstTarget()
+    {
+        Instance.TutorialStep = TutorialStep.HitTarget;
+    }
+
+    public void HitSecondTarget()
+    {
+        Instance.TutorialStep = TutorialStep.HitMovingTarget;
+    }
+
+    public void CoverDefenders()
+    {
+        Instance.TutorialStep = TutorialStep.Defenders;
+    }
+
+    public void EndTutorial()
+    {
+        Instance.TutorialStep = TutorialStep.TutorialOver;
+    }
 }
