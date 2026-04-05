@@ -48,6 +48,7 @@ public class TutorialController : MonoBehaviour
     public void HitSecondTarget()
     {
         Instance.TutorialStep = TutorialStep.HitMovingTarget;
+        GameFlowController.Instance.BeginGame();
         _chime.Play();
     }
 

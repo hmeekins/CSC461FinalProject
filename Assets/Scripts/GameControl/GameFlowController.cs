@@ -60,7 +60,7 @@ public class GameFlowController : MonoBehaviour
         BeginGame();
     }
 
-    private void BeginGame()
+    public void BeginGame()
     {
         GameData.StartNewRound();
         State = GameState.StartGame;
