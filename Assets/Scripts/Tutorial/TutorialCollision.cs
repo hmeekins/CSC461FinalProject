@@ -7,18 +7,17 @@ public class TutorialCollision : MonoBehaviour
     private bool _locked = false;
     void OnTriggerEnter(Collider other)
     {
+        Destroy(other.gameObject);
         if (_locked) 
             return;
 
         if (TutorialController.Instance.TutorialStep == TutorialStep.SpawnBall) {
-            Destroy(other);
             TutorialController.Instance.HitFirstTarget();
             _locked = true;
             StartCoroutine(Unlock());
             return;
         }
         else {
-            Destroy(other);
             TutorialController.Instance.HitSecondTarget();
         }
     }

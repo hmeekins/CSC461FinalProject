@@ -16,6 +16,7 @@ public class TutorialController : MonoBehaviour
 {
     public static TutorialController Instance;
     public TutorialStep TutorialStep;
+    [SerializeField] private AudioSource _chime;
 
     private void Awake()
     {
@@ -35,16 +36,19 @@ public class TutorialController : MonoBehaviour
     public void BallSpawned()
     {
         Instance.TutorialStep = TutorialStep.SpawnBall;
+        _chime.Play();
     }
 
     public void HitFirstTarget()
     {
         Instance.TutorialStep = TutorialStep.HitTarget;
+        _chime.Play();
     }
 
     public void HitSecondTarget()
     {
         Instance.TutorialStep = TutorialStep.HitMovingTarget;
+        _chime.Play();
     }
 
     public void CoverDefenders()
