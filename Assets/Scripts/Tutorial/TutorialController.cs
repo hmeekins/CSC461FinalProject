@@ -9,6 +9,7 @@ public enum TutorialStep
         HitTarget,
         HitMovingTarget,
         Defenders,
+        Rusher,
         TutorialOver
     }
 
@@ -57,8 +58,15 @@ public class TutorialController : MonoBehaviour
         Instance.TutorialStep = TutorialStep.Defenders;
     }
 
+    public void CoverRusher()
+    {
+        Instance.TutorialStep = TutorialStep.Rusher;
+        _chime.Play();
+    }
+
     public void EndTutorial()
     {
         Instance.TutorialStep = TutorialStep.TutorialOver;
+        _chime.Play();
     }
 }

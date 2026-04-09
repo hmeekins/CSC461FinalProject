@@ -31,7 +31,11 @@ public class TutorialText : MonoBehaviour
             break;
 
         case TutorialStep.Defenders:
-            _tutorial.text = "In a real game, defenders will follow your teammates. If a defender catches the ball, you lose the play. Also watch out for the rusher charging at you or you will be tackled!";
+            _tutorial.text = "In a real game, defenders will follow your teammates. If a defender catches the ball, you lose the play.";
+            break;
+
+        case TutorialStep.Rusher:
+            _tutorial.text = "There will also be a rusher to watch out for. They will run towards you at an increasing speed. Make sure you keep an eye out or you will be tackled";
             break;
 
         case TutorialStep.TutorialOver:

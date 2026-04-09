@@ -5,6 +5,7 @@ using UnityEngine;
 public class SceneController : MonoBehaviour
 {
     private GameObject _target;
+    private GameObject _enemy;
     private GameObject _continueB;
     private GameObject _startGameB;
     private GameObject _returnB;
@@ -12,6 +13,7 @@ public class SceneController : MonoBehaviour
     void Start()
     {
         _target = GameObject.Find("Target");
+        _enemy = GameObject.Find("Enemy");
         _continueB = GameObject.Find("Continue");
         _startGameB = GameObject.Find("StartGame");
         _returnB = GameObject.Find("Return");
@@ -21,7 +23,9 @@ public class SceneController : MonoBehaviour
     {
         if (TutorialController.Instance.TutorialStep == TutorialStep.GameBasics)
             CheckBall();
+
         TargetVisible();
+        EnemyVisible();
         ActivateButtons();
     }
 
@@ -42,9 +46,17 @@ public class SceneController : MonoBehaviour
             _target.SetActive(false);
     }
 
+    private void EnemyVisible()
+    {
+        if(TutorialController.Instance.TutorialStep == TutorialStep.Defenders || TutorialController.Instance.TutorialStep == TutorialStep.Rusher)
+            _enemy.SetActive(true);
+        else
+            _enemy.SetActive(false);
+    }
+
     private void ActivateButtons()
     {
-        if (TutorialController.Instance.TutorialStep == TutorialStep.HitMovingTarget || TutorialController.Instance.TutorialStep == TutorialStep.Defenders)
+        if (TutorialController.Instance.TutorialStep == TutorialStep.HitMovingTarget || TutorialController.Instance.TutorialStep == TutorialStep.Defenders || TutorialController.Instance.TutorialStep == TutorialStep.Rusher)
             _continueB.SetActive(true);
         else
             _continueB.SetActive(false);

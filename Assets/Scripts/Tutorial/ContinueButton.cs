@@ -8,6 +8,8 @@ public class ContinueButton : MonoBehaviour
     {
         if (TutorialController.Instance.TutorialStep == TutorialStep.HitMovingTarget)
             TutorialController.Instance.CoverDefenders();
+        else if (TutorialController.Instance.TutorialStep == TutorialStep.Defenders)
+            TutorialController.Instance.CoverRusher();
         else
             TutorialController.Instance.EndTutorial();
     }
