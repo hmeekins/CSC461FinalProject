@@ -6,14 +6,17 @@ public class SceneController : MonoBehaviour
 {
     private GameObject _target;
     private GameObject _enemy;
+    private GameObject _controllerImage;
     private GameObject _continueB;
     private GameObject _startGameB;
     private GameObject _returnB;
+
     
     void Start()
     {
         _target = GameObject.Find("Target");
         _enemy = GameObject.Find("Enemy");
+        _controllerImage = GameObject.Find("ControllerImg");
         _continueB = GameObject.Find("Continue");
         _startGameB = GameObject.Find("StartGame");
         _returnB = GameObject.Find("Return");
@@ -26,7 +29,7 @@ public class SceneController : MonoBehaviour
 
         TargetVisible();
         EnemyVisible();
-        ActivateButtons();
+        MenuVisibility();
     }
 
     private void CheckBall()
@@ -54,8 +57,13 @@ public class SceneController : MonoBehaviour
             _enemy.SetActive(false);
     }
 
-    private void ActivateButtons()
+    private void MenuVisibility()
     {
+        if (TutorialController.Instance.TutorialStep == TutorialStep.GameBasics)
+            _controllerImage.SetActive(true);
+        else
+            _controllerImage.SetActive(false);
+
         if (TutorialController.Instance.TutorialStep == TutorialStep.HitMovingTarget || TutorialController.Instance.TutorialStep == TutorialStep.Defenders || TutorialController.Instance.TutorialStep == TutorialStep.Rusher)
             _continueB.SetActive(true);
         else

@@ -15,7 +15,7 @@ public class TutorialText : MonoBehaviour
     switch(TutorialController.Instance.TutorialStep)
     {
         case TutorialStep.GameBasics:
-            _tutorial.text = "Welcome to Spiral VR! Your goal is to complete passes and rack up the highest score possible. To begin, press and hold the front trigger.";
+            _tutorial.text = "Welcome to Spiral VR! Your goal is to complete passes and rack up the highest score possible. To spawn a ball, press and hold the front trigger.";
             break;
 
         case TutorialStep.SpawnBall:
