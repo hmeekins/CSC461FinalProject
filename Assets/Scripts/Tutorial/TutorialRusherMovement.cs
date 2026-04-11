@@ -10,12 +10,14 @@ public class TutorialRusherMovement : MonoBehaviour
     [SerializeField] private float _speed = 2f;
     [SerializeField] private float _rushDistance = 6f;
     [SerializeField] private float _resetDelay = .5f;
+    [SerializeField] private TutorialParticles _particles;
     private Vector3 _startPosition;
     private bool _rushStarted = false;
 
     void Start()
     {
         _startPosition = transform.position;
+        _particles = GameObject.Find("Particles").GetComponent<TutorialParticles>();
     }
 
     void Update() 
@@ -52,7 +54,7 @@ public class TutorialRusherMovement : MonoBehaviour
             }
 
             yield return new WaitForSeconds(_resetDelay);
-
+            _particles.Poof(transform.position);
             transform.position = _startPosition;
         }
     }

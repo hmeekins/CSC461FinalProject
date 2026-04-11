@@ -5,6 +5,12 @@ using UnityEngine;
 public class TutorialCollision : MonoBehaviour
 {
     private bool _locked = false;
+    private TutorialParticles _particles;
+
+    void Start()
+    {
+        _particles = GameObject.Find("Particles").GetComponent<TutorialParticles>();
+    }
     void OnTriggerEnter(Collider other)
     {
         Destroy(other.gameObject);
@@ -13,12 +19,15 @@ public class TutorialCollision : MonoBehaviour
 
         if (TutorialController.Instance.TutorialStep == TutorialStep.SpawnBall) {
             TutorialController.Instance.HitFirstTarget();
+            _particles.Poof(transform.position);
             _locked = true;
             StartCoroutine(Unlock());
             return;
         }
-        else {
+        else 
+        {
             TutorialController.Instance.HitSecondTarget();
+            _particles.Poof(transform.position);
         }
     }
 
