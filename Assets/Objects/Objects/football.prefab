@@ -265,7 +265,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 2
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -334,32 +334,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 499f142cbddaf2b4f97b408937cd4867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points: 70
-  timeStep: 0.05
-  minPreviewSpeed: 5
-  previewSmoothing: 20
-  directionSmoothing: 18
-  pumpHoldTime: 0.5
-  decayPerSecond: 12
-  throwColorGradient:
+  _points: 100
+  _timeStep: 0.05
+  _maxPreviewSpeed: 17.5
+  _minThrowSpeed: 3
+  _maxThrowSpeed: 7
+  _throwColorGradient:
     serializedVersion: 2
-    key0: {r: 0.0039215684, g: 1, b: 0.39637035, a: 0.5529412}
-    key1: {r: 0.9093313, g: 1, b: 0, a: 0.5529412}
-    key2: {r: 1, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
+    key0: {r: 0, g: 0.9811321, b: 0.89986616, a: 0.6666667}
+    key1: {r: 0.023584902, g: 1, b: 0.56109434, a: 0.7058824}
+    key2: {r: 0.86951685, g: 1, b: 0.30588233, a: 0}
+    key3: {r: 1, g: 0.47913203, b: 0, a: 0}
+    key4: {r: 1, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 34695
-    ctime2: 65535
-    ctime3: 0
-    ctime4: 0
+    ctime1: 16384
+    ctime2: 30455
+    ctime3: 46838
+    ctime4: 65535
     ctime5: 0
     ctime6: 0
     ctime7: 0
-    atime0: 0
+    atime0: 386
     atime1: 65535
     atime2: 0
     atime3: 0
@@ -369,11 +367,21 @@ MonoBehaviour:
     atime7: 0
     m_Mode: 0
     m_ColorSpace: -1
-    m_NumColorKeys: 3
+    m_NumColorKeys: 5
     m_NumAlphaKeys: 2
-  maxColorSpeed: 16
-  minWidth: 0.07
-  maxWidth: 0.15
+  _maxColorSpeed: 17.5
+  _minWidth: 0.05
+  _maxWidth: 0.1
+  _maxWidthBoost: 1.8
+  _minArcLift: 0.05
+  _maxArcLift: 0.22
+  _backStart: 0
+  _backMax: 0.5
+  _offset: 0.2
+  _pumpFakeHoldTime: 0.6
+  _pumpFakeFadeSpeed: 2
+  _pumpFakeRetract: 0.1
+  _pumpFakeTriggerPullback: 0.15
 --- !u!1 &3760276381624830121
 GameObject:
   m_ObjectHideFlags: 0

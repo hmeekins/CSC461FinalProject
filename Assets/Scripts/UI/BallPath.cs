@@ -1,161 +1,224 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BallPath : MonoBehaviour
 {
-    public int points = 40;
-    public float timeStep = 0.05f;
+    [Header("Trajectory")]
+    [SerializeField] private int _points = 40;
+    [SerializeField] private float _timeStep = 0.05f;
 
-    public float minPreviewSpeed = 6f;
-    public float previewSmoothing = 20f;
-    public float directionSmoothing = 18f;
+    [Header("Pullback Preview")]
+    [SerializeField] private float _maxPreviewSpeed = 20f;
 
-    public float pumpHoldTime = 0.3f;
-    public float decayPerSecond = 10f;
+    [Header("Throw Detection")]
+    [SerializeField] private float _minThrowSpeed = 1.5f;
+    [SerializeField] private float _maxThrowSpeed = 6f;
 
-    public Gradient throwColorGradient;
-    public float maxColorSpeed = 20f;
+    [Header("Visuals")]
+    [SerializeField] private Gradient _throwColorGradient;
+    [SerializeField] private float _maxColorSpeed = 20f;
 
-    public float minWidth = 0.01f;
-    public float maxWidth = 0.05f;
+    [SerializeField] private float _minWidth = 0.01f;
+    [SerializeField] private float _maxWidth = 0.05f;
+    [SerializeField] private float _maxWidthBoost = 1.8f;
+    [SerializeField] private float _minArcLift = 0.05f;
+    [SerializeField] private float _maxArcLift = 0.22f;
 
-    private LineRenderer path;
-    private BallBehaviour ball;
-    private Transform handTransform;
-    private Vector3 offset = new Vector3(0f, 90f, 20f);
+    [Header("Pullback")]
+    [SerializeField] private float _backStart = 0.00f;
+    [SerializeField] private float _backMax = 0.20f;
+    [SerializeField] private float _offset = 0f;
 
-    private Vector3 smoothedDir;
-    private float smoothedSpeed;
-    private float latchedSpeed;
-    private float latchedTime;
-    private bool isPreviewing;
-    private bool wasHoldingBall;
-    private Vector3 thrownPosition;
-    private Vector3 thrownVelocity;
+    [Header("Pump Fake Fade")]
+    [SerializeField] private float _pumpFakeHoldTime = 0.10f;
+    [SerializeField] private float _pumpFakeFadeSpeed = 4.0f;
+    [SerializeField] private float _pumpFakeRetract = 0.25f;
+    [SerializeField] private float _pumpFakeTriggerPullback = 0.15f;
+
+    private float _pumpFakeAlpha;
+    private float _pumpFakeHoldTimer;
+    private Vector3 _lastPreviewVelocity;
+
+    private LineRenderer _path;
+    private BallBehaviour _ball;
+    private Transform _handTransform;
+    private Transform _headTransform;
+
+    private bool _wasHoldingBall;
+    private Vector3 _thrownPosition;
+    private Vector3 _thrownVelocity;
 
     void Start()
     {
         var rig = FindObjectOfType<OVRCameraRig>();
-        handTransform = rig.rightHandAnchor;
-        path = gameObject.GetComponent<LineRenderer>();
-        ball = gameObject.GetComponent<BallBehaviour>();
+
+        if (!GameFlowController.Instance.LeftHanded)
+            _handTransform = rig.rightHandAnchor;
+        else
+            _handTransform = rig.leftHandAnchor;
+
+        _headTransform = rig.centerEyeAnchor;
+
+        _path = GetComponent<LineRenderer>();
+        _ball = GetComponent<BallBehaviour>();
     }
 
     void Update()
     {
-        bool isHoldingBall = ball.IsHoldingBall();
+        bool isHoldingBall = _ball.IsHoldingBall();
 
-        if (wasHoldingBall && !isHoldingBall)
+        if (_wasHoldingBall && !isHoldingBall)
         {
-            thrownPosition = transform.position;
-            thrownVelocity = ball.GetPredictedVelocity();
+            _thrownPosition = transform.position;
+            _thrownVelocity = _ball.GetPredictedVelocity();
         }
 
-        wasHoldingBall = isHoldingBall;
+        _wasHoldingBall = isHoldingBall;
 
-        if (GameFlowController.Instance.Variation == GameVariation.Variation4 ||
-        GameFlowController.Instance.Variation == GameVariation.Variation5 ||
-        GameFlowController.Instance.Variation == GameVariation.Variation6)
+        if (!ShouldShowPath())
         {
-            if (!isHoldingBall)
+            _path.enabled = false;
+            return;
+        }
+
+        if (isHoldingBall)
+        {
+            DrawHeldPath();
+        }
+        else
+        {
+            DrawThrownPath();
+        }
+    }
+
+    bool ShouldShowPath()
+    {
+        GameVariation variation = GameFlowController.Instance.Variation;
+
+        return variation == GameVariation.Variation4 ||
+               variation == GameVariation.Variation5 ||
+               variation == GameVariation.Variation6;
+    }
+
+    void DrawHeldPath()
+    {
+        Vector3 startPosition = transform.position;
+
+        Vector3 realVelocity = _ball.GetPredictedVelocity();
+        float realSpeed = realVelocity.magnitude;
+
+        float backAmount = GetBackAmount();
+        Vector3 headFlat = Vector3.ProjectOnPlane(_headTransform.forward, Vector3.up).normalized;
+        if (headFlat == Vector3.zero)
+            headFlat = Vector3.forward;
+
+        float arcLift = Mathf.Lerp(_minArcLift, _maxArcLift, backAmount);
+        float verticalAim = _headTransform.forward.y + arcLift;
+
+        Vector3 direction = new Vector3(headFlat.x, verticalAim, headFlat.z).normalized;
+
+        float pullbackSpeed = _maxPreviewSpeed * backAmount;
+        float throwConfidence = Mathf.InverseLerp(_minThrowSpeed, _maxThrowSpeed, realSpeed);
+        float finalSpeed = Mathf.Lerp(pullbackSpeed, realSpeed, throwConfidence);
+
+        Vector3 previewVelocity = direction * finalSpeed;
+
+        if (backAmount >= _pumpFakeTriggerPullback)
+        {
+            _pumpFakeAlpha = Mathf.Max(_pumpFakeAlpha, backAmount);
+            _pumpFakeHoldTimer = _pumpFakeHoldTime;
+            _lastPreviewVelocity = previewVelocity;
+        }
+        else
+        {
+            if (_pumpFakeHoldTimer > 0f)
             {
-                path.enabled = true;
-                DrawThrownPath();
-                return;
+                _pumpFakeHoldTimer -= Time.deltaTime;
             }
-
-            path.enabled = true;
-            DrawPath();
+            else
+            {
+                _pumpFakeAlpha = Mathf.MoveTowards(_pumpFakeAlpha, 0f, _pumpFakeFadeSpeed * Time.deltaTime);
+            }
         }
-    }
 
-    void UpdatePathVisuals(float speed)
-    {
-        float t = Mathf.InverseLerp(minPreviewSpeed, maxColorSpeed, speed);
-        Color c = throwColorGradient.Evaluate(t);
-        float w = Mathf.Lerp(minWidth, maxWidth, t);
+        float liveConfidence = Mathf.Clamp01(Mathf.Max(backAmount, throwConfidence));
 
-        path.startColor = c;
-        path.endColor = c;
-        path.startWidth = w;
-        path.endWidth = w;
-    }
+        bool usingLivePreview = backAmount > 0.001f || throwConfidence > 0.01f;
 
-    void DrawPath()
-    {
-        Vector3 position = transform.position;
+        Vector3 displayVelocity = usingLivePreview ? previewVelocity : _lastPreviewVelocity;
+        float displayConfidence = usingLivePreview ? liveConfidence : _pumpFakeAlpha;
 
-        Quaternion aimRot = handTransform.rotation * Quaternion.Euler(offset);
-        Vector3 aimDir = (aimRot * Vector3.left).normalized;
-
-        float currentSpeed = ball.GetPredictedVelocity().magnitude;
-        currentSpeed = Mathf.Max(currentSpeed, minPreviewSpeed);
-
-        float now = Time.time;
-
-        if (currentSpeed >= latchedSpeed)
+        if (displayConfidence <= 0.01f || displayVelocity.sqrMagnitude <= 0.0001f)
         {
-            latchedSpeed = currentSpeed;
-            latchedTime = now;
-        }
-        else
-        {
-            if (now - latchedTime > pumpHoldTime)
-                latchedSpeed = Mathf.Max(minPreviewSpeed, latchedSpeed - decayPerSecond * Time.deltaTime);
+            _path.enabled = false;
+            return;
         }
 
-        float aSpeed = 1f - Mathf.Exp(-previewSmoothing * Time.deltaTime);
-        float aDir = 1f - Mathf.Exp(-directionSmoothing * Time.deltaTime);
+        _path.enabled = true;
 
-        if (smoothedDir == Vector3.zero)
-            smoothedDir = aimDir;
-        else
-            smoothedDir = Vector3.Slerp(smoothedDir, aimDir, aDir);
+        float retractFactor = Mathf.Lerp(_pumpFakeRetract, 1f, displayConfidence);
+        displayVelocity *= retractFactor;
 
-        smoothedSpeed = Mathf.Lerp(smoothedSpeed, latchedSpeed, aSpeed);
-        UpdatePathVisuals(smoothedSpeed);
-
-        Vector3 p = position;
-        Vector3 v = smoothedDir * smoothedSpeed;
-
-        int count = points + 1;
-        path.positionCount = count;
-
-        path.SetPosition(0, p);
-
-        for (int i = 0; i < points; i++)
-        {
-            Vector3 nextP = p + v * timeStep + 0.5f * Physics.gravity * timeStep * timeStep;
-            Vector3 nextV = v + Physics.gravity * timeStep;
-
-            path.SetPosition(i + 1, nextP);
-
-            p = nextP;
-            v = nextV;
-        }
+        UpdatePathVisuals(displayVelocity.magnitude, displayConfidence);
+        DrawTrajectory(startPosition, displayVelocity);
     }
 
     void DrawThrownPath()
     {
-        Vector3 p = thrownPosition;
-        Vector3 v = thrownVelocity;
-        UpdatePathVisuals(v.magnitude);
+        _path.enabled = true;
+        UpdatePathVisuals(_thrownVelocity.magnitude, 1f);
+        DrawTrajectory(_thrownPosition, _thrownVelocity);
+    }
 
-        int count = points + 1;
-        path.positionCount = count;
+    float GetBackAmount()
+    {
+        Vector3 flatForward = Vector3.ProjectOnPlane(_headTransform.forward, Vector3.up).normalized;
 
-        path.SetPosition(0, p);
+        if (flatForward == Vector3.zero)
+            return 0f;
 
-        for (int i = 0; i < points; i++)
+        Vector3 toHand = _handTransform.position - _headTransform.position;
+        float pullBackDistance = Vector3.Dot(-flatForward, toHand) + _offset;
+
+        return Mathf.Clamp01(
+            Mathf.InverseLerp(_backStart, _backMax, pullBackDistance)
+        );
+    }
+
+    void DrawTrajectory(Vector3 startPosition, Vector3 startVelocity)
+    {
+        Vector3 position = startPosition;
+        Vector3 velocity = startVelocity;
+
+        _path.positionCount = _points + 1;
+        _path.SetPosition(0, position);
+
+        for (int i = 0; i < _points; i++)
         {
-            Vector3 nextP = p + v * timeStep + 0.5f * Physics.gravity * timeStep * timeStep;
-            Vector3 nextV = v + Physics.gravity * timeStep;
+            Vector3 nextPosition = position + velocity * _timeStep + 0.5f * Physics.gravity * _timeStep * _timeStep;
+            Vector3 nextVelocity = velocity + Physics.gravity * _timeStep;
 
-            path.SetPosition(i + 1, nextP);
+            _path.SetPosition(i + 1, nextPosition);
 
-            p = nextP;
-            v = nextV;
+            position = nextPosition;
+            velocity = nextVelocity;
         }
+    }
+
+    void UpdatePathVisuals(float speed, float confidence)
+    {
+        float t = Mathf.InverseLerp(0f, _maxColorSpeed, speed);
+        Color color = _throwColorGradient.Evaluate(t);
+
+        float alpha = confidence * confidence;
+        color.a *= alpha;
+
+        float baseWidth = Mathf.Lerp(_minWidth, _maxWidth, t);
+        float widthBoost = Mathf.Lerp(0.7f, _maxWidthBoost, confidence);
+        float finalWidth = baseWidth * widthBoost;
+
+        _path.startColor = color;
+        _path.endColor = color;
+        _path.startWidth = finalWidth;
+        _path.endWidth = finalWidth;
     }
 }
