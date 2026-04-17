@@ -17775,7 +17775,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3903482226883268833, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3903482226883268834, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
       propertyPath: m_Enabled
@@ -18158,9 +18158,9 @@ MonoBehaviour:
   rusherCollision: {fileID: 1890685609}
   Variation: 5
   UserId: 
-  MaxPlays: 3
-  IgnoreDowns: 1
-  DifficultyScaling: 0
+  MaxPlays: 1000
+  IgnoreDowns: 0
+  DifficultyScaling: 1
 --- !u!4 &780009711
 Transform:
   m_ObjectHideFlags: 0

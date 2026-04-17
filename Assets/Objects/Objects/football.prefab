@@ -376,8 +376,8 @@ MonoBehaviour:
   _minArcLift: 0.05
   _maxArcLift: 0.22
   _backStart: 0
-  _backMax: 0.5
-  _offset: 0.2
+  _backMax: 0.7
+  _offset: 0.3
   _pumpFakeHoldTime: 0.6
   _pumpFakeFadeSpeed: 2
   _pumpFakeRetract: 0.1
