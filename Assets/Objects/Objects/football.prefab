@@ -337,8 +337,8 @@ MonoBehaviour:
   _points: 100
   _timeStep: 0.05
   _maxPreviewSpeed: 17.5
-  _minThrowSpeed: 3
-  _maxThrowSpeed: 7
+  _minThrowSpeed: 5
+  _maxThrowSpeed: 8
   _throwColorGradient:
     serializedVersion: 2
     key0: {r: 0, g: 0.9811321, b: 0.89986616, a: 0.6666667}
@@ -375,13 +375,10 @@ MonoBehaviour:
   _maxWidthBoost: 1.8
   _minArcLift: 0.05
   _maxArcLift: 0.22
+  _pullbackExponent: 1.5
   _backStart: 0
   _backMax: 0.7
   _offset: 0.3
-  _pumpFakeHoldTime: 0.6
-  _pumpFakeFadeSpeed: 2
-  _pumpFakeRetract: 0.1
-  _pumpFakeTriggerPullback: 0.15
 --- !u!1 &3760276381624830121
 GameObject:
   m_ObjectHideFlags: 0

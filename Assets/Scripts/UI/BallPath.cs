@@ -24,19 +24,10 @@ public class BallPath : MonoBehaviour
     [SerializeField] private float _maxArcLift = 0.22f;
 
     [Header("Pullback")]
+    [SerializeField] private float _pullbackExponent = 2.5f;
     [SerializeField] private float _backStart = 0.00f;
     [SerializeField] private float _backMax = 0.20f;
     [SerializeField] private float _offset = 0f;
-
-    [Header("Pump Fake Fade")]
-    [SerializeField] private float _pumpFakeHoldTime = 0.10f;
-    [SerializeField] private float _pumpFakeFadeSpeed = 4.0f;
-    [SerializeField] private float _pumpFakeRetract = 0.25f;
-    [SerializeField] private float _pumpFakeTriggerPullback = 0.15f;
-
-    private float _pumpFakeAlpha;
-    private float _pumpFakeHoldTimer;
-    private Vector3 _lastPreviewVelocity;
 
     private LineRenderer _path;
     private BallBehaviour _ball;
@@ -107,47 +98,26 @@ public class BallPath : MonoBehaviour
         float realSpeed = realVelocity.magnitude;
 
         float backAmount = GetBackAmount();
+
         Vector3 headFlat = Vector3.ProjectOnPlane(_headTransform.forward, Vector3.up).normalized;
         if (headFlat == Vector3.zero)
             headFlat = Vector3.forward;
 
-        float arcLift = Mathf.Lerp(_minArcLift, _maxArcLift, backAmount);
+        float curvedBackAmount = 1f - Mathf.Pow(1f - backAmount, _pullbackExponent);
+
+        float arcLift = Mathf.Lerp(_minArcLift, _maxArcLift, curvedBackAmount);
         float verticalAim = _headTransform.forward.y + arcLift;
 
         Vector3 direction = new Vector3(headFlat.x, verticalAim, headFlat.z).normalized;
 
-        float pullbackSpeed = _maxPreviewSpeed * backAmount;
+        float pullbackSpeed = _maxPreviewSpeed * curvedBackAmount;
         float throwConfidence = Mathf.InverseLerp(_minThrowSpeed, _maxThrowSpeed, realSpeed);
         float finalSpeed = Mathf.Lerp(pullbackSpeed, realSpeed, throwConfidence);
 
         Vector3 previewVelocity = direction * finalSpeed;
+        float confidence = Mathf.Clamp01(Mathf.Max(backAmount, throwConfidence));
 
-        if (backAmount >= _pumpFakeTriggerPullback)
-        {
-            _pumpFakeAlpha = Mathf.Max(_pumpFakeAlpha, backAmount);
-            _pumpFakeHoldTimer = _pumpFakeHoldTime;
-            _lastPreviewVelocity = previewVelocity;
-        }
-        else
-        {
-            if (_pumpFakeHoldTimer > 0f)
-            {
-                _pumpFakeHoldTimer -= Time.deltaTime;
-            }
-            else
-            {
-                _pumpFakeAlpha = Mathf.MoveTowards(_pumpFakeAlpha, 0f, _pumpFakeFadeSpeed * Time.deltaTime);
-            }
-        }
-
-        float liveConfidence = Mathf.Clamp01(Mathf.Max(backAmount, throwConfidence));
-
-        bool usingLivePreview = backAmount > 0.001f || throwConfidence > 0.01f;
-
-        Vector3 displayVelocity = usingLivePreview ? previewVelocity : _lastPreviewVelocity;
-        float displayConfidence = usingLivePreview ? liveConfidence : _pumpFakeAlpha;
-
-        if (displayConfidence <= 0.01f || displayVelocity.sqrMagnitude <= 0.0001f)
+        if (confidence <= 0.01f || previewVelocity.sqrMagnitude <= 0.0001f)
         {
             _path.enabled = false;
             return;
@@ -155,11 +125,8 @@ public class BallPath : MonoBehaviour
 
         _path.enabled = true;
 
-        float retractFactor = Mathf.Lerp(_pumpFakeRetract, 1f, displayConfidence);
-        displayVelocity *= retractFactor;
-
-        UpdatePathVisuals(displayVelocity.magnitude, displayConfidence);
-        DrawTrajectory(startPosition, displayVelocity);
+        UpdatePathVisuals(previewVelocity.magnitude, confidence);
+        DrawTrajectory(startPosition, previewVelocity);
     }
 
     void DrawThrownPath()
@@ -209,7 +176,7 @@ public class BallPath : MonoBehaviour
         float t = Mathf.InverseLerp(0f, _maxColorSpeed, speed);
         Color color = _throwColorGradient.Evaluate(t);
 
-        float alpha = confidence * confidence;
+        float alpha = confidence;
         color.a *= alpha;
 
         float baseWidth = Mathf.Lerp(_minWidth, _maxWidth, t);

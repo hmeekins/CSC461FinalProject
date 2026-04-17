@@ -18158,9 +18158,9 @@ MonoBehaviour:
   rusherCollision: {fileID: 1890685609}
   Variation: 5
   UserId: 
-  MaxPlays: 1000
+  MaxPlays: 5
   IgnoreDowns: 0
-  DifficultyScaling: 1
+  DifficultyScaling: 0
 --- !u!4 &780009711
 Transform:
   m_ObjectHideFlags: 0
