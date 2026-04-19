@@ -6,6 +6,7 @@ public enum TutorialStep
     {
         GameBasics,
         SpawnBall,
+        FinishedZones,
         HitTarget,
         HitMovingTarget,
         Defenders,
@@ -37,6 +38,12 @@ public class TutorialController : MonoBehaviour
     public void BallSpawned()
     {
         Instance.TutorialStep = TutorialStep.SpawnBall;
+        _chime.Play();
+    }
+
+    public void FinishZones()
+    {
+        Instance.TutorialStep = TutorialStep.FinishedZones;
         _chime.Play();
     }
 

@@ -10,6 +10,7 @@ public class SceneController : MonoBehaviour
     private GameObject _continueB;
     private GameObject _startGameB;
     private GameObject _returnB;
+    private GameObject _zones;
 
     
     void Start()
@@ -20,13 +21,14 @@ public class SceneController : MonoBehaviour
         _continueB = GameObject.Find("Continue");
         _startGameB = GameObject.Find("StartGame");
         _returnB = GameObject.Find("Return");
+        _zones = GameObject.Find("Zones");
     }
 
     void Update()
     {
         if (TutorialController.Instance.TutorialStep == TutorialStep.GameBasics)
             CheckBall();
-
+        ZoneVisible();
         TargetVisible();
         EnemyVisible();
         MenuVisibility();
@@ -41,9 +43,17 @@ public class SceneController : MonoBehaviour
         }
     }
 
+    public void ZoneVisible()
+    {
+        if (TutorialController.Instance.TutorialStep == TutorialStep.SpawnBall)
+            _zones.SetActive(true);
+        else
+            _zones.SetActive(false);
+    }
+
     private void TargetVisible()
     {
-        if(TutorialController.Instance.TutorialStep == TutorialStep.SpawnBall || TutorialController.Instance.TutorialStep == TutorialStep.HitTarget)
+        if(TutorialController.Instance.TutorialStep == TutorialStep.FinishedZones || TutorialController.Instance.TutorialStep == TutorialStep.HitTarget)
             _target.SetActive(true);
         else
             _target.SetActive(false);
@@ -64,7 +74,7 @@ public class SceneController : MonoBehaviour
         else
             _controllerImage.SetActive(false);
 
-        if (TutorialController.Instance.TutorialStep == TutorialStep.HitMovingTarget || TutorialController.Instance.TutorialStep == TutorialStep.Defenders || TutorialController.Instance.TutorialStep == TutorialStep.Rusher)
+        if (TutorialController.Instance.TutorialStep == TutorialStep.SpawnBall || TutorialController.Instance.TutorialStep == TutorialStep.HitMovingTarget || TutorialController.Instance.TutorialStep == TutorialStep.Defenders || TutorialController.Instance.TutorialStep == TutorialStep.Rusher)
             _continueB.SetActive(true);
         else
             _continueB.SetActive(false);
