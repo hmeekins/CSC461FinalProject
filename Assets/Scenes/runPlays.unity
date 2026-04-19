@@ -18169,7 +18169,7 @@ MonoBehaviour:
   rusherCollision: {fileID: 1890685609}
   Variation: 5
   UserId: 
-  MaxPlays: 5
+  MaxPlays: 10
   IgnoreDowns: 0
   DifficultyScaling: 0
 --- !u!4 &780009711

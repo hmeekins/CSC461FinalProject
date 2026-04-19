@@ -39,7 +39,7 @@ public class BallSpawner : MonoBehaviour
         }
         UnityEngine.Debug.Log(controller + " " + triggerAxis);
     }
-    
+
     private void Update()
     {
         float triggerValue = OVRInput.Get(triggerAxis, controller);
@@ -88,7 +88,10 @@ public class BallSpawner : MonoBehaviour
 
     public bool isUsingUI()
     {
-        return _rightRayInteractor.HasInteractable || _leftRayInteractor.HasInteractable;
+        if (!GameFlowController.Instance.LeftHanded)
+            return _rightRayInteractor.HasInteractable;
+        else
+            return _leftRayInteractor.HasInteractable;
     }
 
 }
