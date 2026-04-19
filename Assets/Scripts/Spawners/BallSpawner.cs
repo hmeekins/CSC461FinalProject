@@ -1,11 +1,16 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Oculus.Interaction;
 
 public class BallSpawner : MonoBehaviour
 {
     public GameObject objectPrefab;
     [SerializeField] private bool StartPlayOnBallSpawn;
+    
+
+    [SerializeField] private RayInteractor _rightRayInteractor;
+    [SerializeField] private RayInteractor _leftRayInteractor;
     
     private OVRInput.Axis1D triggerAxis;
     public float pressThreshold = 0.8f;
@@ -34,14 +39,20 @@ public class BallSpawner : MonoBehaviour
         }
         UnityEngine.Debug.Log(controller + " " + triggerAxis);
     }
+    
     private void Update()
     {
         float triggerValue = OVRInput.Get(triggerAxis, controller);
 
         if (GameFlowController.Instance.State != GameState.WaitingForSnap) 
             return;
+        
+        if (isUsingUI())
+            return;
+
         if (triggerValue < pressThreshold)
             hasReleasedTrigger = true;
+            
         if (currentObject == null && triggerValue >= pressThreshold && hasReleasedTrigger == true)
         {   
             SpawnObjectInHand();
@@ -73,6 +84,11 @@ public class BallSpawner : MonoBehaviour
         }
 
         _velHistory.Clear();
+    }
+
+    public bool isUsingUI()
+    {
+        return _rightRayInteractor.HasInteractable || _leftRayInteractor.HasInteractable;
     }
 
 }

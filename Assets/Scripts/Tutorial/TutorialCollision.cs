@@ -17,7 +17,7 @@ public class TutorialCollision : MonoBehaviour
         if (_locked) 
             return;
 
-        if (TutorialController.Instance.TutorialStep == TutorialStep.SpawnBall) {
+        if (TutorialController.Instance.TutorialStep == TutorialStep.FinishedZones) {
             TutorialController.Instance.HitFirstTarget();
             _particles.Poof(transform.position);
             _locked = true;

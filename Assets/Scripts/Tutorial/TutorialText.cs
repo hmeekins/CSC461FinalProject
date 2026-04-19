@@ -17,13 +17,13 @@ public class TutorialText : MonoBehaviour
         case TutorialStep.GameBasics:
             _tutorial.text = "Welcome to Spiral VR! Your goal is to complete passes and rack up the highest score possible. To spawn a ball, press and hold the front trigger.";
             break;
-            
+
         case TutorialStep.SpawnBall:
-            _tutorial.text = "Great! Now you can throw the ball. Use a natural throwing motion, and release the trigger just like you would release a real ball.";
+            _tutorial.text = "Great! Now you can throw the ball. Use a natural throwing motion, and release the trigger just like you would release a real ball. See if you can throw to each zone.";
             break;
 
         case TutorialStep.FinishedZones:
-            _tutorial.text = "Nice! Now throw the ball at the target.";
+            _tutorial.text = "Nice! Now that you have an idea of how to throw the ball, try hitting the target.";
             break;
 
         case TutorialStep.HitTarget:
