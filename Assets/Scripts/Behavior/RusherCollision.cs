@@ -52,7 +52,7 @@ public class RusherCollision : MonoBehaviour
             _audioSource.Play();
             AudioSource.PlayClipAtPoint(_audioSource.clip, transform.position);
         }
-        GameFlowController.Instance.OnPlayerTackled();
+        
         GlobalVariables.tackled = true;
         yield return StartCoroutine(ApplyKnockback(hitSourcePos));
         yield return StartCoroutine(ImpactShake());
@@ -62,8 +62,8 @@ public class RusherCollision : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         OVRInput.SetControllerVibration(0f, 0f, OVRInput.Controller.RTouch);
         OVRInput.SetControllerVibration(0f, 0f, OVRInput.Controller.LTouch);
-
         GlobalVariables.downs += 1;
+        GameFlowController.Instance.OnPlayerTackled();  
     }
 
     private IEnumerator ImpactShake()
