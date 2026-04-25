@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LobbyLoader : MonoBehaviour
+public class SceneLoader : MonoBehaviour
 {
-    public void LoadLobby()
+    public void StartScene(string SceneName)
     {
-        SceneManager.LoadScene("LockerRoom");
+        SceneManager.LoadScene(SceneName);
     }
 }

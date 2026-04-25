@@ -20955,15 +20955,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 908121855}
-        m_TargetAssemblyTypeName: ReloadScene, Assembly-CSharp
-        m_MethodName: RestartGame
-        m_Mode: 1
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: StartScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: runPlays
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &908121853
@@ -21013,7 +21013,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 908121850}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cb09f0c1ecc5724ca26ae540210cbf6, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d25fa8551b857b46a8bee2a9848ce12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &908531306
@@ -21537,7 +21537,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 926009554}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e02a7f31dcd7a1046b9c849fca1acf8a, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d25fa8551b857b46a8bee2a9848ce12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &926009557
@@ -21585,15 +21585,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 926009556}
-        m_TargetAssemblyTypeName: LobbyLoader, Assembly-CSharp
-        m_MethodName: LoadLobby
-        m_Mode: 1
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: StartScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: LockerRoom
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &926009558
