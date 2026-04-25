@@ -57,6 +57,10 @@ public class GameFlowController : MonoBehaviour
     private void Start()
     {
         GlobalVariables.ResetData();
+        if (GlobalVariables.showAimPath)
+            Instance.Variation = GameVariation.Variation5;
+        else
+            Instance.Variation = GameVariation.Variation2;
         BeginGame();
     }
 

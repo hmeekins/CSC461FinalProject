@@ -140,7 +140,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1.8
+  m_Radius: 2.3
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &3963325430935750943
 AudioSource:
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e99dbc541be4f564181ec994fa5a7bb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPosition: 
+  PlayerPosition: 
   speed: 5
   football: {fileID: 0}
 --- !u!114 &2567553447994771268
@@ -265,11 +265,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96194c1ffce99c34f94687c4dd71fb0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  atTargetZ: 0
-  atTargetX: 0
-  playerPosition: 
-  targetZ: 0
-  targetX: 0
+  AtTargetZ: 0
+  AtTargetX: 0
+  PlayerPosition: 
+  TargetZ: 0
+  TargetX: 0
 --- !u!198 &8853353505542255236
 ParticleSystem:
   m_ObjectHideFlags: 0

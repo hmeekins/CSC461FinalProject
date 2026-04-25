@@ -168,7 +168,7 @@ MonoBehaviour:
   startSpeed: 8
   minSpeed: 3
   slowDownTime: 8
-  stopDistance: 1.5
+  stopDistance: 2.3
   rotationSpeed: 5
 --- !u!1 &5253804713589231798
 GameObject:

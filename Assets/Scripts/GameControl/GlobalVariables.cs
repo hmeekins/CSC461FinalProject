@@ -22,6 +22,7 @@ public static class GlobalVariables
     public static bool teammateCaught = false;
     public static bool miss = false;
     public static bool tackled = false;
+    public static bool showAimPath = false;
 
     public static void ResetData()
     {
