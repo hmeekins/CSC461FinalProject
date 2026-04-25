@@ -34360,15 +34360,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1427040592}
-        m_TargetAssemblyTypeName: GameLoader, Assembly-CSharp
-        m_MethodName: LoadGame
-        m_Mode: 1
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: StartScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: runPlays
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1427040594
@@ -50635,7 +50635,7 @@ GameObject:
   - component: {fileID: 2036412070}
   - component: {fileID: 2036412069}
   - component: {fileID: 2036412068}
-  - component: {fileID: 2036412067}
+  - component: {fileID: 2036412071}
   m_Layer: 5
   m_Name: Return
   m_TagString: Untagged
@@ -50663,18 +50663,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0.7049994, y: -0.494}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2036412067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2036412065}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e02a7f31dcd7a1046b9c849fca1acf8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2036412068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50719,16 +50707,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2036412067}
-        m_TargetAssemblyTypeName: LobbyLoader, Assembly-CSharp
-        m_MethodName: LoadLobby
-        m_Mode: 1
+      - m_Target: {fileID: 2036412071}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: StartScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: LockerRoom
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &2036412069
@@ -50769,6 +50757,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2036412065}
   m_CullTransparentMesh: 1
+--- !u!114 &2036412071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036412065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d25fa8551b857b46a8bee2a9848ce12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2039109032
 GameObject:
   m_ObjectHideFlags: 0
