@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        Vector2 input = GameFlowController.Instance.LeftHanded
+        Vector2 input = GlobalVariables.leftHanded
             ? OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick)
             : OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
         if (GameFlowController.Instance.State == GameState.PlayRunning) {

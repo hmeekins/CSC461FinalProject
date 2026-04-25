@@ -42,7 +42,7 @@ public class BallPath : MonoBehaviour
     {
         var rig = FindObjectOfType<OVRCameraRig>();
 
-        if (!GameFlowController.Instance.LeftHanded)
+        if (!GlobalVariables.leftHanded)
             _handTransform = rig.rightHandAnchor;
         else
             _handTransform = rig.leftHandAnchor;

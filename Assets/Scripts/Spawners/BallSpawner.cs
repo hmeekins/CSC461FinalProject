@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Oculus.Interaction;
 
 public class BallSpawner : MonoBehaviour
@@ -24,8 +23,9 @@ public class BallSpawner : MonoBehaviour
 
     public void Start()
     {
+        Debug.Log("BallSpawner sees leftHanded as: " + GlobalVariables.leftHanded);
         OVRCameraRig rig = FindObjectOfType<OVRCameraRig>();
-        if (!GameFlowController.Instance.LeftHanded)
+        if (!GlobalVariables.leftHanded)
         {
             controller = OVRInput.Controller.RTouch;
             handTransform = rig.rightHandAnchor;
@@ -88,7 +88,7 @@ public class BallSpawner : MonoBehaviour
 
     public bool isUsingUI()
     {
-        if (!GameFlowController.Instance.LeftHanded)
+        if (!GlobalVariables.leftHanded)
             return _rightRayInteractor.HasInteractable;
         else
             return _leftRayInteractor.HasInteractable;

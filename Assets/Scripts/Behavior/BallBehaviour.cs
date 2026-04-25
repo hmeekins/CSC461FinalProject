@@ -22,7 +22,7 @@ public class BallBehaviour : MonoBehaviour
         _currentObject = gameObject;
         var rig = FindObjectOfType<OVRCameraRig>();
         _trackingSpace = rig.trackingSpace;
-        if (!GameFlowController.Instance.LeftHanded)
+        if (!GlobalVariables.leftHanded)
         {
             _controller = OVRInput.Controller.RTouch;
             _handTransform = rig.rightHandAnchor;
