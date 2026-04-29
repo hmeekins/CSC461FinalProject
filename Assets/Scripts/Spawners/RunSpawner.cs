@@ -22,8 +22,14 @@ public class RunSpawner : MonoBehaviour
     
     void Update()
     {
-        if (GameFlowController.Instance.State == GameState.WaitingForSnap && rightRunner == null && leftRunner == null) 
+        if (GameFlowController.Instance.State == GameState.WaitingForSnap && rightRunner == null && leftRunner == null)
             SpawnFootballPlayer();
+
+        if (GlobalVariables.teammate1Finished && GlobalVariables.teammate2Finished && !GlobalVariables.endPlay) 
+        {
+            GlobalVariables.downs += 1;
+            GameFlowController.Instance.OnRunFinished();
+        }
     }
 
     /// <summary>

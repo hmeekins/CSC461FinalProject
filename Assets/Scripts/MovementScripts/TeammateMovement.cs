@@ -78,14 +78,20 @@ public class TeammateMovement : MonoBehaviour
             if (transform.position.z == GlobalVariables.leftTargetZ)
                 AtTargetZ = true;
             if (transform.position.x == GlobalVariables.leftTargetX)
+            {
+                GlobalVariables.teammate1Finished = true;
                 Destroy(gameObject);
+            }
         }
         else
         {
             if (transform.position.z == GlobalVariables.rightTargetZ)
                 AtTargetZ = true;
             if (transform.position.x == GlobalVariables.rightTargetX)
+            {
+                GlobalVariables.teammate2Finished = true;
                 Destroy(gameObject);
+            }
         }
     }
 }

@@ -23,6 +23,9 @@ public static class GlobalVariables
     public static bool miss = false;
     public static bool tackled = false;
     public static bool showAimPath = false;
+    public static bool teammate1Finished = false;
+    public static bool teammate2Finished = false;
+    public static bool endPlay = false;
 
     public static void ResetData()
     {
@@ -33,5 +36,8 @@ public static class GlobalVariables
         miss = false;
         tackled = false;
         successfulPasses = 0;
+        teammate1Finished = false;
+        teammate2Finished = false;
+        endPlay = false;
     }
 }

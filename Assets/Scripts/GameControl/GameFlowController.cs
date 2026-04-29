@@ -76,7 +76,10 @@ public class GameFlowController : MonoBehaviour
         GlobalVariables.teammateCaught = false;
         GlobalVariables.miss = false;
         GlobalVariables.tackled = false;
+        GlobalVariables.teammate1Finished = false;
+        GlobalVariables.teammate2Finished = false;
         rusherCollision.HasTriggered = false;
+
         State = GameState.WaitingForSnap;
     }
 
@@ -91,10 +94,10 @@ public class GameFlowController : MonoBehaviour
     {
         if (GlobalVariables.downs > 4 && !IgnoreDowns)
         {
-            GameFlowController.Instance.EndGame();
+            Instance.EndGame();
             return;
         }
-
+        GlobalVariables.endPlay = true;
         IsResolvingPlay = true;
         DestroyByTag("Ball");
         StartCoroutine(FinishSequence());
@@ -104,10 +107,10 @@ public class GameFlowController : MonoBehaviour
     {
         if (GlobalVariables.downs > 4 && !IgnoreDowns)
         {
-            GameFlowController.Instance.EndGame();
+            Instance.EndGame();
             return;
         }
-        
+        GlobalVariables.endPlay = true;
         IsResolvingPlay = true;
         StartCoroutine(FinishSequence());
     }
@@ -116,12 +119,25 @@ public class GameFlowController : MonoBehaviour
     {
         if (GlobalVariables.downs > 4 && !IgnoreDowns)
         {
-            GameFlowController.Instance.EndGame();
+            Instance.EndGame();
             return;
         }
-
+        GlobalVariables.endPlay = true;
         IsResolvingPlay = true;
         DestroyByTag("Ball");
+        StartCoroutine(FinishSequence());
+    }
+
+    public void OnRunFinished()
+    {
+        if (GlobalVariables.downs > 4 && !IgnoreDowns)
+        {
+            Instance.EndGame();
+            return;
+        }
+        GlobalVariables.endPlay = true;
+        IsResolvingPlay = true;
+        CleanupField();
         StartCoroutine(FinishSequence());
     }
 
