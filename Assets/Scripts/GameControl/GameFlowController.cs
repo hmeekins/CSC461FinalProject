@@ -57,6 +57,7 @@ public class GameFlowController : MonoBehaviour
     private void Start()
     {
         GlobalVariables.ResetData();
+        CsvLogger.InitializeLogger();
         BeginGame();
     }
 
@@ -124,6 +125,7 @@ public class GameFlowController : MonoBehaviour
     public void FinishReset()
     {
         IsResolvingPlay = false;
+        GameData.NextPlay();
         EnterWaitingForSnap();
     }
 

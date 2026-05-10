@@ -40,6 +40,8 @@ public class RusherCollision : MonoBehaviour
                 _audioFade.FadeOut(1, 4f);
                 HasTriggered = true;
                 GameData.RegisterTackle();
+                CsvLogger.SaveEventData("Tackle", GameData.PlayNum);
+
                 StartCoroutine(TackleSequence(other.transform.position));
             }
         }

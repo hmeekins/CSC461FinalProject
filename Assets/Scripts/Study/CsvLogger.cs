@@ -5,26 +5,47 @@ using UnityEngine;
 
 public static class CsvLogger
 {
-    public static void SaveRoundData(string movementFile) 
+    private static string _directory;
+    private static DateTimeOffset _trialStartTime;
+
+    public static void InitializeLogger()
     {
-        string directory = Path.Combine(Application.dataPath, "csv");
-        if (!Directory.Exists(directory))
+        string userFolder = $"User_{GameFlowController.Instance.UserId}";
+
+        _directory = Path.Combine(
+            Application.dataPath,
+            "csv",
+            userFolder
+        );
+
+        if (!Directory.Exists(_directory))
         {
-            Directory.CreateDirectory(directory);
+            Directory.CreateDirectory(_directory);
         }
 
-        string filePath = Path.Combine(directory, $"game_data{GameFlowController.Instance.UserId}.csv");
+        _trialStartTime = DateTimeOffset.UtcNow;
+
+        Debug.Log("CSV logger initialized at: " + _directory);
+    }
+
+    public static void SaveRoundData(string movementFile)
+    {
+        string filePath = Path.Combine(
+            _directory,
+            $"game_data_variation_{GameData.Variation}.csv"
+        );
+
         bool fileExists = File.Exists(filePath);
         StringBuilder sb = new StringBuilder();
 
         if (!fileExists)
         {
-            sb.AppendLine("Date,MovementFile,Variation,NumPasses,CompletedPasses,Accuracy,NumInterceptions,NumTackles,RoundDuration(s),AverageDistance(m)"); 
+            sb.AppendLine("Date,MovementFile,Variation,NumPasses,CompletedPasses,Accuracy,NumInterceptions,NumTackles,RoundDuration(s),AverageDistance(m)");
         }
 
         sb.AppendLine(string.Join(",",
-            DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToLongTimeString(),
-            movementFile, 
+            DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+            EscapeCsv(movementFile),
             GameData.Variation,
             GameData.NumPasses,
             GameData.CompletedPasses,
@@ -36,36 +57,22 @@ public static class CsvLogger
         ));
 
         File.AppendAllText(filePath, sb.ToString());
-        Debug.Log("CSV saved to: " + filePath);
+        Debug.Log("Round CSV saved to: " + filePath);
     }
 
-    public static string SaveMovementData() 
+    public static string SaveMovementData()
     {
-        string directory = Path.Combine(Application.dataPath, "csv");
-        if (!Directory.Exists(directory))
-        {
-            Directory.CreateDirectory(directory);
-        }
+        string movementFileName = $"movement_data_variation_{GameData.Variation}.csv";
+        string filePath = Path.Combine(_directory, movementFileName);
 
-        string timestamp = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToLongTimeString();
-
-        // Replace invalid filename characters (like / and :)
-        foreach (var c in Path.GetInvalidFileNameChars())
-        {
-            timestamp = timestamp.Replace(c, '.');
-        }
-
-        string movementFileName = $"movementData_{GameFlowController.Instance.UserId}_{timestamp}.csv"; 
-        string filePath = Path.Combine(directory, movementFileName); 
-    
         StringBuilder sb = new StringBuilder();
 
-        sb.AppendLine("MovementFile,PlayNum,Timestamp,HeadPosX,HeadPosY,HeadPosZ,HeadRotX,HeadRotY,HeadRotZ,HeadRotW,LeftHandPosX,LeftHandPosY,LeftHandPosZ,LeftHandRotX,LeftHandRotY,LeftHandRotZ,LeftHandRotW,RightHandPosX,RightHandPosY,RightHandPosZ,RightHandRotX,RightHandRotY,RightHandRotZ,RightHandRotW"); 
-        
+        sb.AppendLine("MovementFile,PlayNum,Timestamp,HeadPosX,HeadPosY,HeadPosZ,HeadRotX,HeadRotY,HeadRotZ,HeadRotW,LeftHandPosX,LeftHandPosY,LeftHandPosZ,LeftHandRotX,LeftHandRotY,LeftHandRotZ,LeftHandRotW,RightHandPosX,RightHandPosY,RightHandPosZ,RightHandRotX,RightHandRotY,RightHandRotZ,RightHandRotW");
+
         foreach (MovementSample sample in GameData.MovementSamples)
         {
             sb.AppendLine(string.Join(",",
-                movementFileName, 
+                EscapeCsv(movementFileName),
                 sample.PlayNum,
                 sample.Timestamp,
 
@@ -97,6 +104,55 @@ public static class CsvLogger
 
         File.WriteAllText(filePath, sb.ToString());
         Debug.Log("Movement CSV saved to: " + filePath);
-        return movementFileName; 
+
+        return movementFileName;
+    }
+
+    public static void SaveEventData(string gameEvent, int playNum, string eventDetail = "")
+    {
+        string filePath = Path.Combine(
+            _directory,
+            $"event_data_variation_{GameData.Variation}.csv"
+        );
+
+        bool fileExists = File.Exists(filePath);
+        StringBuilder sb = new StringBuilder();
+
+        if (!fileExists)
+        {
+            sb.AppendLine("DateTimeUTC,UnixTimeMs,TrialTimeS,Variation,PlayNum,EventType");
+        }
+
+        DateTimeOffset now = DateTimeOffset.UtcNow;
+
+        long unixTimeMs = now.ToUnixTimeMilliseconds();
+        double trialTimeS = (now - _trialStartTime).TotalSeconds;
+
+        sb.AppendLine(string.Join(",",
+            now.ToString("O"),
+            unixTimeMs,
+            trialTimeS.ToString("F3"),
+            GameData.Variation,
+            playNum,
+            EscapeCsv(gameEvent)
+        ));
+
+        File.AppendAllText(filePath, sb.ToString());
+        Debug.Log("Event CSV saved to: " + filePath);
+    }
+
+    private static string EscapeCsv(string value)
+    {
+        if (string.IsNullOrEmpty(value))
+        {
+            return "";
+        }
+
+        if (value.Contains(",") || value.Contains("\"") || value.Contains("\n"))
+        {
+            return "\"" + value.Replace("\"", "\"\"") + "\"";
+        }
+
+        return value;
     }
 }

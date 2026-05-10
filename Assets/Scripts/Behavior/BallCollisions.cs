@@ -38,6 +38,7 @@ public class BallCollisions : MonoBehaviour
 
             _distance = Vector3.Distance(GlobalVariables.ballPosition, transform.position);
             GameData.AddDistance(_distance);
+            CsvLogger.SaveEventData("Incomplete Pass", GameData.PlayNum);
 
             GameFlowController.Instance.OnIncomplete();
         }
@@ -71,6 +72,7 @@ public class BallCollisions : MonoBehaviour
 
             GameData.RegisterCompletedPass();
             GameData.AddDistance(_distance);
+            CsvLogger.SaveEventData("Successful Pass", GameData.PlayNum);
             
             GameFlowController.Instance.EndPlay();
         }
@@ -88,6 +90,7 @@ public class BallCollisions : MonoBehaviour
            
             GameData.AddDistance(_distance);
             GameData.RegisterInterception();
+            CsvLogger.SaveEventData("Interception", GameData.PlayNum);
 
             GameFlowController.Instance.EndPlay();
         }

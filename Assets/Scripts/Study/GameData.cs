@@ -12,6 +12,7 @@ public static class GameData
     public static int RoundDuration { get; private set; } = 0;
     public static List<float> Distances { get; private set; } = new List<float>();
     public static float AverageDistance { get; private set; } = 0f;
+    public static int PlayNum { get; private set; } = 1;
     public static List<MovementSample> MovementSamples {get; private set;} = new List<MovementSample>();
 
     public static void StartNewRound()
@@ -26,6 +27,7 @@ public static class GameData
         AverageDistance = 0f;
         Distances.Clear();
         MovementSamples.Clear();
+        PlayNum = 1;
     }
 
     public static void RegisterPass()
@@ -60,6 +62,11 @@ public static class GameData
     public static void AddMovementSample(MovementSample sample)
     {
         MovementSamples.Add(sample);
+    }
+
+    public static void NextPlay()
+    {
+        PlayNum++;
     }
 
 
