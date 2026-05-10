@@ -32,7 +32,7 @@ public static class CsvLogger
     {
         string filePath = Path.Combine(
             _directory,
-            $"game_data_variation_{GameData.Variation}.csv"
+            $"game_data_condition_{GameData.Variation}.csv"
         );
 
         bool fileExists = File.Exists(filePath);
@@ -40,7 +40,7 @@ public static class CsvLogger
 
         if (!fileExists)
         {
-            sb.AppendLine("Date,MovementFile,Variation,NumPasses,CompletedPasses,Accuracy,NumInterceptions,NumTackles,RoundDuration(s),AverageDistance(m)");
+            sb.AppendLine("Date,MovementFile,Condition,NumPasses,CompletedPasses,Accuracy,NumInterceptions,NumTackles,RoundDuration(s),AverageDistance(m)");
         }
 
         sb.AppendLine(string.Join(",",
@@ -62,7 +62,7 @@ public static class CsvLogger
 
     public static string SaveMovementData()
     {
-        string movementFileName = $"movement_data_variation_{GameData.Variation}.csv";
+        string movementFileName = $"movement_data_condition_{GameData.Variation}.csv";
         string filePath = Path.Combine(_directory, movementFileName);
 
         StringBuilder sb = new StringBuilder();
@@ -112,7 +112,7 @@ public static class CsvLogger
     {
         string filePath = Path.Combine(
             _directory,
-            $"event_data_variation_{GameData.Variation}.csv"
+            $"event_data_condition_{GameData.Variation}.csv"
         );
 
         bool fileExists = File.Exists(filePath);
@@ -120,7 +120,7 @@ public static class CsvLogger
 
         if (!fileExists)
         {
-            sb.AppendLine("DateTimeUTC,UnixTimeMs,TrialTimeS,Variation,PlayNum,EventType");
+            sb.AppendLine("DateTimeUTC,UnixTimeMs,TrialTimeS,Condition,PlayNum,EventType");
         }
 
         DateTimeOffset now = DateTimeOffset.UtcNow;
