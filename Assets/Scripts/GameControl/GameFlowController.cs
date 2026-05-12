@@ -58,6 +58,7 @@ public class GameFlowController : MonoBehaviour
     {
         GlobalVariables.ResetData();
         CsvLogger.InitializeLogger();
+        CsvLogger.SaveEventData("Game Start", GameData.PlayNum);
         BeginGame();
     }
 
@@ -133,6 +134,7 @@ public class GameFlowController : MonoBehaviour
     {
         if (GlobalVariables.score > GlobalVariables.highscore)
             SetHighScore();
+        CsvLogger.SaveEventData("Game Over", GameData.PlayNum);
         CleanupField();
         GameData.FinalizeRound();
         State = GameState.GameOver;

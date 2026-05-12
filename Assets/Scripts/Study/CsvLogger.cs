@@ -108,7 +108,7 @@ public static class CsvLogger
         return movementFileName;
     }
 
-    public static void SaveEventData(string gameEvent, int playNum, string eventDetail = "")
+    public static void SaveEventData(string gameEvent, int playNum)
     {
         string filePath = Path.Combine(
             _directory,
