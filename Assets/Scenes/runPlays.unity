@@ -18167,9 +18167,9 @@ MonoBehaviour:
   IsTutorial: 0
   resetPlayerOnPlayEnd: {fileID: 1357414560}
   rusherCollision: {fileID: 1890685609}
-  Variation: 5
-  UserId: 1
-  MaxPlays: 5
+  Variation: 1
+  UserId: test
+  MaxPlays: 20
   IgnoreDowns: 1
   DifficultyScaling: 0
 --- !u!4 &780009711

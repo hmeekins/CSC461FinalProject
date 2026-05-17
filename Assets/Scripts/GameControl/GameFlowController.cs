@@ -58,13 +58,13 @@ public class GameFlowController : MonoBehaviour
     {
         GlobalVariables.ResetData();
         CsvLogger.InitializeLogger();
-        CsvLogger.SaveEventData("Game Start", GameData.PlayNum);
         BeginGame();
     }
 
     public void BeginGame()
     {
         GameData.StartNewRound();
+        CsvLogger.SaveEventData("Game Start", GameData.PlayNum);
         State = GameState.StartGame;
     }
 
