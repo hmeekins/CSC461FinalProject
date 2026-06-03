@@ -2,6 +2,7 @@
   "dependencies": {
     "com.meta.xr.sdk.core": "81.0.0",
     "com.meta.xr.sdk.interaction.ovr": "81.0.0",
+    "com.unity.recorder": "4.0.3",
     "com.unity.xr.management": "4.5.3",
     "com.unity.xr.oculus": "4.2.0",
     "com.unity.xr.openxr": "1.12.1",
