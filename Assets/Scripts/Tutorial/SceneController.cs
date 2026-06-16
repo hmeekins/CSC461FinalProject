@@ -74,7 +74,9 @@ public class SceneController : MonoBehaviour
         else
             _controllerImage.SetActive(false);
 
-        if (TutorialController.Instance.TutorialStep == TutorialStep.SpawnBall || TutorialController.Instance.TutorialStep == TutorialStep.HitMovingTarget || TutorialController.Instance.TutorialStep == TutorialStep.Defenders || TutorialController.Instance.TutorialStep == TutorialStep.Rusher)
+        if (TutorialController.Instance.TutorialStep == TutorialStep.HitMovingTarget || TutorialController.Instance.TutorialStep == TutorialStep.Defenders || TutorialController.Instance.TutorialStep == TutorialStep.Rusher)
+            _continueB.SetActive(true);
+        else if (TutorialController.Instance.TutorialStep == TutorialStep.SpawnBall && TutorialController.Instance.ZonesHit == 3)
             _continueB.SetActive(true);
         else
             _continueB.SetActive(false);
