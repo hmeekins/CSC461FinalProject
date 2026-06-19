@@ -19,7 +19,7 @@ public class TutorialText : MonoBehaviour
             break;
 
         case TutorialStep.SpawnBall:
-            _tutorial.text = "Great! Now you can throw the ball. Use a natural throwing motion, and release the trigger just like you would release a real ball. See if you can throw to each zone."
+            _tutorial.text = "Great! Now you can throw the ball. Use a natural throwing motion, and release the trigger just like you would release a real ball. See if you can throw to each zone. *See jumbotron for throwing example*"
                 + $"\n\n{TutorialController.Instance.ZonesHit}/3 zones completed";
             break;
 
