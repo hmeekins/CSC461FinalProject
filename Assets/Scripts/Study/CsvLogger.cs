@@ -1,3 +1,4 @@
+
 using System;
 using System.IO;
 using System.Text;
@@ -7,10 +8,13 @@ public static class CsvLogger
 {
     private static string _directory;
     private static DateTimeOffset _trialStartTime;
+    private static string _userId;
 
     public static void InitializeLogger()
     {
-        string userFolder = $"User_{GameFlowController.Instance.UserId}";
+        _userId = GameFlowController.Instance.UserId.ToString();
+
+        string userFolder = $"User_{_userId}";
 
         _directory = Path.Combine(
             Application.dataPath,
@@ -32,7 +36,7 @@ public static class CsvLogger
     {
         string filePath = Path.Combine(
             _directory,
-            $"game_data_condition_{GameData.Variation}.csv"
+            $"game_data_user_{_userId}.csv"
         );
 
         bool fileExists = File.Exists(filePath);
@@ -62,17 +66,22 @@ public static class CsvLogger
 
     public static string SaveMovementData()
     {
-        string movementFileName = $"movement_data_condition_{GameData.Variation}.csv";
+        string movementFileName = $"movement_data_user_{_userId}.csv";
         string filePath = Path.Combine(_directory, movementFileName);
 
+        bool fileExists = File.Exists(filePath);
         StringBuilder sb = new StringBuilder();
 
-        sb.AppendLine("MovementFile,PlayNum,Timestamp,HeadPosX,HeadPosY,HeadPosZ,HeadRotX,HeadRotY,HeadRotZ,HeadRotW,LeftHandPosX,LeftHandPosY,LeftHandPosZ,LeftHandRotX,LeftHandRotY,LeftHandRotZ,LeftHandRotW,RightHandPosX,RightHandPosY,RightHandPosZ,RightHandRotX,RightHandRotY,RightHandRotZ,RightHandRotW");
+        if (!fileExists)
+        {
+            sb.AppendLine("MovementFile,Condition,PlayNum,Timestamp,HeadPosX,HeadPosY,HeadPosZ,HeadRotX,HeadRotY,HeadRotZ,HeadRotW,LeftHandPosX,LeftHandPosY,LeftHandPosZ,LeftHandRotX,LeftHandRotY,LeftHandRotZ,LeftHandRotW,RightHandPosX,RightHandPosY,RightHandPosZ,RightHandRotX,RightHandRotY,RightHandRotZ,RightHandRotW");
+        }
 
         foreach (MovementSample sample in GameData.MovementSamples)
         {
             sb.AppendLine(string.Join(",",
                 EscapeCsv(movementFileName),
+                GameData.Variation,
                 sample.PlayNum,
                 sample.Timestamp,
 
@@ -102,7 +111,7 @@ public static class CsvLogger
             ));
         }
 
-        File.WriteAllText(filePath, sb.ToString());
+        File.AppendAllText(filePath, sb.ToString());
         Debug.Log("Movement CSV saved to: " + filePath);
 
         return movementFileName;
@@ -112,7 +121,7 @@ public static class CsvLogger
     {
         string filePath = Path.Combine(
             _directory,
-            $"event_data_condition_{GameData.Variation}.csv"
+            $"event_data_user_{_userId}.csv"
         );
 
         bool fileExists = File.Exists(filePath);
