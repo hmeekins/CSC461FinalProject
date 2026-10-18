@@ -44,12 +44,11 @@ public static class CsvLogger
 
         if (!fileExists)
         {
-            sb.AppendLine("Date,MovementFile,Condition,NumPasses,CompletedPasses,Accuracy,NumInterceptions,NumTackles,RoundDuration(s),AverageDistance(m)");
+            sb.AppendLine("Date,Condition,NumPasses,CompletedPasses,Accuracy,NumInterceptions,NumTackles,RoundDuration(s),AverageDistance(m)");
         }
 
         sb.AppendLine(string.Join(",",
             DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-            EscapeCsv(movementFile),
             GameData.Variation,
             GameData.NumPasses,
             GameData.CompletedPasses,
@@ -74,13 +73,12 @@ public static class CsvLogger
 
         if (!fileExists)
         {
-            sb.AppendLine("MovementFile,Condition,PlayNum,Timestamp,HeadPosX,HeadPosY,HeadPosZ,HeadRotX,HeadRotY,HeadRotZ,HeadRotW,LeftHandPosX,LeftHandPosY,LeftHandPosZ,LeftHandRotX,LeftHandRotY,LeftHandRotZ,LeftHandRotW,RightHandPosX,RightHandPosY,RightHandPosZ,RightHandRotX,RightHandRotY,RightHandRotZ,RightHandRotW");
+            sb.AppendLine("Condition,PlayNum,Timestamp,HeadPosX,HeadPosY,HeadPosZ,HeadRotX,HeadRotY,HeadRotZ,HeadRotW,LeftHandPosX,LeftHandPosY,LeftHandPosZ,LeftHandRotX,LeftHandRotY,LeftHandRotZ,LeftHandRotW,RightHandPosX,RightHandPosY,RightHandPosZ,RightHandRotX,RightHandRotY,RightHandRotZ,RightHandRotW");
         }
 
         foreach (MovementSample sample in GameData.MovementSamples)
         {
             sb.AppendLine(string.Join(",",
-                EscapeCsv(movementFileName),
                 GameData.Variation,
                 sample.PlayNum,
                 sample.Timestamp,
