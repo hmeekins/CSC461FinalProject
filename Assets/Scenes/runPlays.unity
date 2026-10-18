@@ -18167,9 +18167,9 @@ MonoBehaviour:
   IsTutorial: 0
   resetPlayerOnPlayEnd: {fileID: 1357414560}
   rusherCollision: {fileID: 1890685609}
-  Variation: 1
-  UserId: test
-  MaxPlays: 20
+  Variation: 3
+  UserId: 1
+  MaxPlays: 10
   IgnoreDowns: 1
   DifficultyScaling: 0
 --- !u!4 &780009711
@@ -33469,7 +33469,7 @@ Transform:
   m_GameObject: {fileID: 1357414554}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 14.31}
+  m_LocalPosition: {x: 0, y: 0.5, z: 14.31}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -46608,7 +46608,7 @@ Transform:
   m_GameObject: {fileID: 1848626826}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 14.24}
+  m_LocalPosition: {x: 0, y: 0.5, z: 14.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

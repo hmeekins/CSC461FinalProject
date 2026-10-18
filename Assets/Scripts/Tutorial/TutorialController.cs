@@ -19,6 +19,8 @@ public class TutorialController : MonoBehaviour
     public static TutorialController Instance;
     public TutorialStep TutorialStep;
     [SerializeField] private AudioSource _chime;
+    private bool[] _zoneHit = new bool[3];
+    public int ZonesHit { get; private set; }
 
     private void Awake()
     {
@@ -39,6 +41,14 @@ public class TutorialController : MonoBehaviour
     {
         Instance.TutorialStep = TutorialStep.SpawnBall;
         _chime.Play();
+    }
+    public void ZoneCompleted(int zoneID)
+    {
+        if (_zoneHit[zoneID])
+            return;
+
+        _zoneHit[zoneID] = true;
+        ZonesHit++;
     }
 
     public void FinishZones()
